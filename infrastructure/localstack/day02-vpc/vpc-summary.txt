@@ -1,0 +1,23 @@
+VPC Infrastructure Summary - Day 2
+==================================
+
+VPC Configuration:
+- VPC ID: vpc-6f2a845f590ad7ecc
+- CIDR: 10.0.0.0/16
+- DNS Support: Enabled
+- DNS Hostnames: Enabled
+
+Networking:
+- Internet Gateway: igw-a1d0bc95ed96375a0
+- Public Subnet: subnet-b3153423a4821d6ca (10.0.1.0/24, us-east-1a)
+- Private Subnet: subnet-396257f00c493dbb6 (10.0.2.0/24, us-east-1b)
+
+Routing:
+- Public Route Table: rtb-d84e7edbaac270e3b (routes to IGW)
+- Private Route Table: rtb-916de5c0bcd4eee52 (local only)
+
+Security Groups:
+- Web SG: sg-975736c2997b3e844 (ports 22, 80, 443, 3000 from 0.0.0.0/0)
+- App SG: sg-fc9aeb4a869ff9eb9 (all TCP from 10.0.0.0/16)
+
+Status: ✅ Complete
