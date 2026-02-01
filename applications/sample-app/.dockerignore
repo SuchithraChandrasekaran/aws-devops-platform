@@ -1,0 +1,51 @@
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Testing
+coverage
+.nyc_output
+*.test.js
+*.spec.js
+tests/
+
+# Development files
+.env
+.env.local
+.env.*.local
+*.bak
+
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Documentation
+README.md
+*.md
+docs/
+
+# CI/CD
+.github
+.gitlab-ci.yml
+azure-pipelines.yml
+
+# Build artifacts
+dist
+build
+*.log
+
+# Temporary files
+tmp
+temp
+*.tmp

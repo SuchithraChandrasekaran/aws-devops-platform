@@ -1,0 +1,37 @@
+# Day 3 - Docker Compose Configuration for Development
+version: '3.8'
+
+services:
+  sample-app:
+    build:
+      context: ../../applications/sample-app
+      dockerfile: Dockerfile
+    image: aws-devops-sample-app:dev
+    container_name: sample-app-dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    volumes:
+      # Mount source code for hot-reloading during development
+      - ../../applications/sample-app/src:/app/src:ro
+      - ../../applications/sample-app/config:/app/config:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    networks:
+      - devops-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  devops-network:
+    driver: bridge
