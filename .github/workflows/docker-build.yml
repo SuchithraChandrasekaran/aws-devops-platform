@@ -1,0 +1,93 @@
+name: Docker Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'applications/sample-app/**'
+      - '.github/workflows/docker-build.yml'
+  pull_request:
+    branches: [ main ]
+
+env:
+  IMAGE_NAME: aws-devops-sample-app
+  LOCALSTACK_ENDPOINT: http://localhost:4566
+  S3_BUCKET: aws-devops-artifacts
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: |
+          cd applications/sample-app
+          npm ci
+      
+      - name: Run tests
+        run: |
+          cd applications/sample-app
+          npm test
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build Docker image
+        run: |
+          cd applications/sample-app
+          docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} .
+          docker tag ${{ env.IMAGE_NAME }}:${{ github.sha }} ${{ env.IMAGE_NAME }}:latest
+      
+      - name: Run container health check
+        run: |
+          docker run -d --name test-container -p 3000:3000 ${{ env.IMAGE_NAME }}:latest
+          sleep 5
+          curl http://localhost:3000/health
+          docker stop test-container
+          docker rm test-container
+      
+      - name: Save Docker image
+        run: |
+          docker save ${{ env.IMAGE_NAME }}:${{ github.sha }} | gzip > docker-image.tar.gz
+      
+      - name: Start LocalStack
+        run: |
+          docker run -d --name localstack -p 4566:4566 -e SERVICES=s3 localstack/localstack:latest
+          sleep 10
+      
+      - name: Configure AWS CLI for LocalStack
+        run: |
+          aws configure set aws_access_key_id test
+          aws configure set aws_secret_access_key test
+          aws configure set region us-east-1
+      
+      - name: Create S3 bucket
+        run: |
+          aws --endpoint-url=${{ env.LOCALSTACK_ENDPOINT }} \
+            s3 mb s3://${{ env.S3_BUCKET }} || true
+      
+      - name: Upload artifact to S3
+        run: |
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          VERSION="${TIMESTAMP}-${{ github.sha }}"
+          
+          aws --endpoint-url=${{ env.LOCALSTACK_ENDPOINT }} \
+            s3 cp docker-image.tar.gz \
+            s3://${{ env.S3_BUCKET }}/docker-images/${{ env.IMAGE_NAME }}-${VERSION}.tar.gz
+          
+          echo "Artifact uploaded: s3://${{ env.S3_BUCKET }}/docker-images/${{ env.IMAGE_NAME }}-${VERSION}.tar.gz"
+      
+      - name: Upload artifact for deployment
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image-${{ github.sha }}
+          path: docker-image.tar.gz
+          retention-days: 7

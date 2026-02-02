@@ -1,0 +1,87 @@
+name: Deploy to LocalStack
+
+on:
+  workflow_run:
+    workflows: ["Docker Build and Test"]
+    types:
+      - completed
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: aws-devops-sample-app
+  LOCALSTACK_ENDPOINT: http://localhost:4566
+  S3_BUCKET: aws-devops-artifacts
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Start LocalStack
+        run: |
+          docker run -d --name localstack \
+            -p 4566:4566 \
+            -e SERVICES=ec2,s3 \
+            localstack/localstack:latest
+          sleep 15
+      
+      - name: Configure AWS CLI
+        run: |
+          aws configure set aws_access_key_id test
+          aws configure set aws_secret_access_key test
+          aws configure set region us-east-1
+      
+      - name: Setup S3 bucket
+        run: |
+          aws --endpoint-url=${{ env.LOCALSTACK_ENDPOINT }} \
+            s3 mb s3://${{ env.S3_BUCKET }} || true
+      
+      - name: Download artifact from previous workflow
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-image-${{ github.sha }}
+      
+      - name: Upload to LocalStack S3
+        run: |
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          VERSION="${TIMESTAMP}-${{ github.sha }}"
+          
+          aws --endpoint-url=${{ env.LOCALSTACK_ENDPOINT }} \
+            s3 cp docker-image.tar.gz \
+            s3://${{ env.S3_BUCKET }}/docker-images/${{ env.IMAGE_NAME }}-${VERSION}.tar.gz
+      
+      - name: Download from S3 and load
+        run: |
+          # Get latest artifact
+          LATEST=$(aws --endpoint-url=${{ env.LOCALSTACK_ENDPOINT }} \
+            s3 ls s3://${{ env.S3_BUCKET }}/docker-images/ | \
+            grep ${{ env.IMAGE_NAME }} | sort | tail -n 1 | awk '{print $4}')
+          
+          aws --endpoint-url=${{ env.LOCALSTACK_ENDPOINT }} \
+            s3 cp s3://${{ env.S3_BUCKET }}/docker-images/${LATEST} \
+            downloaded-image.tar.gz
+          
+          docker load < downloaded-image.tar.gz
+      
+      - name: Deploy to LocalStack EC2
+        run: |
+          # Create EC2 instance
+          INSTANCE_ID=$(aws --endpoint-url=${{ env.LOCALSTACK_ENDPOINT }} \
+            ec2 run-instances \
+            --image-id ami-0c55b159cbfafe1f0 \
+            --instance-type t2.micro \
+            --query 'Instances[0].InstanceId' \
+            --output text)
+          
+          echo "Deployed to instance: ${INSTANCE_ID}"
+      
+      - name: Run health check
+        run: |
+          docker run -d --name deployed-app -p 3000:3000 ${{ env.IMAGE_NAME }}:latest
+          sleep 5
+          curl http://localhost:3000/health
+          echo "Deployment successful!"
