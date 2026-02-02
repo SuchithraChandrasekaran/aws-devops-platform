@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  localstack:
+    container_name: localstack-aws-devops
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+    environment:
+      - SERVICES=ec2,s3,dynamodb,lambda,cloudformation,cloudwatch,sns,sqs,iam
+      - DEBUG=1
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - EDGE_PORT=4566
+      - PERSISTENCE=0
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - localstack-network
+    restart: unless-stopped
+
+networks:
+  localstack-network:
+    driver: bridge
