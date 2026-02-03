@@ -1,0 +1,14 @@
+name: Day 5 Test
+
+on:
+  push:
+    branches: [ main, dev ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test
+        run: echo "Day 5 pipeline test successful!"

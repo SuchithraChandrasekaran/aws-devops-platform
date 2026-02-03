@@ -40,6 +40,17 @@ app.get('/api/info', (req, res) => {
   });
 });
 
+// Metrics endpoint (added for test compatibility)
+app.get('/metrics', (req, res) => {
+  res.json({ 
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    memory: process.memoryUsage(),
+    platform: process.platform,
+    nodeVersion: process.version
+  });
+});
+
 // Ready check endpoint (for Kubernetes readiness probes)
 app.get('/ready', (req, res) => {
   res.json({ 
@@ -66,13 +77,19 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log('='.repeat(50));
-  console.log('AWS DevOps Platform - Sample Application');
-  console.log('='.repeat(50));
-  console.log(`Day: 3 - Docker Containerization`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Health check: http://localhost:${PORT}/health`);
-  console.log('='.repeat(50));
-});
+// Only start the server if this file is run directly (not imported for testing)
+if (require.main === module) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log('='.repeat(50));
+    console.log('AWS DevOps Platform - Sample Application');
+    console.log('='.repeat(50));
+    console.log(`Day: 3 - Docker Containerization`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Health check: http://localhost:${PORT}/health`);
+    console.log('='.repeat(50));
+  });
+}
+
+// Export app for testing
+module.exports = app;

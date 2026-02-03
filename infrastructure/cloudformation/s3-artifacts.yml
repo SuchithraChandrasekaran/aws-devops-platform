@@ -1,0 +1,94 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'S3 buckets for CI/CD pipeline artifacts'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - staging
+      - prod
+    Description: Environment name
+
+Resources:
+  ArtifactsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'aws-devops-artifacts-${Environment}'
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: DeleteOldVersions
+            Status: Enabled
+            NoncurrentVersionExpirationInDays: 30
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Purpose
+          Value: CI/CD Artifacts
+        - Key: Project
+          Value: AWS DevOps Platform
+
+  PipelineLogsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'aws-devops-pipeline-logs-${Environment}'
+      LifecycleConfiguration:
+        Rules:
+          - Id: DeleteOldLogs
+            Status: Enabled
+            ExpirationInDays: 90
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Purpose
+          Value: Pipeline Logs
+        - Key: Project
+          Value: AWS DevOps Platform
+
+  ArtifactsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ArtifactsBucket
+      PolicyDocument:
+        Statement:
+          - Sid: AllowPipelineAccess
+            Effect: Allow
+            Principal:
+              Service: codepipeline.amazonaws.com
+            Action:
+              - s3:GetObject
+              - s3:PutObject
+              - s3:GetObjectVersion
+            Resource: !Sub '${ArtifactsBucket.Arn}/*'
+
+Outputs:
+  ArtifactsBucketName:
+    Description: Name of the artifacts bucket
+    Value: !Ref ArtifactsBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-ArtifactsBucket'
+
+  ArtifactsBucketArn:
+    Description: ARN of the artifacts bucket
+    Value: !GetAtt ArtifactsBucket.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-ArtifactsBucketArn'
+
+  LogsBucketName:
+    Description: Name of the logs bucket
+    Value: !Ref PipelineLogsBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-LogsBucket'
