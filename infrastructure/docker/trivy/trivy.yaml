@@ -1,0 +1,26 @@
+# Trivy configuration file
+severity:
+  - CRITICAL
+  - HIGH
+  - MEDIUM
+
+vulnerability:
+  type:
+    - os
+    - library
+
+scan:
+  skip-files:
+    - "**/*.md"
+    - "**/test/**"
+    - "**/tests/**"
+  
+  skip-dirs:
+    - node_modules
+    - .git
+
+exit-code: 1
+
+format: json
+
+output: trivy-report.json

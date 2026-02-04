@@ -1,38 +1,22 @@
 {
-  "name": "aws-devops-platform-api",
+  "name": "sample-app",
   "version": "1.0.0",
-  "description": "AWS DevOps Platform - Sample Node.js Application for Day 2",
+  "description": "Sample Node.js application for AWS DevOps Platform",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "test": "jest",
+    "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "test:unit": "jest tests/unit",
-    "test:integration": "jest tests/integration",
-    "test:ci": "jest --ci --coverage"
+    "test:integration": "jest --testPathPattern=integration",
+    "test:api": "jest --testPathPattern=api",
+    "coverage": "jest --coverage --coverageReporters=text-lcov > coverage.lcov"
   },
-  "keywords": [
-    "aws",
-    "devops",
-    "nodejs",
-    "express",
-    "localstack"
-  ],
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "helmet": "^7.1.0",
-    "morgan": "^1.10.0"
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "nodemon": "^3.0.2",
-    "supertest": "^6.3.4"
-  },
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
+    "supertest": "^6.3.3",
+    "@types/jest": "^29.5.8"
   }
 }
