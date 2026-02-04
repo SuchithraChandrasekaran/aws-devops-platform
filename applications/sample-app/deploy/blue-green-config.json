@@ -1,0 +1,34 @@
+{
+  "deployment": {
+    "strategy": "blue-green",
+    "bluePort": 4000,
+    "greenPort": 4001,
+    "nginxPort": 8080,
+    "healthCheckPath": "/health",
+    "healthCheckTimeout": 30,
+    "healthCheckInterval": 5
+  },
+  "containers": {
+    "blue": {
+      "name": "sample-app-blue",
+      "image": "sample-app:blue",
+      "port": 4000
+    },
+    "green": {
+      "name": "sample-app-green",
+      "image": "sample-app:green",
+      "port": 4001
+    }
+  },
+  "nginx": {
+    "name": "nginx-lb",
+    "image": "nginx-lb:latest",
+    "port": 8080,
+    "activeEnvironment": "green"
+  },
+  "rollback": {
+    "enabled": true,
+    "maxRetries": 3,
+    "retryDelay": 5
+  }
+}
