@@ -2,9 +2,6 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-	  console.log(`Server running on port ${PORT}`);
-});
 // Middleware
 app.use(express.json());
 
@@ -43,7 +40,7 @@ app.get('/api/info', (req, res) => {
   });
 });
 
-// Metrics endpoint (added for test compatibility)
+// Metrics endpoint
 app.get('/metrics', (req, res) => {
   res.json({ 
     uptime: process.uptime(),
@@ -54,7 +51,7 @@ app.get('/metrics', (req, res) => {
   });
 });
 
-// Ready check endpoint (for Kubernetes readiness probes)
+// Ready check endpoint
 app.get('/ready', (req, res) => {
   res.json({ 
     ready: true,
