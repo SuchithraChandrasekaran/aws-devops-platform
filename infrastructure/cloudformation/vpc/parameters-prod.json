@@ -14,5 +14,13 @@
   {
     "ParameterKey": "PublicSubnet2CIDR",
     "ParameterValue": "10.1.2.0/24"
+  },
+  {
+    "ParameterKey": "EnableNATGateway",
+    "ParameterValue": "false"
+  },
+  {
+    "ParameterKey": "EnableVPCFlowLogs",
+    "ParameterValue": "false"
   }
 ]
