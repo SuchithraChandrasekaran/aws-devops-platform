@@ -1,0 +1,18 @@
+[
+  {
+    "ParameterKey": "DBName",
+    "ParameterValue": "myappdb"
+  },
+  {
+    "ParameterKey": "DBUsername",
+    "ParameterValue": "admin"
+  },
+  {
+    "ParameterKey": "DBPassword",
+    "ParameterValue": "TempPassword123!"
+  },
+  {
+    "ParameterKey": "Environment",
+    "ParameterValue": "dev"
+  }
+]

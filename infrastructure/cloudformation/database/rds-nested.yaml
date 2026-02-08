@@ -1,0 +1,128 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Nested Stack - RDS PostgreSQL Database (LocalStack Simulated)'
+
+Parameters:
+  DBName:
+    Type: String
+    Default: myappdb
+    Description: Database name
+
+  DBUsername:
+    Type: String
+    Default: admin
+    Description: Database admin username
+
+  DBPassword:
+    Type: String
+    NoEcho: true
+    Default: TempPassword123!
+    Description: Database admin password
+
+  Environment:
+    Type: String
+    AllowedValues:
+      - dev
+      - prod
+    Default: dev
+    Description: Environment type
+
+  VPCId:
+    Type: String
+    Description: VPC ID from parent stack
+
+  PrivateSubnet1:
+    Type: String
+    Description: First private subnet for RDS
+
+  PrivateSubnet2:
+    Type: String
+    Description: Second private subnet for RDS
+
+Conditions:
+  IsProd: !Equals [!Ref Environment, prod]
+
+Resources:
+  # DB Subnet Group
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupName: !Sub '${Environment}-db-subnet-group'
+      DBSubnetGroupDescription: !Sub 'Subnet group for ${Environment} RDS'
+      SubnetIds:
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+      Tags:
+        - Key: Name
+          Value: !Sub '${Environment}-db-subnet-group'
+        - Key: Environment
+          Value: !Ref Environment
+
+  # Security Group for RDS
+  DBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub '${Environment}-rds-sg'
+      GroupDescription: Security group for RDS database
+      VpcId: !Ref VPCId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+          CidrIp: 10.0.0.0/16
+          Description: PostgreSQL access from VPC
+      Tags:
+        - Key: Name
+          Value: !Sub '${Environment}-rds-sg'
+        - Key: Environment
+          Value: !Ref Environment
+
+  # RDS Instance
+  DBInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: !Sub '${Environment}-postgres-db'
+      DBName: !Ref DBName
+      Engine: postgres
+      EngineVersion: '13.7'
+      DBInstanceClass: !If [IsProd, db.t3.medium, db.t3.micro]
+      AllocatedStorage: !If [IsProd, 100, 20]
+      StorageType: gp2
+      MasterUsername: !Ref DBUsername
+      MasterUserPassword: !Ref DBPassword
+      VPCSecurityGroups:
+        - !Ref DBSecurityGroup
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      MultiAZ: !If [IsProd, true, false]
+      BackupRetentionPeriod: !If [IsProd, 7, 1]
+      PreferredBackupWindow: '03:00-04:00'
+      PreferredMaintenanceWindow: 'sun:04:00-sun:05:00'
+      Tags:
+        - Key: Name
+          Value: !Sub '${Environment}-postgres-db'
+        - Key: Environment
+          Value: !Ref Environment
+
+Outputs:
+  DBInstanceEndpoint:
+    Description: RDS instance endpoint
+    Value: !GetAtt DBInstance.Endpoint.Address
+    Export:
+      Name: !Sub '${AWS::StackName}-DBEndpoint'
+
+  DBInstancePort:
+    Description: RDS instance port
+    Value: !GetAtt DBInstance.Endpoint.Port
+    Export:
+      Name: !Sub '${AWS::StackName}-DBPort'
+
+  DBName:
+    Description: Database name
+    Value: !Ref DBName
+    Export:
+      Name: !Sub '${AWS::StackName}-DBName'
+
+  DBSecurityGroupId:
+    Description: RDS security group ID
+    Value: !Ref DBSecurityGroup
+    Export:
+      Name: !Sub '${AWS::StackName}-DBSecurityGroup'
