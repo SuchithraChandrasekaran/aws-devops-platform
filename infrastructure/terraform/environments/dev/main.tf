@@ -1,10 +1,5 @@
 # Dev Environment Configuration
-
-terraform {
-  backend "local" {
-    path = "terraform-dev.tfstate"
-  }
-}
+# Backend configured in backend.tf
 
 module "vpc" {
   source = "../../modules/vpc"
