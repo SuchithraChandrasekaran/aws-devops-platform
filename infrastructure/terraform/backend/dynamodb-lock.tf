@@ -1,5 +1,3 @@
-# DynamoDB Table for Terraform State Locking
-
 resource "aws_dynamodb_table" "terraform_locks" {
   name         = "terraform-state-locks"
   billing_mode = "PAY_PER_REQUEST"

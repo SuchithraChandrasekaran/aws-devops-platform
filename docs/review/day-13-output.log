@@ -1,0 +1,151 @@
+=== DAY 13 - SSM PARAMETER STORE TESTING ===
+Date: Tue Feb 10 18:46:50 IST 2026
+
+=== Test 1: List all Terraform resources ===
+module.vpc.aws_internet_gateway.main
+module.vpc.aws_route_table.public
+module.vpc.aws_route_table_association.public_1
+module.vpc.aws_route_table_association.public_2
+module.vpc.aws_subnet.public_1
+module.vpc.aws_subnet.public_2
+module.vpc.aws_vpc.main
+
+=== Test 2: View Terraform outputs ===
+internet_gateway_id = "igw-5d558d18cab071873"
+public_route_table_id = "rtb-96012281c315d989c"
+public_subnet_1_id = "subnet-8a1c08b6eb854674e"
+public_subnet_2_id = "subnet-cd7c4c77d561783de"
+ssm_parameter_names = {
+  "app_environment" = "/dev/devops-platform/app/environment"
+  "app_name" = "/dev/devops-platform/app/name"
+  "app_version" = "/dev/devops-platform/app/version"
+  "db_host" = "/dev/devops-platform/database/host"
+  "db_port" = "/dev/devops-platform/database/port"
+}
+vpc_cidr = "10.0.0.0/16"
+vpc_id = "vpc-05418d5b834f3a2e3"
+
+=== Test 3: Get all parameters (default path) ===
+=== Parameters under: /dev/devops-platform ===
+
+--------------------------------------------------------------------------------------------------------
+|                                          GetParametersByPath                                         |
++------------------------------------------------------------------------------------------------------+
+||                                             Parameters                                             ||
+|+------------------+---------------------------------------------------------------------------------+|
+||  ARN             |  arn:aws:ssm:us-east-1:000000000000:parameter/dev/devops-platform/app/version   ||
+||  DataType        |  text                                                                           ||
+||  LastModifiedDate|  2026-02-10T18:41:13.731000+05:30                                               ||
+||  Name            |  /dev/devops-platform/app/version                                               ||
+||  Value           |  1.1.0                                                                          ||
+||  Version         |  1                                                                              ||
+|+------------------+---------------------------------------------------------------------------------+|
+
+Total count:
+1
+
+=== Test 4: Get parameters under /app path ===
+=== Parameters under: /dev/devops-platform/app ===
+
+--------------------------------------------------------------------------------------------------------
+|                                          GetParametersByPath                                         |
++------------------------------------------------------------------------------------------------------+
+||                                             Parameters                                             ||
+|+------------------+---------------------------------------------------------------------------------+|
+||  ARN             |  arn:aws:ssm:us-east-1:000000000000:parameter/dev/devops-platform/app/version   ||
+||  DataType        |  text                                                                           ||
+||  LastModifiedDate|  2026-02-10T18:41:13.731000+05:30                                               ||
+||  Name            |  /dev/devops-platform/app/version                                               ||
+||  Value           |  1.1.0                                                                          ||
+||  Version         |  1                                                                              ||
+|+------------------+---------------------------------------------------------------------------------+|
+
+Total count:
+1
+
+=== Test 5: Get parameters under /database path ===
+=== Parameters under: /dev/devops-platform/database ===
+
+---------------------
+|GetParametersByPath|
++-------------------+
+
+Total count:
+0
+
+=== Test 6: Get single parameter details ===
+{
+  "Name": "/dev/devops-platform/app/version",
+  "Value": "1.1.0",
+  "Version": 1,
+  "Type": null,
+  "LastModifiedDate": "2026-02-10T18:41:13.731000+05:30"
+}
+
+=== Test 7: Update parameter version ===
+Updating: /dev/devops-platform/app/version
+New value: 1.1.0
+{
+    "Version": 2,
+    "Tier": "Standard"
+}
+
+Updated successfully!
+----------------------------------------------------------
+|                      GetParameter                      |
++-----------------------------------+--------+-----------+
+|               Name                | Value  |  Version  |
++-----------------------------------+--------+-----------+
+|  /dev/devops-platform/app/version |  1.1.0 |  2        |
++-----------------------------------+--------+-----------+
+
+=== Test 8: Update another parameter ===
+Updating: /dev/devops-platform/app/name
+New value: devops-platform-v2
+{
+    "Version": 1,
+    "Tier": "Standard"
+}
+
+Updated successfully!
+--------------------------------------------------------------------
+|                           GetParameter                           |
++--------------------------------+----------------------+----------+
+|              Name              |        Value         | Version  |
++--------------------------------+----------------------+----------+
+|  /dev/devops-platform/app/name |  devops-platform-v2  |  1       |
++--------------------------------+----------------------+----------+
+
+=== Test 9: Check parameter version history ===
+------------------------------------------------------------
+|                    GetParameterHistory                   |
++----------------------------------------------------------+
+||                       Parameters                       ||
+|+-------------------+------------------------------------+|
+||  DataType         |  text                              ||
+||  LastModifiedDate |  2026-02-10T18:41:13.731000+05:30  ||
+||  LastModifiedUser |  N/A                               ||
+||  Name             |  /dev/devops-platform/app/version  ||
+||  Tier             |  Standard                          ||
+||  Value            |  1.1.0                             ||
+||  Version          |  1                                 ||
+|+-------------------+------------------------------------+|
+||                       Parameters                       ||
+|+-------------------+------------------------------------+|
+||  DataType         |  text                              ||
+||  LastModifiedDate |  2026-02-10T18:47:11.105000+05:30  ||
+||  LastModifiedUser |  N/A                               ||
+||  Name             |  /dev/devops-platform/app/version  ||
+||  Tier             |  Standard                          ||
+||  Value            |  1.1.0                             ||
+||  Version          |  2                                 ||
+|+-------------------+------------------------------------+|
+
+=== Test 10: Verify state in S3 backend ===
+2026-02-10 18:30:31      13506 terraform.tfstate
+
+=== Test 11: Count total parameters ===
+Total parameters created: 2
+
+=== TESTING COMPLETE ===
+All tests passed successfully!
