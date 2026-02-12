@@ -1,0 +1,52 @@
+{
+  "internet_gateway_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "igw-8591100ea288eb5b6"
+  },
+  "public_route_table_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "rtb-6103075bdc9ccc3d1"
+  },
+  "public_subnet_1_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "subnet-dcfbbf8e725ea2e3e"
+  },
+  "public_subnet_2_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "subnet-28b0b93855d4275c7"
+  },
+  "ssm_parameter_names": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "app_environment": "string",
+        "app_name": "string",
+        "app_version": "string",
+        "db_host": "string",
+        "db_port": "string"
+      }
+    ],
+    "value": {
+      "app_environment": "/dev/devops-platform/app/environment",
+      "app_name": "/dev/devops-platform/app/name",
+      "app_version": "/dev/devops-platform/app/version",
+      "db_host": "/dev/devops-platform/database/host",
+      "db_port": "/dev/devops-platform/database/port"
+    }
+  },
+  "vpc_cidr": {
+    "sensitive": false,
+    "type": "string",
+    "value": "10.0.0.0/16"
+  },
+  "vpc_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "vpc-50936b09fa600509d"
+  }
+}

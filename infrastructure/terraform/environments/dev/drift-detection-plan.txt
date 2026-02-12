@@ -1,0 +1,60 @@
+[0m[1mmodule.ssm_parameters.aws_ssm_parameter.parameter["app_name"]: Refreshing state... [id=/dev/devops-platform/app/name][0m
+[0m[1mmodule.ssm_parameters.aws_ssm_parameter.parameter["db_host"]: Refreshing state... [id=/dev/devops-platform/database/host][0m
+[0m[1mmodule.ssm_parameters.aws_ssm_parameter.parameter["app_environment"]: Refreshing state... [id=/dev/devops-platform/app/environment][0m
+[0m[1mmodule.ssm_parameters.aws_ssm_parameter.parameter["app_version"]: Refreshing state... [id=/dev/devops-platform/app/version][0m
+[0m[1mmodule.ssm_parameters.aws_ssm_parameter.parameter["db_port"]: Refreshing state... [id=/dev/devops-platform/database/port][0m
+[0m[1mmodule.vpc.aws_vpc.main: Refreshing state... [id=vpc-50936b09fa600509d][0m
+[0m[1mmodule.vpc.aws_internet_gateway.main: Refreshing state... [id=igw-8591100ea288eb5b6][0m
+[0m[1mmodule.vpc.aws_subnet.public_2: Refreshing state... [id=subnet-28b0b93855d4275c7][0m
+[0m[1mmodule.vpc.aws_subnet.public_1: Refreshing state... [id=subnet-dcfbbf8e725ea2e3e][0m
+[0m[1mmodule.vpc.aws_route_table.public: Refreshing state... [id=rtb-6103075bdc9ccc3d1][0m
+[0m[1mmodule.vpc.aws_route_table_association.public_1: Refreshing state... [id=rtbassoc-aae4e339b709d4c1c][0m
+[0m[1mmodule.vpc.aws_route_table_association.public_2: Refreshing state... [id=rtbassoc-03c34bb9c6d442336][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [33m~[0m update in-place[0m
+
+Terraform will perform the following actions:
+
+[1m  # module.ssm_parameters.aws_ssm_parameter.parameter["app_version"][0m will be updated in-place
+[0m  [33m~[0m[0m resource "aws_ssm_parameter" "parameter" {
+        id              = "/dev/devops-platform/app/version"
+      [32m+[0m[0m insecure_value  = (known after apply)
+        name            = "/dev/devops-platform/app/version"
+        tags            = {
+            "Environment" = "dev"
+            "ManagedBy"   = "Terraform"
+            "Name"        = "/dev/devops-platform/app/version"
+        }
+      [33m~[0m[0m value           = (sensitive value)
+      [33m~[0m[0m version         = 2 -> (known after apply)
+        [90m# (9 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.vpc.aws_vpc.main[0m will be updated in-place
+[0m  [33m~[0m[0m resource "aws_vpc" "main" {
+        id                                   = "vpc-50936b09fa600509d"
+      [33m~[0m[0m tags                                 = {
+            "Day"         = "11"
+          [31m-[0m[0m "DriftTest"   = "Day14" [90m-> null[0m[0m
+            "Environment" = "dev"
+            "ManagedBy"   = "Terraform"
+          [31m-[0m[0m "ManualTag"   = "OutsideTerraform" [90m-> null[0m[0m
+            "Name"        = "dev-vpc"
+            "Project"     = "AWS DevOps Platform"
+        }
+      [33m~[0m[0m tags_all                             = {
+          [31m-[0m[0m "DriftTest"   = "Day14" [90m-> null[0m[0m
+          [31m-[0m[0m "ManualTag"   = "OutsideTerraform" [90m-> null[0m[0m
+            [90m# (5 unchanged elements hidden)[0m[0m
+        }
+        [90m# (18 unchanged attributes hidden)[0m[0m
+    }
+
+[1mPlan:[0m [0m0 to add, 2 to change, 0 to destroy.
+[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
