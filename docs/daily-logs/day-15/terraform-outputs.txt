@@ -1,0 +1,2 @@
+cloudwatch_dashboard = "myapp-metrics-dashboard"
+cloudwatch_log_group = "/aws/localstack/myapp"

@@ -1,0 +1,71 @@
+========================================
+CloudWatch Metrics Testing - Day 15
+Date: Thu Feb 12 18:20:31 IST 2026
+========================================
+
+Test 1: Publishing custom metrics...
+/home/suchithra/aws-devops-platform/scripts/monitoring/publish_metrics.py:29: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  'Timestamp': datetime.utcnow()
+========================================
+CloudWatch Custom Metrics Publisher
+Day 15 - Publishing metrics to LocalStack
+========================================
+
+Batch 1/5:
+✓ Published: MyApp/Performance/RequestCount = 4 Count
+✓ Published: MyApp/Performance/ResponseTime = 463.19130971212866 Milliseconds
+✓ Published: MyApp/Performance/ErrorCount = 0 Count
+
+Batch 2/5:
+✓ Published: MyApp/Performance/RequestCount = 4 Count
+✓ Published: MyApp/Performance/ResponseTime = 90.17144290849936 Milliseconds
+✓ Published: MyApp/Performance/ErrorCount = 2 Count
+
+Batch 3/5:
+✓ Published: MyApp/Performance/RequestCount = 10 Count
+✓ Published: MyApp/Performance/ResponseTime = 274.25238099205194 Milliseconds
+✓ Published: MyApp/Performance/ErrorCount = 1 Count
+
+Batch 4/5:
+✓ Published: MyApp/Performance/RequestCount = 7 Count
+✓ Published: MyApp/Performance/ResponseTime = 421.1035828897833 Milliseconds
+✓ Published: MyApp/Performance/ErrorCount = 3 Count
+
+Batch 5/5:
+✓ Published: MyApp/Performance/RequestCount = 8 Count
+✓ Published: MyApp/Performance/ResponseTime = 289.4004780500443 Milliseconds
+✓ Published: MyApp/Performance/ErrorCount = 2 Count
+
+✓ Metrics publishing complete
+
+Test 2: Verify metrics in CloudWatch...
+{
+    "Metrics": [
+        {
+            "Namespace": "MyApp/Performance",
+            "MetricName": "ErrorCount"
+        },
+        {
+            "Namespace": "MyApp/Performance",
+            "MetricName": "RequestCount"
+        },
+        {
+            "Namespace": "MyApp/Performance",
+            "MetricName": "ResponseTime"
+        }
+    ]
+}
+
+Test 3: Get metric statistics...
+{
+    "Label": "RequestCount",
+    "Datapoints": [
+        {
+            "Timestamp": "2026-02-12T12:50:16+00:00",
+            "Sum": 33.0,
+            "Unit": "Count"
+        }
+    ]
+}
+
+✓ Metrics test complete
