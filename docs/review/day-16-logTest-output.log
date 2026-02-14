@@ -1,0 +1,79 @@
+========================================
+CloudWatch Logs Testing
+========================================
+
+Test 1: Sending logs to CloudWatch...
+========================================
+CloudWatch Centralized Logger - Day 16
+========================================
+
+Log sent: [INFO] Application started successfully
+Log sent: [INFO] Loading configuration from SSM
+Log sent: [INFO] API endpoint /health called
+Log sent: [INFO] API endpoint /users called
+Log sent: [ERROR] Database connection timeout
+Log sent: [WARNING] High memory usage detected
+Log sent: [INFO] Application running normally
+
+Logs sent to CloudWatch
+
+Test 2: Retrieving application logs...
+{
+    "events": [
+        {
+            "logStreamName": "app-stream",
+            "timestamp": 1770961402706,
+            "message": "[INFO] Application started successfully",
+            "ingestionTime": 1770961402774,
+            "eventId": "0"
+        },
+        {
+            "logStreamName": "app-stream",
+            "timestamp": 1770961402779,
+            "message": "[INFO] Loading configuration from SSM",
+            "ingestionTime": 1770961402827,
+            "eventId": "1"
+        },
+        {
+            "logStreamName": "app-stream",
+            "timestamp": 1770961404029,
+            "message": "[INFO] Application running normally",
+            "ingestionTime": 1770961404089,
+            "eventId": "6"
+        }
+    ],
+    "searchedLogStreams": [
+        {
+            "logStreamName": "app-stream",
+            "searchedCompletely": true
+        }
+    ]
+}
+
+Test 3: Retrieving error logs...
+{
+    "events": [
+        {
+            "logStreamName": "error-stream",
+            "timestamp": 1770961402934,
+            "message": "[ERROR] Database connection timeout",
+            "ingestionTime": 1770961402980,
+            "eventId": "4"
+        },
+        {
+            "logStreamName": "error-stream",
+            "timestamp": 1770961402983,
+            "message": "[WARNING] High memory usage detected",
+            "ingestionTime": 1770961403024,
+            "eventId": "5"
+        }
+    ],
+    "searchedLogStreams": [
+        {
+            "logStreamName": "error-stream",
+            "searchedCompletely": true
+        }
+    ]
+}
+
+Logging test complete
