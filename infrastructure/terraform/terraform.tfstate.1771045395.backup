@@ -1,0 +1,320 @@
+{
+  "version": 4,
+  "terraform_version": "1.14.4",
+  "serial": 19,
+  "lineage": "01adb384-e6d6-ec36-778c-562ef01eb435",
+  "outputs": {
+    "cloudwatch_dashboard": {
+      "value": "myapp-metrics-dashboard",
+      "type": "string"
+    },
+    "cloudwatch_log_group": {
+      "value": "/aws/localstack/myapp",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_dashboard",
+      "name": "monitoring",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "dashboard_arn": "arn:aws:cloudwatch::000000000000:dashboard/myapp-metrics-dashboard",
+            "dashboard_body": "{\"widgets\":[{\"properties\":{\"metrics\":[[\"MyApp/Performance\",\"RequestCount\"],[\"MyApp/Performance\",\"ResponseTime\"],[\"MyApp/Performance\",\"ErrorCount\"]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Sum\",\"title\":\"Application Performance Metrics\"},\"type\":\"metric\"}]}",
+            "dashboard_name": "myapp-metrics-dashboard",
+            "id": "myapp-metrics-dashboard"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "api",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/api/myapp",
+            "id": "/aws/api/myapp",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/api/myapp",
+            "name_prefix": "",
+            "retention_in_days": 7,
+            "skip_destroy": false,
+            "tags": {
+              "Day": "16",
+              "Environment": "dev",
+              "Service": "api"
+            },
+            "tags_all": {
+              "Day": "16",
+              "Environment": "dev",
+              "Service": "api"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "app_logs",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/localstack/myapp",
+            "id": "/aws/localstack/myapp",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/localstack/myapp",
+            "name_prefix": "",
+            "retention_in_days": 7,
+            "skip_destroy": false,
+            "tags": {
+              "Day": "15",
+              "Environment": "dev",
+              "ManagedBy": "terraform"
+            },
+            "tags_all": {
+              "Day": "15",
+              "Environment": "dev",
+              "ManagedBy": "terraform"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "application",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/application/myapp",
+            "id": "/aws/application/myapp",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/application/myapp",
+            "name_prefix": "",
+            "retention_in_days": 7,
+            "skip_destroy": false,
+            "tags": {
+              "Day": "16",
+              "Environment": "dev",
+              "Service": "application"
+            },
+            "tags_all": {
+              "Day": "16",
+              "Environment": "dev",
+              "Service": "application"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "errors",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/errors/myapp",
+            "id": "/aws/errors/myapp",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/errors/myapp",
+            "name_prefix": "",
+            "retention_in_days": 14,
+            "skip_destroy": false,
+            "tags": {
+              "Day": "16",
+              "Environment": "dev",
+              "Service": "errors"
+            },
+            "tags_all": {
+              "Day": "16",
+              "Environment": "dev",
+              "Service": "errors"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_metric_filter",
+      "name": "api_latency",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "APILatency",
+            "log_group_name": "/aws/api/myapp",
+            "metric_transformation": [
+              {
+                "default_value": "",
+                "dimensions": null,
+                "name": "APIResponseTime",
+                "namespace": "MyApp/Logs",
+                "unit": "None",
+                "value": "$latency"
+              }
+            ],
+            "name": "APILatency",
+            "pattern": "[time, request_id, latency]"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.cloudwatch.aws_cloudwatch_log_group.api"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_metric_filter",
+      "name": "error_count",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "ErrorCountFromLogs",
+            "log_group_name": "/aws/errors/myapp",
+            "metric_transformation": [
+              {
+                "default_value": "",
+                "dimensions": null,
+                "name": "ErrorCountFromLogs",
+                "namespace": "MyApp/Logs",
+                "unit": "None",
+                "value": "1"
+              }
+            ],
+            "name": "ErrorCountFromLogs",
+            "pattern": "[ERROR]"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.cloudwatch.aws_cloudwatch_log_group.errors"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_stream",
+      "name": "api_stream",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/api/myapp:log-stream:api-stream",
+            "id": "api-stream",
+            "log_group_name": "/aws/api/myapp",
+            "name": "api-stream"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.cloudwatch.aws_cloudwatch_log_group.api"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_stream",
+      "name": "app_stream",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/application/myapp:log-stream:app-stream",
+            "id": "app-stream",
+            "log_group_name": "/aws/application/myapp",
+            "name": "app-stream"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.cloudwatch.aws_cloudwatch_log_group.application"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_stream",
+      "name": "error_stream",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/errors/myapp:log-stream:error-stream",
+            "id": "error-stream",
+            "log_group_name": "/aws/errors/myapp",
+            "name": "error-stream"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.cloudwatch.aws_cloudwatch_log_group.errors"
+          ]
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}

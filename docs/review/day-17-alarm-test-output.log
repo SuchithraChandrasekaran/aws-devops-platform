@@ -1,0 +1,83 @@
+/home/suchithra/aws-devops-platform/scripts/alerting/test_alarms.py:29: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  'Timestamp': datetime.utcnow(),
+==================================================
+CloudWatch Alarms Testing - Day 17
+==================================================
+
+Test 1: Triggering CPU alarm (>80%)...
+Sent: CPUUtilization = 85 Percent
+Sent: CPUUtilization = 87 Percent
+
+Test 2: Triggering Memory alarm (>85%)...
+Sent: MemoryUtilization = 90 Percent
+Sent: MemoryUtilization = 92 Percent
+
+Test 3: Triggering Disk alarm (>90%)...
+Sent: DiskUtilization = 95 Percent
+
+Test 4: Triggering Error alarm (>10 errors)...
+Sent: ErrorCountFromLogs = 15 Count
+
+Test 5: Triggering Latency alarm (>1000ms)...
+Sent: APIResponseTime = 1500 Count
+Sent: APIResponseTime = 1200 Count
+
+Test 6: Sending normal values...
+Sent: CPUUtilization = 45 Percent
+Sent: MemoryUtilization = 60 Percent
+Sent: DiskUtilization = 70 Percent
+Sent: RequestCount = 50 Count
+Sent: DatabaseConnections = 30 Count
+Sent: CacheHitRate = 85 Percent
+Sent: QueueDepth = 25 Count
+
+==================================================
+Current Alarm States
+==================================================
+⚪ high-api-latency
+   State: INSUFFICIENT_DATA
+   Reason: Unchecked: Initial alarm creation
+
+⚪ low-cache-hit-rate
+   State: INSUFFICIENT_DATA
+   Reason: Unchecked: Initial alarm creation
+
+⚪ high-queue-depth
+   State: INSUFFICIENT_DATA
+   Reason: Unchecked: Initial alarm creation
+
+⚪ high-memory-utilization
+   State: INSUFFICIENT_DATA
+   Reason: Unchecked: Initial alarm creation
+
+⚪ high-db-connections
+   State: INSUFFICIENT_DATA
+   Reason: Unchecked: Initial alarm creation
+
+⚪ high-network-throughput
+   State: INSUFFICIENT_DATA
+   Reason: Unchecked: Initial alarm creation
+
+⚪ low-request-count
+   State: INSUFFICIENT_DATA
+   Reason: Unchecked: Initial alarm creation
+
+⚪ high-cpu-utilization
+   State: INSUFFICIENT_DATA
+   Reason: Unchecked: Initial alarm creation
+
+⚪ high-disk-usage
+   State: INSUFFICIENT_DATA
+   Reason: Unchecked: Initial alarm creation
+
+⚪ high-error-count
+   State: INSUFFICIENT_DATA
+   Reason: Unchecked: Initial alarm creation
+
+
+Composite Alarms:
+🟢 system-unhealthy: INSUFFICIENT_DATA
+
+==================================================
+Alarm testing complete
+==================================================
