@@ -1,0 +1,75 @@
+{
+  "version": 4,
+  "terraform_version": "1.14.4",
+  "serial": 26,
+  "lineage": "01adb384-e6d6-ec36-778c-562ef01eb435",
+  "outputs": {
+    "cloudwatch_dashboard": {
+      "value": "myapp-metrics-dashboard",
+      "type": "string"
+    },
+    "cloudwatch_log_group": {
+      "value": "/aws/localstack/myapp",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_dashboard",
+      "name": "monitoring",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "dashboard_arn": "arn:aws:cloudwatch::000000000000:dashboard/myapp-metrics-dashboard",
+            "dashboard_body": "{\"widgets\":[{\"properties\":{\"metrics\":[[\"MyApp/Performance\",\"RequestCount\"],[\"MyApp/Performance\",\"ResponseTime\"],[\"MyApp/Performance\",\"ErrorCount\"]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Sum\",\"title\":\"Application Performance Metrics\"},\"type\":\"metric\"}]}",
+            "dashboard_name": "myapp-metrics-dashboard",
+            "id": "myapp-metrics-dashboard"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "app_logs",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/localstack/myapp",
+            "id": "/aws/localstack/myapp",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/localstack/myapp",
+            "name_prefix": "",
+            "retention_in_days": 7,
+            "skip_destroy": false,
+            "tags": {
+              "Day": "15",
+              "Environment": "dev",
+              "ManagedBy": "terraform"
+            },
+            "tags_all": {
+              "Day": "15",
+              "Environment": "dev",
+              "ManagedBy": "terraform"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}

@@ -15,3 +15,9 @@ variable "project_name" {
   type        = string
   default     = "aws-devops-platform"
 }
+
+variable "alert_email" {
+  description = "Email address for alert notifications"
+  type        = string
+  default     = "suchithrac@gmail.com"
+}

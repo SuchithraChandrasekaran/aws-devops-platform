@@ -8,7 +8,6 @@ services:
       - "4566:4566"
       - "4510-4559:4510-4559"
     environment:
-      - SERVICES=ec2,s3,dynamodb,lambda,cloudformation,cloudwatch,sns,sqs,iam
       - DEBUG=1
       - AWS_DEFAULT_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=test
