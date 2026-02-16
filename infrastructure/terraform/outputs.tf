@@ -1,9 +1,34 @@
-output "cloudwatch_log_group" {
-  description = "CloudWatch log group for application"
-  value       = module.cloudwatch.log_group_name
+# Terraform Outputs
+
+# CloudWatch Log Groups
+output "application_log_group" {
+  description = "Application log group name"
+  value       = module.cloudwatch.application_log_group
 }
 
-output "cloudwatch_dashboard" {
-  description = "CloudWatch dashboard name"
+output "api_log_group" {
+  description = "API log group name"
+  value       = module.cloudwatch.api_log_group
+}
+
+output "errors_log_group" {
+  description = "Errors log group name"
+  value       = module.cloudwatch.errors_log_group
+}
+
+# Dashboard
+output "dashboard_name" {
+  description = "Operations dashboard name"
   value       = module.cloudwatch.dashboard_name
+}
+
+# SNS Topics
+output "critical_topic_arn" {
+  description = "Critical alerts SNS topic ARN"
+  value       = module.sns.critical_topic_arn
+}
+
+output "warning_topic_arn" {
+  description = "Warning alerts SNS topic ARN"
+  value       = module.sns.warning_topic_arn
 }
