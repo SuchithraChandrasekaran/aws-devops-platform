@@ -1,0 +1,51 @@
+# Prometheus Configuration - Day 19
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    environment: 'localstack-dev'
+    project: 'aws-devops-platform'
+
+# Alerting configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+# Rule files
+rule_files:
+  - 'alerts.yml'
+
+# Scrape configurations
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          service: 'prometheus'
+
+  # Node Exporter (system metrics)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+        labels:
+          service: 'node-exporter'
+          instance: 'localstack-host'
+
+  # LocalStack metrics (if available)
+  - job_name: 'localstack'
+    static_configs:
+      - targets: ['host.docker.internal:4566']
+        labels:
+          service: 'localstack'
+    metrics_path: '/_localstack/health'
+    scrape_interval: 30s
+
+  # Application metrics (custom exporter)
+  - job_name: 'myapp'
+    static_configs:
+      - targets: ['app-exporter:8000']
+        labels:
+          service: 'myapp'
+          environment: 'dev'
