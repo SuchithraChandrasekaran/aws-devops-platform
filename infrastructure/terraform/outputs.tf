@@ -32,3 +32,9 @@ output "warning_topic_arn" {
   description = "Warning alerts SNS topic ARN"
   value       = module.sns.warning_topic_arn
 }
+
+# EventBridge
+output "event_bus_name" {
+  description = "Custom event bus name"
+  value       = module.eventbridge.event_bus_name
+}

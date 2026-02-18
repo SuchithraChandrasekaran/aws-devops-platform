@@ -27,6 +27,7 @@ provider "aws" {
     ec2            = "http://localhost:4566"
     es             = "http://localhost:4566"
     elasticache    = "http://localhost:4566"
+    events         = "http://localhost:4566"
     firehose       = "http://localhost:4566"
     iam            = "http://localhost:4566"
     kinesis        = "http://localhost:4566"

@@ -15,3 +15,12 @@ module "sns" {
   environment = var.environment
   alert_email = var.alert_email
 }
+
+# EventBridge Module for event automation
+module "eventbridge" {
+  source = "./modules/eventbridge"
+
+  environment        = var.environment
+  critical_topic_arn = module.sns.critical_topic_arn
+  warning_topic_arn  = module.sns.warning_topic_arn
+}
