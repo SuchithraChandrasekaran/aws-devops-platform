@@ -1,0 +1,127 @@
+========================================
+Week 3 Complete Integration Test
+========================================
+
+Pre-flight Checks:
+-----------------
+LocalStack: Running
+Prometheus: Running
+Grafana: Running
+
+
+======================================================================
+  MONITORING STACK INTEGRATION TEST - DAY 21
+  Week 3 Complete Observability Validation
+======================================================================
+
+======================================================================
+  TEST 1: CloudWatch Metrics
+======================================================================
+  ✓ Sent metric: CPUUtilization = 85 Percent
+  ✓ Sent metric: MemoryUtilization = 90 Percent
+  ✓ Sent metric: ErrorCountFromLogs = 15 Count
+  ✓ Sent metric: APIResponseTime = 1200 Milliseconds
+
+======================================================================
+  TEST 2: CloudWatch Logs
+======================================================================
+  Log group exists: /aws/application/myapp
+  Log group exists: /aws/api/myapp
+  Log group exists: /aws/errors/myapp
+
+======================================================================
+  TEST 3: CloudWatch Alarms
+======================================================================
+  Total alarms configured: 10
+  Critical alarms: 3
+  🟢 high-memory-utilization: OK
+  ⚪ high-queue-depth: INSUFFICIENT_DATA
+  ⚪ high-db-connections: INSUFFICIENT_DATA
+  🟢 high-cpu-utilization: OK
+  🔴 high-error-count: ALARM
+
+======================================================================
+  TEST 4: SNS Topics
+======================================================================
+  Total SNS topics: 3
+  ✓ critical-alerts
+    └─ Subscriptions: 1
+  ✓ warning-alerts
+    └─ Subscriptions: 0
+  ✓ info-alerts
+    └─ Subscriptions: 0
+
+======================================================================
+  TEST 5: EventBridge Rules
+======================================================================
+  Default bus rules: 6
+  Custom bus rules: 2
+  Total rules: 8
+  ✓ weekly-report: cron(0 9 ? * MON *)
+  ✓ metric-collection: rate(1 minute)
+  ✓ app-health-check: rate(5 minutes)
+
+======================================================================
+  TEST 6: Prometheus
+======================================================================
+  ✓ Prometheus is healthy
+  Total targets: 4
+  ✗ localstack: down
+  ✓ myapp: up
+  ✓ node-exporter: up
+  ✓ prometheus: up
+
+======================================================================
+  TEST 7: Grafana
+======================================================================
+  ✓ Grafana is healthy
+  Datasources configured: 1
+  ✓ Prometheus (prometheus)
+
+======================================================================
+  TEST 8: End-to-End Workflow
+======================================================================
+  Simulating high CPU event...
+  ✓ Sent high CPU metric (95%)
+  ✓ Published custom event to EventBridge
+  ✓ Sent error log entry
+
+  Workflow Summary:
+  1. Metric → CloudWatch → Alarm (should trigger)
+  2. Event → EventBridge → SNS (notification sent)
+  3. Log → CloudWatch Logs → Metric Filter
+  4. All data → Prometheus → Grafana (visualization)
+
+======================================================================
+  TEST RESULTS SUMMARY
+======================================================================
+  ✓ CloudWatch Metrics: PASS
+  ✓ CloudWatch Logs: PASS
+  ✓ CloudWatch Alarms: PASS
+  ✓ SNS Topics: PASS
+  ✓ EventBridge Rules: PASS
+  ✓ Prometheus: PASS
+  ✓ Grafana: PASS
+  ✓ End-to-End Workflow: PASS
+
+  Total: 8/8 tests passed
+
+ ALL TESTS PASSED - MONITORING STACK FULLY OPERATIONAL!
+
+========================================
+Additional Verifications
+========================================
+
+CloudWatch Dashboard:
+operations-dashboard
+  Dashboard exists
+
+SNS Subscriptions:
+  Total subscriptions: 1
+
+EventBridge Event Buses:
+default	myapp-event-bus
+
+========================================
+Integration test complete!
+========================================
