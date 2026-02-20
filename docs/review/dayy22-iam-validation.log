@@ -1,0 +1,80 @@
+
+======================================================================
+  IAM POLICY VALIDATION - DAY 22
+======================================================================
+
+Found 4 myapp roles
+
+Analyzing role: myapp-worker-service-role
+----------------------------------------------------------------------
+  ✓ Role exists
+  ✓ Attached policies: 4
+
+  Policy: myapp-cloudwatch-logs-write
+    ✓ No major issues found
+    Allow: logs:CreateLogGroup, logs:CreateLogStream, logs:PutLogEvents (+1 more)
+
+  Policy: myapp-cloudwatch-metrics-write
+    ✓ No major issues found
+    Allow: cloudwatch:PutMetricData
+
+  Policy: myapp-eventbridge-put-events
+    ✓ No major issues found
+    Allow: events:PutEvents
+
+  Policy: myapp-s3-write
+    ✓ No major issues found
+    Allow: s3:PutObject, s3:PutObjectAcl, s3:DeleteObject
+
+Analyzing role: myapp-admin-role
+----------------------------------------------------------------------
+  ✓ Role exists
+  ✓ Attached policies: 1
+
+  Policy: myapp-admin-policy
+    ⚠️  Found Resource: * without conditions (too permissive)
+    ⚠️  Found Resource: * without conditions (too permissive)
+    Allow: cloudwatch:*, logs:*, sns:* (+2 more)
+    Deny: iam:DeleteRole, iam:DeletePolicy, iam:DeleteUser
+
+Analyzing role: myapp-monitoring-service-role
+----------------------------------------------------------------------
+  ✓ Role exists
+  ✓ Attached policies: 2
+
+  Policy: myapp-cloudwatch-logs-write
+    ✓ No major issues found
+    Allow: logs:CreateLogGroup, logs:CreateLogStream, logs:PutLogEvents (+1 more)
+
+  Policy: myapp-sns-publish
+    ✓ No major issues found
+    Allow: sns:Publish
+
+Analyzing role: myapp-application-service-role
+----------------------------------------------------------------------
+  ✓ Role exists
+  ✓ Attached policies: 3
+
+  Policy: myapp-cloudwatch-logs-write
+    ✓ No major issues found
+    Allow: logs:CreateLogGroup, logs:CreateLogStream, logs:PutLogEvents (+1 more)
+
+  Policy: myapp-cloudwatch-metrics-write
+    ✓ No major issues found
+    Allow: cloudwatch:PutMetricData
+
+  Policy: myapp-s3-read-only
+    ✓ No major issues found
+    Allow: s3:GetObject, s3:ListBucket
+
+======================================================================
+  VALIDATION SUMMARY
+======================================================================
+  ✓ myapp-worker-service-role: VALID
+  ✓ myapp-admin-role: VALID
+  ✓ myapp-monitoring-service-role: VALID
+  ✓ myapp-application-service-role: VALID
+
+  Total: 4/4 roles validated
+
+  ALL ROLES FOLLOW LEAST-PRIVILEGE PRINCIPLES!

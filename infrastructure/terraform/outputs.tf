@@ -38,3 +38,14 @@ output "event_bus_name" {
   description = "Custom event bus name"
   value       = module.eventbridge.event_bus_name
 }
+
+# IAM Outputs
+output "application_role_arn" {
+  description = "Application service role ARN"
+  value       = module.iam.application_service_role_arn
+}
+
+output "worker_role_arn" {
+  description = "Worker service role ARN"
+  value       = module.iam.worker_service_role_arn
+}

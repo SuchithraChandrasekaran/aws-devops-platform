@@ -1,23 +1,17 @@
 variable "environment" {
-  description = "Environment name (dev, staging, prod)"
+  description = "Environment name"
   type        = string
   default     = "dev"
 }
 
-variable "region" {
-  description = "AWS region"
-  type        = string
-  default     = "us-east-1"
-}
-
 variable "project_name" {
-  description = "Project name"
+  description = "Project name for resource naming"
   type        = string
-  default     = "aws-devops-platform"
+  default     = "myapp"
 }
 
 variable "alert_email" {
   description = "Email address for alert notifications"
   type        = string
-  default     = "suchithrac@gmail.com"
+  default     = "devops@example.com"
 }

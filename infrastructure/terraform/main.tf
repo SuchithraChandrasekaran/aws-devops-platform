@@ -24,3 +24,11 @@ module "eventbridge" {
   critical_topic_arn = module.sns.critical_topic_arn
   warning_topic_arn  = module.sns.warning_topic_arn
 }
+
+# IAM Module for roles and policies
+module "iam" {
+  source = "./modules/iam"
+
+  environment    = var.environment
+  project_name   = var.project_name
+}
