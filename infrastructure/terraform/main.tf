@@ -32,3 +32,20 @@ module "iam" {
   environment    = var.environment
   project_name   = var.project_name
 }
+
+# KMS Module for encryption keys
+module "kms" {
+  source = "./modules/kms"
+
+  environment  = var.environment
+  project_name = var.project_name
+}
+
+# Secrets Manager Module
+module "secrets" {
+  source = "./modules/secrets"
+
+  environment  = var.environment
+  project_name = var.project_name
+  kms_key_id   = module.kms.kms_key_id
+}

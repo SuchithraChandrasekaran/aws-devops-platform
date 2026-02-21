@@ -1,0 +1,116 @@
+{
+    "SecretList": [
+        {
+            "ARN": "arn:aws:secretsmanager:us-east-1:000000000000:secret:myapp/app/config-TgkqIN",
+            "Name": "myapp/app/config",
+            "Description": "Application configuration secrets",
+            "KmsKeyId": "ec97de3f-cecb-4c18-9449-5eba8a6523ab",
+            "LastChangedDate": "2026-02-21T00:24:50.900000+05:30",
+            "LastAccessedDate": "2026-02-20T05:30:00+05:30",
+            "Tags": [
+                {
+                    "Key": "Type",
+                    "Value": "config"
+                },
+                {
+                    "Key": "Day",
+                    "Value": "23"
+                },
+                {
+                    "Key": "Environment",
+                    "Value": "dev"
+                }
+            ],
+            "SecretVersionsToStages": {
+                "terraform-20260220185450893900000005": [
+                    "AWSCURRENT"
+                ]
+            },
+            "CreatedDate": "2026-02-21T00:24:50.731997+05:30"
+        },
+        {
+            "ARN": "arn:aws:secretsmanager:us-east-1:000000000000:secret:myapp/certificates/ssl-hblwUj",
+            "Name": "myapp/certificates/ssl",
+            "Description": "SSL/TLS certificates",
+            "KmsKeyId": "ec97de3f-cecb-4c18-9449-5eba8a6523ab",
+            "LastChangedDate": "2026-02-21T00:24:50.937000+05:30",
+            "LastAccessedDate": "2026-02-20T05:30:00+05:30",
+            "Tags": [
+                {
+                    "Key": "Environment",
+                    "Value": "dev"
+                },
+                {
+                    "Key": "Type",
+                    "Value": "certificates"
+                },
+                {
+                    "Key": "Day",
+                    "Value": "23"
+                }
+            ],
+            "SecretVersionsToStages": {
+                "terraform-20260220185450929500000007": [
+                    "AWSCURRENT"
+                ]
+            },
+            "CreatedDate": "2026-02-21T00:24:50.735352+05:30"
+        },
+        {
+            "ARN": "arn:aws:secretsmanager:us-east-1:000000000000:secret:myapp/api/keys-Oupcvb",
+            "Name": "myapp/api/keys",
+            "Description": "Third-party API keys",
+            "KmsKeyId": "ec97de3f-cecb-4c18-9449-5eba8a6523ab",
+            "LastChangedDate": "2026-02-21T00:24:50.931000+05:30",
+            "LastAccessedDate": "2026-02-20T05:30:00+05:30",
+            "Tags": [
+                {
+                    "Key": "Environment",
+                    "Value": "dev"
+                },
+                {
+                    "Key": "Day",
+                    "Value": "23"
+                },
+                {
+                    "Key": "Type",
+                    "Value": "api"
+                }
+            ],
+            "SecretVersionsToStages": {
+                "terraform-20260220185450919600000006": [
+                    "AWSCURRENT"
+                ]
+            },
+            "CreatedDate": "2026-02-21T00:24:50.739082+05:30"
+        },
+        {
+            "ARN": "arn:aws:secretsmanager:us-east-1:000000000000:secret:myapp/database/credentials-Vimxqs",
+            "Name": "myapp/database/credentials",
+            "Description": "Database connection credentials",
+            "KmsKeyId": "ec97de3f-cecb-4c18-9449-5eba8a6523ab",
+            "LastChangedDate": "2026-02-21T00:24:50.950000+05:30",
+            "LastAccessedDate": "2026-02-20T05:30:00+05:30",
+            "Tags": [
+                {
+                    "Key": "Type",
+                    "Value": "database"
+                },
+                {
+                    "Key": "Environment",
+                    "Value": "dev"
+                },
+                {
+                    "Key": "Day",
+                    "Value": "23"
+                }
+            ],
+            "SecretVersionsToStages": {
+                "terraform-20260220185450932100000008": [
+                    "AWSCURRENT"
+                ]
+            },
+            "CreatedDate": "2026-02-21T00:24:50.742000+05:30"
+        }
+    ]
+}

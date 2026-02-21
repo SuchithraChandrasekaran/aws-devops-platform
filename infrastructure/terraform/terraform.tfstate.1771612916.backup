@@ -1,0 +1,2357 @@
+{
+  "version": 4,
+  "terraform_version": "1.14.4",
+  "serial": 237,
+  "lineage": "01adb384-e6d6-ec36-778c-562ef01eb435",
+  "outputs": {
+    "api_log_group": {
+      "value": "/aws/api/myapp",
+      "type": "string"
+    },
+    "application_log_group": {
+      "value": "/aws/application/myapp",
+      "type": "string"
+    },
+    "application_role_arn": {
+      "value": "arn:aws:iam::000000000000:role/myapp-application-service-role",
+      "type": "string"
+    },
+    "critical_topic_arn": {
+      "value": "arn:aws:sns:us-east-1:000000000000:critical-alerts",
+      "type": "string"
+    },
+    "dashboard_name": {
+      "value": "operations-dashboard",
+      "type": "string"
+    },
+    "errors_log_group": {
+      "value": "/aws/errors/myapp",
+      "type": "string"
+    },
+    "event_bus_name": {
+      "value": "myapp-event-bus",
+      "type": "string"
+    },
+    "warning_topic_arn": {
+      "value": "arn:aws:sns:us-east-1:000000000000:warning-alerts",
+      "type": "string"
+    },
+    "worker_role_arn": {
+      "value": "arn:aws:iam::000000000000:role/myapp-worker-service-role",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_composite_alarm",
+      "name": "system_unhealthy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "actions_enabled": true,
+            "actions_suppressor": [],
+            "alarm_actions": [
+              "arn:aws:sns:us-east-1:000000000000:critical-alerts"
+            ],
+            "alarm_description": "Triggers when multiple critical conditions met",
+            "alarm_name": "system-unhealthy",
+            "alarm_rule": "ALARM(high-cpu-utilization) OR ALARM(high-memory-utilization) OR (ALARM(high-error-count) AND ALARM(high-api-latency))",
+            "arn": "arn:aws:cloudwatch:us-east-1:000000000000:alarm:system-unhealthy",
+            "id": "system-unhealthy",
+            "insufficient_data_actions": null,
+            "ok_actions": null,
+            "tags": {},
+            "tags_all": {}
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.sns.aws_sns_topic.critical_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_dashboard",
+      "name": "operations",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "dashboard_arn": "arn:aws:cloudwatch::000000000000:dashboard/operations-dashboard",
+            "dashboard_body": "{\"widgets\":[{\"height\":6,\"properties\":{\"metrics\":[[\"MyApp/Metrics\",\"CPUUtilization\",{\"label\":\"CPU %\",\"stat\":\"Average\"}]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Average\",\"title\":\"CPU Utilization\",\"yAxis\":{\"left\":{\"max\":100,\"min\":0}}},\"type\":\"metric\",\"width\":12,\"x\":0,\"y\":0},{\"height\":6,\"properties\":{\"metrics\":[[\"MyApp/Metrics\",\"MemoryUtilization\",{\"label\":\"Memory %\",\"stat\":\"Average\"}]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Average\",\"title\":\"Memory Utilization\",\"yAxis\":{\"left\":{\"max\":100,\"min\":0}}},\"type\":\"metric\",\"width\":12,\"x\":12,\"y\":0},{\"height\":6,\"properties\":{\"metrics\":[[\"MyApp/Metrics\",\"DiskUtilization\",{\"label\":\"Disk %\",\"stat\":\"Average\"}]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Average\",\"title\":\"Disk Utilization\",\"yAxis\":{\"left\":{\"max\":100,\"min\":0}}},\"type\":\"metric\",\"width\":8,\"x\":0,\"y\":6},{\"height\":6,\"properties\":{\"metrics\":[[\"MyApp/Metrics\",\"NetworkThroughput\",{\"label\":\"Network MB/s\",\"stat\":\"Average\"}]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Average\",\"title\":\"Network Throughput\"},\"type\":\"metric\",\"width\":8,\"x\":8,\"y\":6},{\"height\":6,\"properties\":{\"metrics\":[[\"MyApp/Metrics\",\"RequestCount\",{\"label\":\"Requests\",\"stat\":\"Sum\"}]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Sum\",\"title\":\"Request Count\"},\"type\":\"metric\",\"width\":8,\"x\":16,\"y\":6},{\"height\":6,\"properties\":{\"metrics\":[[\"MyApp/Logs\",\"ErrorCountFromLogs\",{\"label\":\"Errors\",\"stat\":\"Sum\"}]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Sum\",\"title\":\"Error Count\"},\"type\":\"metric\",\"width\":12,\"x\":0,\"y\":12},{\"height\":6,\"properties\":{\"metrics\":[[\"MyApp/Logs\",\"APIResponseTime\",{\"label\":\"Latency (ms)\",\"stat\":\"Average\"}]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Average\",\"title\":\"API Response Time\"},\"type\":\"metric\",\"width\":12,\"x\":12,\"y\":12},{\"height\":6,\"properties\":{\"metrics\":[[\"MyApp/Metrics\",\"DatabaseConnections\",{\"label\":\"DB Connections\",\"stat\":\"Average\"}]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Average\",\"title\":\"Database Connections\"},\"type\":\"metric\",\"width\":8,\"x\":0,\"y\":18},{\"height\":6,\"properties\":{\"metrics\":[[\"MyApp/Metrics\",\"CacheHitRate\",{\"label\":\"Cache Hit %\",\"stat\":\"Average\"}]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Average\",\"title\":\"Cache Hit Rate\",\"yAxis\":{\"left\":{\"max\":100,\"min\":0}}},\"type\":\"metric\",\"width\":8,\"x\":8,\"y\":18},{\"height\":6,\"properties\":{\"metrics\":[[\"MyApp/Metrics\",\"QueueDepth\",{\"label\":\"Queue Depth\",\"stat\":\"Maximum\"}]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Maximum\",\"title\":\"Queue Depth\"},\"type\":\"metric\",\"width\":8,\"x\":16,\"y\":18},{\"height\":3,\"properties\":{\"metrics\":[[\"MyApp/Metrics\",\"CPUUtilization\",{\"stat\":\"Average\"}]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Average\",\"title\":\"Current CPU\",\"view\":\"singleValue\"},\"type\":\"metric\",\"width\":6,\"x\":0,\"y\":24},{\"height\":3,\"properties\":{\"metrics\":[[\"MyApp/Metrics\",\"MemoryUtilization\",{\"stat\":\"Average\"}]],\"period\":300,\"region\":\"us-east-1\",\"stat\":\"Average\",\"title\":\"Current Memory\",\"view\":\"singleValue\"},\"type\":\"metric\",\"width\":6,\"x\":6,\"y\":24},{\"height\":3,\"properties\":{\"metrics\":[[\"MyApp/Logs\",\"ErrorCountFromLogs\",{\"stat\":\"Sum\"}]],\"period\":3600,\"region\":\"us-east-1\",\"stat\":\"Sum\",\"title\":\"Errors (Last Hour)\",\"view\":\"singleValue\"},\"type\":\"metric\",\"width\":6,\"x\":12,\"y\":24},{\"height\":3,\"properties\":{\"metrics\":[[\"MyApp/Metrics\",\"RequestCount\",{\"stat\":\"Sum\"}]],\"period\":3600,\"region\":\"us-east-1\",\"stat\":\"Sum\",\"title\":\"Requests (Last Hour)\",\"view\":\"singleValue\"},\"type\":\"metric\",\"width\":6,\"x\":18,\"y\":24},{\"height\":6,\"properties\":{\"alarms\":[\"arn:aws:cloudwatch:us-east-1:000000000000:alarm:high-cpu-utilization\",\"arn:aws:cloudwatch:us-east-1:000000000000:alarm:high-memory-utilization\",\"arn:aws:cloudwatch:us-east-1:000000000000:alarm:high-error-count\",\"arn:aws:cloudwatch:us-east-1:000000000000:alarm:high-api-latency\"],\"title\":\"Alarm Status\"},\"type\":\"alarm\",\"width\":12,\"x\":0,\"y\":27},{\"height\":6,\"properties\":{\"query\":\"SOURCE '/aws/application/myapp' | fields @timestamp, @message | filter @message like /ERROR/ | sort @timestamp desc | limit 20\",\"region\":\"us-east-1\",\"title\":\"Recent Errors\"},\"type\":\"log\",\"width\":12,\"x\":12,\"y\":27}]}",
+            "dashboard_name": "operations-dashboard",
+            "id": "operations-dashboard"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "api",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/api/myapp",
+            "id": "/aws/api/myapp",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/api/myapp",
+            "name_prefix": "",
+            "retention_in_days": 7,
+            "skip_destroy": false,
+            "tags": {
+              "Day": "16",
+              "Environment": "dev",
+              "Service": "api"
+            },
+            "tags_all": {
+              "Day": "16",
+              "Environment": "dev",
+              "Service": "api"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "application",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/application/myapp",
+            "id": "/aws/application/myapp",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/application/myapp",
+            "name_prefix": "",
+            "retention_in_days": 7,
+            "skip_destroy": false,
+            "tags": {
+              "Day": "16",
+              "Environment": "dev",
+              "Service": "application"
+            },
+            "tags_all": {
+              "Day": "16",
+              "Environment": "dev",
+              "Service": "application"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "errors",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/errors/myapp",
+            "id": "/aws/errors/myapp",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/errors/myapp",
+            "name_prefix": "",
+            "retention_in_days": 14,
+            "skip_destroy": false,
+            "tags": {
+              "Day": "16",
+              "Environment": "dev",
+              "Service": "errors"
+            },
+            "tags_all": {
+              "Day": "16",
+              "Environment": "dev",
+              "Service": "errors"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_metric_filter",
+      "name": "api_latency",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "APILatency",
+            "log_group_name": "/aws/api/myapp",
+            "metric_transformation": [
+              {
+                "default_value": "",
+                "dimensions": null,
+                "name": "APIResponseTime",
+                "namespace": "MyApp/Logs",
+                "unit": "None",
+                "value": "$latency"
+              }
+            ],
+            "name": "APILatency",
+            "pattern": "[time, request_id, latency]"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.cloudwatch.aws_cloudwatch_log_group.api"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_metric_filter",
+      "name": "error_count",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "ErrorCountFromLogs",
+            "log_group_name": "/aws/errors/myapp",
+            "metric_transformation": [
+              {
+                "default_value": "",
+                "dimensions": null,
+                "name": "ErrorCountFromLogs",
+                "namespace": "MyApp/Logs",
+                "unit": "None",
+                "value": "1"
+              }
+            ],
+            "name": "ErrorCountFromLogs",
+            "pattern": "[ERROR]"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.cloudwatch.aws_cloudwatch_log_group.errors"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_stream",
+      "name": "api_stream",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/api/myapp:log-stream:api-stream",
+            "id": "api-stream",
+            "log_group_name": "/aws/api/myapp",
+            "name": "api-stream"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.cloudwatch.aws_cloudwatch_log_group.api"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_stream",
+      "name": "app_stream",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/application/myapp:log-stream:app-stream",
+            "id": "app-stream",
+            "log_group_name": "/aws/application/myapp",
+            "name": "app-stream"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.cloudwatch.aws_cloudwatch_log_group.application"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_stream",
+      "name": "error_stream",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:000000000000:log-group:/aws/errors/myapp:log-stream:error-stream",
+            "id": "error-stream",
+            "log_group_name": "/aws/errors/myapp",
+            "name": "error-stream"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.cloudwatch.aws_cloudwatch_log_group.errors"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_metric_alarm",
+      "name": "db_connections",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "actions_enabled": true,
+            "alarm_actions": [
+              "arn:aws:sns:us-east-1:000000000000:critical-alerts"
+            ],
+            "alarm_description": "Triggers when DB connections exceed 80",
+            "alarm_name": "high-db-connections",
+            "arn": "arn:aws:cloudwatch:us-east-1:000000000000:alarm:high-db-connections",
+            "comparison_operator": "GreaterThanThreshold",
+            "datapoints_to_alarm": 0,
+            "dimensions": null,
+            "evaluate_low_sample_count_percentiles": "",
+            "evaluation_periods": 2,
+            "extended_statistic": "",
+            "id": "high-db-connections",
+            "insufficient_data_actions": null,
+            "metric_name": "DatabaseConnections",
+            "metric_query": [],
+            "namespace": "MyApp/Metrics",
+            "ok_actions": null,
+            "period": 300,
+            "statistic": "Average",
+            "tags": {},
+            "tags_all": {},
+            "threshold": 80,
+            "threshold_metric_id": "",
+            "treat_missing_data": "missing",
+            "unit": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.sns.aws_sns_topic.critical_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_metric_alarm",
+      "name": "high_cpu",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "actions_enabled": true,
+            "alarm_actions": [
+              "arn:aws:sns:us-east-1:000000000000:critical-alerts"
+            ],
+            "alarm_description": "Triggers when CPU exceeds 80%",
+            "alarm_name": "high-cpu-utilization",
+            "arn": "arn:aws:cloudwatch:us-east-1:000000000000:alarm:high-cpu-utilization",
+            "comparison_operator": "GreaterThanThreshold",
+            "datapoints_to_alarm": 0,
+            "dimensions": null,
+            "evaluate_low_sample_count_percentiles": "",
+            "evaluation_periods": 2,
+            "extended_statistic": "",
+            "id": "high-cpu-utilization",
+            "insufficient_data_actions": null,
+            "metric_name": "CPUUtilization",
+            "metric_query": [],
+            "namespace": "MyApp/Metrics",
+            "ok_actions": null,
+            "period": 300,
+            "statistic": "Average",
+            "tags": {},
+            "tags_all": {},
+            "threshold": 80,
+            "threshold_metric_id": "",
+            "treat_missing_data": "missing",
+            "unit": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.sns.aws_sns_topic.critical_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_metric_alarm",
+      "name": "high_disk",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "actions_enabled": true,
+            "alarm_actions": [
+              "arn:aws:sns:us-east-1:000000000000:critical-alerts"
+            ],
+            "alarm_description": "Triggers when disk usage exceeds 90%",
+            "alarm_name": "high-disk-usage",
+            "arn": "arn:aws:cloudwatch:us-east-1:000000000000:alarm:high-disk-usage",
+            "comparison_operator": "GreaterThanThreshold",
+            "datapoints_to_alarm": 0,
+            "dimensions": null,
+            "evaluate_low_sample_count_percentiles": "",
+            "evaluation_periods": 1,
+            "extended_statistic": "",
+            "id": "high-disk-usage",
+            "insufficient_data_actions": null,
+            "metric_name": "DiskUtilization",
+            "metric_query": [],
+            "namespace": "MyApp/Metrics",
+            "ok_actions": null,
+            "period": 300,
+            "statistic": "Average",
+            "tags": {},
+            "tags_all": {},
+            "threshold": 90,
+            "threshold_metric_id": "",
+            "treat_missing_data": "missing",
+            "unit": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.sns.aws_sns_topic.critical_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_metric_alarm",
+      "name": "high_errors",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "actions_enabled": true,
+            "alarm_actions": [
+              "arn:aws:sns:us-east-1:000000000000:critical-alerts"
+            ],
+            "alarm_description": "Triggers when errors exceed 10 per 5 min",
+            "alarm_name": "high-error-count",
+            "arn": "arn:aws:cloudwatch:us-east-1:000000000000:alarm:high-error-count",
+            "comparison_operator": "GreaterThanThreshold",
+            "datapoints_to_alarm": 0,
+            "dimensions": null,
+            "evaluate_low_sample_count_percentiles": "",
+            "evaluation_periods": 1,
+            "extended_statistic": "",
+            "id": "high-error-count",
+            "insufficient_data_actions": null,
+            "metric_name": "ErrorCountFromLogs",
+            "metric_query": [],
+            "namespace": "MyApp/Logs",
+            "ok_actions": null,
+            "period": 300,
+            "statistic": "Sum",
+            "tags": {},
+            "tags_all": {},
+            "threshold": 10,
+            "threshold_metric_id": "",
+            "treat_missing_data": "missing",
+            "unit": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.sns.aws_sns_topic.critical_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_metric_alarm",
+      "name": "high_latency",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "actions_enabled": true,
+            "alarm_actions": [
+              "arn:aws:sns:us-east-1:000000000000:warning-alerts"
+            ],
+            "alarm_description": "Triggers when API latency exceeds 1s",
+            "alarm_name": "high-api-latency",
+            "arn": "arn:aws:cloudwatch:us-east-1:000000000000:alarm:high-api-latency",
+            "comparison_operator": "GreaterThanThreshold",
+            "datapoints_to_alarm": 0,
+            "dimensions": null,
+            "evaluate_low_sample_count_percentiles": "",
+            "evaluation_periods": 2,
+            "extended_statistic": "",
+            "id": "high-api-latency",
+            "insufficient_data_actions": null,
+            "metric_name": "APIResponseTime",
+            "metric_query": [],
+            "namespace": "MyApp/Logs",
+            "ok_actions": null,
+            "period": 300,
+            "statistic": "Average",
+            "tags": {},
+            "tags_all": {},
+            "threshold": 1000,
+            "threshold_metric_id": "",
+            "treat_missing_data": "missing",
+            "unit": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.sns.aws_sns_topic.warning_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_metric_alarm",
+      "name": "high_memory",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "actions_enabled": true,
+            "alarm_actions": [
+              "arn:aws:sns:us-east-1:000000000000:critical-alerts"
+            ],
+            "alarm_description": "Triggers when memory exceeds 85%",
+            "alarm_name": "high-memory-utilization",
+            "arn": "arn:aws:cloudwatch:us-east-1:000000000000:alarm:high-memory-utilization",
+            "comparison_operator": "GreaterThanThreshold",
+            "datapoints_to_alarm": 0,
+            "dimensions": null,
+            "evaluate_low_sample_count_percentiles": "",
+            "evaluation_periods": 2,
+            "extended_statistic": "",
+            "id": "high-memory-utilization",
+            "insufficient_data_actions": null,
+            "metric_name": "MemoryUtilization",
+            "metric_query": [],
+            "namespace": "MyApp/Metrics",
+            "ok_actions": null,
+            "period": 300,
+            "statistic": "Average",
+            "tags": {},
+            "tags_all": {},
+            "threshold": 85,
+            "threshold_metric_id": "",
+            "treat_missing_data": "missing",
+            "unit": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.sns.aws_sns_topic.critical_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_metric_alarm",
+      "name": "high_network",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "actions_enabled": true,
+            "alarm_actions": [
+              "arn:aws:sns:us-east-1:000000000000:warning-alerts"
+            ],
+            "alarm_description": "Triggers when network exceeds 1MB/s",
+            "alarm_name": "high-network-throughput",
+            "arn": "arn:aws:cloudwatch:us-east-1:000000000000:alarm:high-network-throughput",
+            "comparison_operator": "GreaterThanThreshold",
+            "datapoints_to_alarm": 0,
+            "dimensions": null,
+            "evaluate_low_sample_count_percentiles": "",
+            "evaluation_periods": 2,
+            "extended_statistic": "",
+            "id": "high-network-throughput",
+            "insufficient_data_actions": null,
+            "metric_name": "NetworkThroughput",
+            "metric_query": [],
+            "namespace": "MyApp/Metrics",
+            "ok_actions": null,
+            "period": 300,
+            "statistic": "Average",
+            "tags": {},
+            "tags_all": {},
+            "threshold": 1000000,
+            "threshold_metric_id": "",
+            "treat_missing_data": "missing",
+            "unit": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.sns.aws_sns_topic.warning_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_metric_alarm",
+      "name": "high_queue_depth",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "actions_enabled": true,
+            "alarm_actions": [
+              "arn:aws:sns:us-east-1:000000000000:critical-alerts"
+            ],
+            "alarm_description": "Triggers when queue depth exceeds 100",
+            "alarm_name": "high-queue-depth",
+            "arn": "arn:aws:cloudwatch:us-east-1:000000000000:alarm:high-queue-depth",
+            "comparison_operator": "GreaterThanThreshold",
+            "datapoints_to_alarm": 0,
+            "dimensions": null,
+            "evaluate_low_sample_count_percentiles": "",
+            "evaluation_periods": 1,
+            "extended_statistic": "",
+            "id": "high-queue-depth",
+            "insufficient_data_actions": null,
+            "metric_name": "QueueDepth",
+            "metric_query": [],
+            "namespace": "MyApp/Metrics",
+            "ok_actions": null,
+            "period": 300,
+            "statistic": "Maximum",
+            "tags": {},
+            "tags_all": {},
+            "threshold": 100,
+            "threshold_metric_id": "",
+            "treat_missing_data": "missing",
+            "unit": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.sns.aws_sns_topic.critical_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_metric_alarm",
+      "name": "low_cache_hit",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "actions_enabled": true,
+            "alarm_actions": [
+              "arn:aws:sns:us-east-1:000000000000:warning-alerts"
+            ],
+            "alarm_description": "Triggers when cache hit rate below 70%",
+            "alarm_name": "low-cache-hit-rate",
+            "arn": "arn:aws:cloudwatch:us-east-1:000000000000:alarm:low-cache-hit-rate",
+            "comparison_operator": "LessThanThreshold",
+            "datapoints_to_alarm": 0,
+            "dimensions": null,
+            "evaluate_low_sample_count_percentiles": "",
+            "evaluation_periods": 2,
+            "extended_statistic": "",
+            "id": "low-cache-hit-rate",
+            "insufficient_data_actions": null,
+            "metric_name": "CacheHitRate",
+            "metric_query": [],
+            "namespace": "MyApp/Metrics",
+            "ok_actions": null,
+            "period": 300,
+            "statistic": "Average",
+            "tags": {},
+            "tags_all": {},
+            "threshold": 70,
+            "threshold_metric_id": "",
+            "treat_missing_data": "missing",
+            "unit": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.sns.aws_sns_topic.warning_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.cloudwatch",
+      "mode": "managed",
+      "type": "aws_cloudwatch_metric_alarm",
+      "name": "low_requests",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "actions_enabled": true,
+            "alarm_actions": [
+              "arn:aws:sns:us-east-1:000000000000:warning-alerts"
+            ],
+            "alarm_description": "Triggers when requests drop below 10 per 5 min",
+            "alarm_name": "low-request-count",
+            "arn": "arn:aws:cloudwatch:us-east-1:000000000000:alarm:low-request-count",
+            "comparison_operator": "LessThanThreshold",
+            "datapoints_to_alarm": 0,
+            "dimensions": null,
+            "evaluate_low_sample_count_percentiles": "",
+            "evaluation_periods": 2,
+            "extended_statistic": "",
+            "id": "low-request-count",
+            "insufficient_data_actions": null,
+            "metric_name": "RequestCount",
+            "metric_query": [],
+            "namespace": "MyApp/Metrics",
+            "ok_actions": null,
+            "period": 300,
+            "statistic": "Sum",
+            "tags": {},
+            "tags_all": {},
+            "threshold": 10,
+            "threshold_metric_id": "",
+            "treat_missing_data": "missing",
+            "unit": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.sns.aws_sns_topic.warning_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_bus",
+      "name": "app_events",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:events:us-east-1:000000000000:event-bus/myapp-event-bus",
+            "dead_letter_config": [],
+            "description": "",
+            "event_source_name": null,
+            "id": "myapp-event-bus",
+            "kms_key_identifier": "",
+            "name": "myapp-event-bus",
+            "tags": {
+              "Day": "20",
+              "Environment": "dev"
+            },
+            "tags_all": {
+              "Day": "20",
+              "Environment": "dev"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_rule",
+      "name": "alarm_state_change",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:events:us-east-1:000000000000:rule/alarm-state-change",
+            "description": "Capture CloudWatch alarm state changes",
+            "event_bus_name": "default",
+            "event_pattern": "{\"detail\":{\"state\":{\"value\":[\"ALARM\"]}},\"detail-type\":[\"CloudWatch Alarm State Change\"],\"source\":[\"aws.cloudwatch\"]}",
+            "force_destroy": false,
+            "id": "alarm-state-change",
+            "is_enabled": true,
+            "name": "alarm-state-change",
+            "name_prefix": "",
+            "role_arn": "",
+            "schedule_expression": "",
+            "state": "ENABLED",
+            "tags": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "pattern"
+            },
+            "tags_all": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "pattern"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_rule",
+      "name": "app_error_event",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:events:us-east-1:000000000000:rule/myapp-event-bus/app-error-event",
+            "description": "Capture custom application error events",
+            "event_bus_name": "myapp-event-bus",
+            "event_pattern": "{\"detail\":{\"severity\":[\"CRITICAL\",\"HIGH\"]},\"detail-type\":[\"ApplicationError\"],\"source\":[\"myapp.backend\"]}",
+            "force_destroy": false,
+            "id": "myapp-event-bus/app-error-event",
+            "is_enabled": true,
+            "name": "app-error-event",
+            "name_prefix": "",
+            "role_arn": "",
+            "schedule_expression": "",
+            "state": "ENABLED",
+            "tags": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "pattern"
+            },
+            "tags_all": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "pattern"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.eventbridge.aws_cloudwatch_event_bus.app_events"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_rule",
+      "name": "daily_cleanup",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:events:us-east-1:000000000000:rule/daily-cleanup",
+            "description": "Trigger daily cleanup at midnight UTC",
+            "event_bus_name": "default",
+            "event_pattern": null,
+            "force_destroy": false,
+            "id": "daily-cleanup",
+            "is_enabled": true,
+            "name": "daily-cleanup",
+            "name_prefix": "",
+            "role_arn": "",
+            "schedule_expression": "cron(0 0 * * ? *)",
+            "state": "ENABLED",
+            "tags": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "scheduled"
+            },
+            "tags_all": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "scheduled"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_rule",
+      "name": "deployment_event",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:events:us-east-1:000000000000:rule/myapp-event-bus/deployment-event",
+            "description": "Capture deployment events",
+            "event_bus_name": "myapp-event-bus",
+            "event_pattern": "{\"detail-type\":[\"DeploymentCompleted\",\"DeploymentFailed\"],\"source\":[\"myapp.cicd\"]}",
+            "force_destroy": false,
+            "id": "myapp-event-bus/deployment-event",
+            "is_enabled": true,
+            "name": "deployment-event",
+            "name_prefix": "",
+            "role_arn": "",
+            "schedule_expression": "",
+            "state": "ENABLED",
+            "tags": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "pattern"
+            },
+            "tags_all": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "pattern"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.eventbridge.aws_cloudwatch_event_bus.app_events"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_rule",
+      "name": "ec2_state_change",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:events:us-east-1:000000000000:rule/ec2-state-change",
+            "description": "Capture EC2 instance state changes",
+            "event_bus_name": "default",
+            "event_pattern": "{\"detail\":{\"state\":[\"stopped\",\"terminated\"]},\"detail-type\":[\"EC2 Instance State-change Notification\"],\"source\":[\"aws.ec2\"]}",
+            "force_destroy": false,
+            "id": "ec2-state-change",
+            "is_enabled": true,
+            "name": "ec2-state-change",
+            "name_prefix": "",
+            "role_arn": "",
+            "schedule_expression": "",
+            "state": "ENABLED",
+            "tags": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "pattern"
+            },
+            "tags_all": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "pattern"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_rule",
+      "name": "health_check",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:events:us-east-1:000000000000:rule/app-health-check",
+            "description": "Trigger health check every 5 minutes",
+            "event_bus_name": "default",
+            "event_pattern": null,
+            "force_destroy": false,
+            "id": "app-health-check",
+            "is_enabled": true,
+            "name": "app-health-check",
+            "name_prefix": "",
+            "role_arn": "",
+            "schedule_expression": "rate(5 minutes)",
+            "state": "ENABLED",
+            "tags": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "scheduled"
+            },
+            "tags_all": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "scheduled"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_rule",
+      "name": "metric_collection",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:events:us-east-1:000000000000:rule/metric-collection",
+            "description": "Collect metrics every minute",
+            "event_bus_name": "default",
+            "event_pattern": null,
+            "force_destroy": false,
+            "id": "metric-collection",
+            "is_enabled": true,
+            "name": "metric-collection",
+            "name_prefix": "",
+            "role_arn": "",
+            "schedule_expression": "rate(1 minute)",
+            "state": "ENABLED",
+            "tags": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "scheduled"
+            },
+            "tags_all": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "scheduled"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_rule",
+      "name": "weekly_report",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:events:us-east-1:000000000000:rule/weekly-report",
+            "description": "Generate weekly report every Monday 9am UTC",
+            "event_bus_name": "default",
+            "event_pattern": null,
+            "force_destroy": false,
+            "id": "weekly-report",
+            "is_enabled": true,
+            "name": "weekly-report",
+            "name_prefix": "",
+            "role_arn": "",
+            "schedule_expression": "cron(0 9 ? * MON *)",
+            "state": "ENABLED",
+            "tags": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "scheduled"
+            },
+            "tags_all": {
+              "Day": "20",
+              "Environment": "dev",
+              "Type": "scheduled"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_target",
+      "name": "alarm_state_target",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "appsync_target": [],
+            "arn": "arn:aws:sns:us-east-1:000000000000:critical-alerts",
+            "batch_target": [],
+            "dead_letter_config": [],
+            "ecs_target": [],
+            "event_bus_name": "default",
+            "force_destroy": false,
+            "http_target": [],
+            "id": "alarm-state-change-terraform-2026021917593954830000000b",
+            "input": "",
+            "input_path": "",
+            "input_transformer": [
+              {
+                "input_paths": {
+                  "alarm_name": "$.detail.alarmName",
+                  "reason": "$.detail.state.reason",
+                  "state": "$.detail.state.value"
+                },
+                "input_template": "\"ALARM TRIGGERED: \u003calarm_name\u003e changed to \u003cstate\u003e. Reason: \u003creason\u003e\""
+              }
+            ],
+            "kinesis_target": [],
+            "redshift_target": [],
+            "retry_policy": [],
+            "role_arn": "",
+            "rule": "alarm-state-change",
+            "run_command_targets": [],
+            "sagemaker_pipeline_target": [],
+            "sqs_target": [],
+            "target_id": "terraform-2026021917593954830000000b"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.eventbridge.aws_cloudwatch_event_rule.alarm_state_change",
+            "module.sns.aws_sns_topic.critical_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_target",
+      "name": "app_error_target",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "appsync_target": [],
+            "arn": "arn:aws:sns:us-east-1:000000000000:critical-alerts",
+            "batch_target": [],
+            "dead_letter_config": [],
+            "ecs_target": [],
+            "event_bus_name": "myapp-event-bus",
+            "force_destroy": false,
+            "http_target": [],
+            "id": "myapp-event-bus-app-error-event-terraform-2026021917593976260000000c",
+            "input": "",
+            "input_path": "",
+            "input_transformer": [
+              {
+                "input_paths": {
+                  "error_type": "$.detail.errorType",
+                  "service": "$.detail.service",
+                  "severity": "$.detail.severity"
+                },
+                "input_template": "\"APP ERROR: \u003cseverity\u003e error in \u003cservice\u003e: \u003cerror_type\u003e\""
+              }
+            ],
+            "kinesis_target": [],
+            "redshift_target": [],
+            "retry_policy": [],
+            "role_arn": "",
+            "rule": "app-error-event",
+            "run_command_targets": [],
+            "sagemaker_pipeline_target": [],
+            "sqs_target": [],
+            "target_id": "terraform-2026021917593976260000000c"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.eventbridge.aws_cloudwatch_event_bus.app_events",
+            "module.eventbridge.aws_cloudwatch_event_rule.app_error_event",
+            "module.sns.aws_sns_topic.critical_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_target",
+      "name": "daily_cleanup_target",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "appsync_target": [],
+            "arn": "arn:aws:sns:us-east-1:000000000000:warning-alerts",
+            "batch_target": [],
+            "dead_letter_config": [],
+            "ecs_target": [],
+            "event_bus_name": "default",
+            "force_destroy": false,
+            "http_target": [],
+            "id": "daily-cleanup-terraform-20260219175940602800000011",
+            "input": "{\"event\":\"DailyCleanup\",\"message\":\"Daily cleanup job triggered\"}",
+            "input_path": "",
+            "input_transformer": [],
+            "kinesis_target": [],
+            "redshift_target": [],
+            "retry_policy": [],
+            "role_arn": "",
+            "rule": "daily-cleanup",
+            "run_command_targets": [],
+            "sagemaker_pipeline_target": [],
+            "sqs_target": [],
+            "target_id": "terraform-20260219175940602800000011"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.eventbridge.aws_cloudwatch_event_rule.daily_cleanup",
+            "module.sns.aws_sns_topic.warning_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_target",
+      "name": "deployment_target",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "appsync_target": [],
+            "arn": "arn:aws:sns:us-east-1:000000000000:warning-alerts",
+            "batch_target": [],
+            "dead_letter_config": [],
+            "ecs_target": [],
+            "event_bus_name": "myapp-event-bus",
+            "force_destroy": false,
+            "http_target": [],
+            "id": "myapp-event-bus-deployment-event-terraform-20260219175940565200000010",
+            "input": "",
+            "input_path": "",
+            "input_transformer": [
+              {
+                "input_paths": {
+                  "environment": "$.detail.environment",
+                  "status": "$.detail-type",
+                  "version": "$.detail.version"
+                },
+                "input_template": "\"DEPLOYMENT: \u003cstatus\u003e for version \u003cversion\u003e in \u003cenvironment\u003e\""
+              }
+            ],
+            "kinesis_target": [],
+            "redshift_target": [],
+            "retry_policy": [],
+            "role_arn": "",
+            "rule": "deployment-event",
+            "run_command_targets": [],
+            "sagemaker_pipeline_target": [],
+            "sqs_target": [],
+            "target_id": "terraform-20260219175940565200000010"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.eventbridge.aws_cloudwatch_event_bus.app_events",
+            "module.eventbridge.aws_cloudwatch_event_rule.deployment_event",
+            "module.sns.aws_sns_topic.warning_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_target",
+      "name": "ec2_state_target",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "appsync_target": [],
+            "arn": "arn:aws:sns:us-east-1:000000000000:warning-alerts",
+            "batch_target": [],
+            "dead_letter_config": [],
+            "ecs_target": [],
+            "event_bus_name": "default",
+            "force_destroy": false,
+            "http_target": [],
+            "id": "ec2-state-change-terraform-2026021917594052820000000e",
+            "input": "",
+            "input_path": "",
+            "input_transformer": [
+              {
+                "input_paths": {
+                  "instance_id": "$.detail.instance-id",
+                  "state": "$.detail.state"
+                },
+                "input_template": "\"EC2 ALERT: Instance \u003cinstance_id\u003e changed to \u003cstate\u003e\""
+              }
+            ],
+            "kinesis_target": [],
+            "redshift_target": [],
+            "retry_policy": [],
+            "role_arn": "",
+            "rule": "ec2-state-change",
+            "run_command_targets": [],
+            "sagemaker_pipeline_target": [],
+            "sqs_target": [],
+            "target_id": "terraform-2026021917594052820000000e"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.eventbridge.aws_cloudwatch_event_rule.ec2_state_change",
+            "module.sns.aws_sns_topic.warning_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_target",
+      "name": "health_check_target",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "appsync_target": [],
+            "arn": "arn:aws:sns:us-east-1:000000000000:critical-alerts",
+            "batch_target": [],
+            "dead_letter_config": [],
+            "ecs_target": [],
+            "event_bus_name": "default",
+            "force_destroy": false,
+            "http_target": [],
+            "id": "app-health-check-terraform-20260219175939465000000009",
+            "input": "{\"event\":\"HealthCheck\",\"message\":\"Scheduled health check triggered\",\"time\":\"auto\"}",
+            "input_path": "",
+            "input_transformer": [],
+            "kinesis_target": [],
+            "redshift_target": [],
+            "retry_policy": [],
+            "role_arn": "",
+            "rule": "app-health-check",
+            "run_command_targets": [],
+            "sagemaker_pipeline_target": [],
+            "sqs_target": [],
+            "target_id": "terraform-20260219175939465000000009"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.eventbridge.aws_cloudwatch_event_rule.health_check",
+            "module.sns.aws_sns_topic.critical_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eventbridge",
+      "mode": "managed",
+      "type": "aws_cloudwatch_event_target",
+      "name": "weekly_report_target",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "appsync_target": [],
+            "arn": "arn:aws:sns:us-east-1:000000000000:warning-alerts",
+            "batch_target": [],
+            "dead_letter_config": [],
+            "ecs_target": [],
+            "event_bus_name": "default",
+            "force_destroy": false,
+            "http_target": [],
+            "id": "weekly-report-terraform-2026021917594052870000000f",
+            "input": "{\"event\":\"WeeklyReport\",\"message\":\"Weekly report generation triggered\"}",
+            "input_path": "",
+            "input_transformer": [],
+            "kinesis_target": [],
+            "redshift_target": [],
+            "retry_policy": [],
+            "role_arn": "",
+            "rule": "weekly-report",
+            "run_command_targets": [],
+            "sagemaker_pipeline_target": [],
+            "sqs_target": [],
+            "target_id": "terraform-2026021917594052870000000f"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.eventbridge.aws_cloudwatch_event_rule.weekly_report",
+            "module.sns.aws_sns_topic.warning_alerts"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "admin_policy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::000000000000:policy/myapp-admin-policy",
+            "attachment_count": 0,
+            "description": "Limited admin permissions",
+            "id": "arn:aws:iam::000000000000:policy/myapp-admin-policy",
+            "name": "myapp-admin-policy",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"cloudwatch:*\",\"logs:*\",\"sns:*\",\"events:*\",\"s3:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"iam:DeleteRole\",\"iam:DeletePolicy\",\"iam:DeleteUser\"],\"Effect\":\"Deny\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "ARYEDIIXLB111UKWT06PY",
+            "tags": {
+              "Day": "22",
+              "Environment": "dev"
+            },
+            "tags_all": {
+              "Day": "22",
+              "Environment": "dev"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "cloudwatch_logs_write",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::000000000000:policy/myapp-cloudwatch-logs-write",
+            "attachment_count": 0,
+            "description": "Allow writing to CloudWatch Logs",
+            "id": "arn:aws:iam::000000000000:policy/myapp-cloudwatch-logs-write",
+            "name": "myapp-cloudwatch-logs-write",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\",\"logs:DescribeLogStreams\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:logs:*:*:log-group:/aws/myapp/*\",\"arn:aws:logs:*:*:log-group:/aws/myapp/*:*\"]}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "AH4EI2GLW9F0LE6AEIEU6",
+            "tags": {
+              "Day": "22",
+              "Environment": "dev",
+              "Purpose": "CloudWatch Logs"
+            },
+            "tags_all": {
+              "Day": "22",
+              "Environment": "dev",
+              "Purpose": "CloudWatch Logs"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "cloudwatch_metrics_write",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::000000000000:policy/myapp-cloudwatch-metrics-write",
+            "attachment_count": 0,
+            "description": "Allow publishing CloudWatch metrics",
+            "id": "arn:aws:iam::000000000000:policy/myapp-cloudwatch-metrics-write",
+            "name": "myapp-cloudwatch-metrics-write",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"cloudwatch:PutMetricData\"],\"Condition\":{\"StringEquals\":{\"cloudwatch:namespace\":[\"MyApp/Metrics\",\"MyApp/Logs\"]}},\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "AAB5AAIPP6NF0EB7JKW2Q",
+            "tags": {
+              "Day": "22",
+              "Environment": "dev",
+              "Purpose": "CloudWatch Metrics"
+            },
+            "tags_all": {
+              "Day": "22",
+              "Environment": "dev",
+              "Purpose": "CloudWatch Metrics"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "eventbridge_put_events",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::000000000000:policy/myapp-eventbridge-put-events",
+            "attachment_count": 0,
+            "description": "Allow publishing events to EventBridge",
+            "id": "arn:aws:iam::000000000000:policy/myapp-eventbridge-put-events",
+            "name": "myapp-eventbridge-put-events",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"events:PutEvents\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:events:*:*:event-bus/myapp-*\",\"arn:aws:events:*:*:event-bus/default\"]}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "AWVYTTK2SW6EBX3TCAZL4",
+            "tags": {
+              "Day": "22",
+              "Environment": "dev",
+              "Purpose": "EventBridge"
+            },
+            "tags_all": {
+              "Day": "22",
+              "Environment": "dev",
+              "Purpose": "EventBridge"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "s3_read_only",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::000000000000:policy/myapp-s3-read-only",
+            "attachment_count": 0,
+            "description": "Allow read-only access to specific S3 buckets",
+            "id": "arn:aws:iam::000000000000:policy/myapp-s3-read-only",
+            "name": "myapp-s3-read-only",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"s3:GetObject\",\"s3:ListBucket\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::myapp-*\",\"arn:aws:s3:::myapp-*/*\"]}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "AIEMA7EMPLVFORJXOMP6Q",
+            "tags": {
+              "Day": "22",
+              "Environment": "dev",
+              "Purpose": "S3 Read"
+            },
+            "tags_all": {
+              "Day": "22",
+              "Environment": "dev",
+              "Purpose": "S3 Read"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "s3_write",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::000000000000:policy/myapp-s3-write",
+            "attachment_count": 0,
+            "description": "Allow write access to specific S3 buckets",
+            "id": "arn:aws:iam::000000000000:policy/myapp-s3-write",
+            "name": "myapp-s3-write",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"s3:PutObject\",\"s3:PutObjectAcl\",\"s3:DeleteObject\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::myapp-*/*\"]}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "A1WYEM6KET9530PNQJUYW",
+            "tags": {
+              "Day": "22",
+              "Environment": "dev",
+              "Purpose": "S3 Write"
+            },
+            "tags_all": {
+              "Day": "22",
+              "Environment": "dev",
+              "Purpose": "S3 Write"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "sns_publish",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::000000000000:policy/myapp-sns-publish",
+            "attachment_count": 0,
+            "description": "Allow publishing to SNS topics",
+            "id": "arn:aws:iam::000000000000:policy/myapp-sns-publish",
+            "name": "myapp-sns-publish",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"sns:Publish\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:sns:*:*:myapp-*\"]}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "A263L3BL2COEB13K6EMT8",
+            "tags": {
+              "Day": "22",
+              "Environment": "dev",
+              "Purpose": "SNS Publish"
+            },
+            "tags_all": {
+              "Day": "22",
+              "Environment": "dev",
+              "Purpose": "SNS Publish"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "admin",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::000000000000:role/myapp-admin-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Condition\":{\"StringEquals\":{\"sts:ExternalId\":\"admin-access-dev\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::000000000000:root\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-02-19T17:59:39Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "myapp-admin-role",
+            "inline_policy": [],
+            "managed_policy_arns": [],
+            "max_session_duration": 3600,
+            "name": "myapp-admin-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Day": "22",
+              "Environment": "dev",
+              "Service": "admin"
+            },
+            "tags_all": {
+              "Day": "22",
+              "Environment": "dev",
+              "Service": "admin"
+            },
+            "unique_id": "AROAQAAAAAAAK3M5AJPXV"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "application_service",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::000000000000:role/myapp-application-service-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-02-19T17:59:37Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "myapp-application-service-role",
+            "inline_policy": [],
+            "managed_policy_arns": [],
+            "max_session_duration": 3600,
+            "name": "myapp-application-service-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Day": "22",
+              "Environment": "dev",
+              "Service": "application"
+            },
+            "tags_all": {
+              "Day": "22",
+              "Environment": "dev",
+              "Service": "application"
+            },
+            "unique_id": "AROAQAAAAAAAL4BUJMSBZ"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "monitoring_service",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::000000000000:role/myapp-monitoring-service-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"events.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-02-19T17:59:38Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "myapp-monitoring-service-role",
+            "inline_policy": [],
+            "managed_policy_arns": [],
+            "max_session_duration": 3600,
+            "name": "myapp-monitoring-service-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Day": "22",
+              "Environment": "dev",
+              "Service": "monitoring"
+            },
+            "tags_all": {
+              "Day": "22",
+              "Environment": "dev",
+              "Service": "monitoring"
+            },
+            "unique_id": "AROAQAAAAAAAKSDI34EJJ"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "worker_service",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::000000000000:role/myapp-worker-service-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-02-19T17:59:37Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "myapp-worker-service-role",
+            "inline_policy": [],
+            "managed_policy_arns": [],
+            "max_session_duration": 3600,
+            "name": "myapp-worker-service-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Day": "22",
+              "Environment": "dev",
+              "Service": "worker"
+            },
+            "tags_all": {
+              "Day": "22",
+              "Environment": "dev",
+              "Service": "worker"
+            },
+            "unique_id": "AROAQAAAAAAAFDHZ5KWNB"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "admin_attach",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "myapp-admin-role-2026021917594041220000000d",
+            "policy_arn": "arn:aws:iam::000000000000:policy/myapp-admin-policy",
+            "role": "myapp-admin-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.iam.aws_iam_policy.admin_policy",
+            "module.iam.aws_iam_role.admin"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "app_cloudwatch_logs",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "myapp-application-service-role-20260219175938960200000002",
+            "policy_arn": "arn:aws:iam::000000000000:policy/myapp-cloudwatch-logs-write",
+            "role": "myapp-application-service-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.iam.aws_iam_policy.cloudwatch_logs_write",
+            "module.iam.aws_iam_role.application_service"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "app_cloudwatch_metrics",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "myapp-application-service-role-20260219175938996300000003",
+            "policy_arn": "arn:aws:iam::000000000000:policy/myapp-cloudwatch-metrics-write",
+            "role": "myapp-application-service-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.iam.aws_iam_policy.cloudwatch_metrics_write",
+            "module.iam.aws_iam_role.application_service"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "app_s3_read",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "myapp-application-service-role-20260219175939222100000005",
+            "policy_arn": "arn:aws:iam::000000000000:policy/myapp-s3-read-only",
+            "role": "myapp-application-service-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.iam.aws_iam_policy.s3_read_only",
+            "module.iam.aws_iam_role.application_service"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "monitoring_cloudwatch_logs",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "myapp-monitoring-service-role-20260219175939423800000008",
+            "policy_arn": "arn:aws:iam::000000000000:policy/myapp-cloudwatch-logs-write",
+            "role": "myapp-monitoring-service-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.iam.aws_iam_policy.cloudwatch_logs_write",
+            "module.iam.aws_iam_role.monitoring_service"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "monitoring_sns",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "myapp-monitoring-service-role-2026021917593950050000000a",
+            "policy_arn": "arn:aws:iam::000000000000:policy/myapp-sns-publish",
+            "role": "myapp-monitoring-service-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.iam.aws_iam_policy.sns_publish",
+            "module.iam.aws_iam_role.monitoring_service"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "worker_cloudwatch_logs",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "myapp-worker-service-role-20260219175938879500000001",
+            "policy_arn": "arn:aws:iam::000000000000:policy/myapp-cloudwatch-logs-write",
+            "role": "myapp-worker-service-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.iam.aws_iam_policy.cloudwatch_logs_write",
+            "module.iam.aws_iam_role.worker_service"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "worker_cloudwatch_metrics",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "myapp-worker-service-role-20260219175939078500000004",
+            "policy_arn": "arn:aws:iam::000000000000:policy/myapp-cloudwatch-metrics-write",
+            "role": "myapp-worker-service-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.iam.aws_iam_policy.cloudwatch_metrics_write",
+            "module.iam.aws_iam_role.worker_service"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "worker_eventbridge",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "myapp-worker-service-role-20260219175939387000000007",
+            "policy_arn": "arn:aws:iam::000000000000:policy/myapp-eventbridge-put-events",
+            "role": "myapp-worker-service-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.iam.aws_iam_policy.eventbridge_put_events",
+            "module.iam.aws_iam_role.worker_service"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.iam",
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "worker_s3_write",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "myapp-worker-service-role-20260219175939315000000006",
+            "policy_arn": "arn:aws:iam::000000000000:policy/myapp-s3-write",
+            "role": "myapp-worker-service-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.iam.aws_iam_policy.s3_write",
+            "module.iam.aws_iam_role.worker_service"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.sns",
+      "mode": "managed",
+      "type": "aws_sns_topic",
+      "name": "critical_alerts",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "application_failure_feedback_role_arn": "",
+            "application_success_feedback_role_arn": "",
+            "application_success_feedback_sample_rate": 0,
+            "archive_policy": "",
+            "arn": "arn:aws:sns:us-east-1:000000000000:critical-alerts",
+            "beginning_archive_time": "",
+            "content_based_deduplication": false,
+            "delivery_policy": "",
+            "display_name": "",
+            "fifo_throughput_scope": "",
+            "fifo_topic": false,
+            "firehose_failure_feedback_role_arn": "",
+            "firehose_success_feedback_role_arn": "",
+            "firehose_success_feedback_sample_rate": 0,
+            "http_failure_feedback_role_arn": "",
+            "http_success_feedback_role_arn": "",
+            "http_success_feedback_sample_rate": 0,
+            "id": "arn:aws:sns:us-east-1:000000000000:critical-alerts",
+            "kms_master_key_id": "",
+            "lambda_failure_feedback_role_arn": "",
+            "lambda_success_feedback_role_arn": "",
+            "lambda_success_feedback_sample_rate": 0,
+            "name": "critical-alerts",
+            "name_prefix": "",
+            "owner": "000000000000",
+            "policy": "{\"Id\":\"__default_policy_ID\",\"Statement\":[{\"Action\":[\"SNS:GetTopicAttributes\",\"SNS:SetTopicAttributes\",\"SNS:AddPermission\",\"SNS:RemovePermission\",\"SNS:DeleteTopic\",\"SNS:Subscribe\",\"SNS:ListSubscriptionsByTopic\",\"SNS:Publish\"],\"Condition\":{\"StringEquals\":{\"AWS:SourceOwner\":\"000000000000\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Resource\":\"arn:aws:sns:us-east-1:000000000000:critical-alerts\",\"Sid\":\"__default_statement_ID\"}],\"Version\":\"2008-10-17\"}",
+            "signature_version": 0,
+            "sqs_failure_feedback_role_arn": "",
+            "sqs_success_feedback_role_arn": "",
+            "sqs_success_feedback_sample_rate": 0,
+            "tags": {
+              "Day": "17",
+              "Environment": "dev"
+            },
+            "tags_all": {
+              "Day": "17",
+              "Environment": "dev"
+            },
+            "tracing_config": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.sns",
+      "mode": "managed",
+      "type": "aws_sns_topic",
+      "name": "info_alerts",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "application_failure_feedback_role_arn": "",
+            "application_success_feedback_role_arn": "",
+            "application_success_feedback_sample_rate": 0,
+            "archive_policy": "",
+            "arn": "arn:aws:sns:us-east-1:000000000000:info-alerts",
+            "beginning_archive_time": "",
+            "content_based_deduplication": false,
+            "delivery_policy": "",
+            "display_name": "",
+            "fifo_throughput_scope": "",
+            "fifo_topic": false,
+            "firehose_failure_feedback_role_arn": "",
+            "firehose_success_feedback_role_arn": "",
+            "firehose_success_feedback_sample_rate": 0,
+            "http_failure_feedback_role_arn": "",
+            "http_success_feedback_role_arn": "",
+            "http_success_feedback_sample_rate": 0,
+            "id": "arn:aws:sns:us-east-1:000000000000:info-alerts",
+            "kms_master_key_id": "",
+            "lambda_failure_feedback_role_arn": "",
+            "lambda_success_feedback_role_arn": "",
+            "lambda_success_feedback_sample_rate": 0,
+            "name": "info-alerts",
+            "name_prefix": "",
+            "owner": "000000000000",
+            "policy": "{\"Id\":\"__default_policy_ID\",\"Statement\":[{\"Action\":[\"SNS:GetTopicAttributes\",\"SNS:SetTopicAttributes\",\"SNS:AddPermission\",\"SNS:RemovePermission\",\"SNS:DeleteTopic\",\"SNS:Subscribe\",\"SNS:ListSubscriptionsByTopic\",\"SNS:Publish\"],\"Condition\":{\"StringEquals\":{\"AWS:SourceOwner\":\"000000000000\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Resource\":\"arn:aws:sns:us-east-1:000000000000:info-alerts\",\"Sid\":\"__default_statement_ID\"}],\"Version\":\"2008-10-17\"}",
+            "signature_version": 0,
+            "sqs_failure_feedback_role_arn": "",
+            "sqs_success_feedback_role_arn": "",
+            "sqs_success_feedback_sample_rate": 0,
+            "tags": {
+              "Day": "17",
+              "Environment": "dev"
+            },
+            "tags_all": {
+              "Day": "17",
+              "Environment": "dev"
+            },
+            "tracing_config": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.sns",
+      "mode": "managed",
+      "type": "aws_sns_topic",
+      "name": "warning_alerts",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "application_failure_feedback_role_arn": "",
+            "application_success_feedback_role_arn": "",
+            "application_success_feedback_sample_rate": 0,
+            "archive_policy": "",
+            "arn": "arn:aws:sns:us-east-1:000000000000:warning-alerts",
+            "beginning_archive_time": "",
+            "content_based_deduplication": false,
+            "delivery_policy": "",
+            "display_name": "",
+            "fifo_throughput_scope": "",
+            "fifo_topic": false,
+            "firehose_failure_feedback_role_arn": "",
+            "firehose_success_feedback_role_arn": "",
+            "firehose_success_feedback_sample_rate": 0,
+            "http_failure_feedback_role_arn": "",
+            "http_success_feedback_role_arn": "",
+            "http_success_feedback_sample_rate": 0,
+            "id": "arn:aws:sns:us-east-1:000000000000:warning-alerts",
+            "kms_master_key_id": "",
+            "lambda_failure_feedback_role_arn": "",
+            "lambda_success_feedback_role_arn": "",
+            "lambda_success_feedback_sample_rate": 0,
+            "name": "warning-alerts",
+            "name_prefix": "",
+            "owner": "000000000000",
+            "policy": "{\"Id\":\"__default_policy_ID\",\"Statement\":[{\"Action\":[\"SNS:GetTopicAttributes\",\"SNS:SetTopicAttributes\",\"SNS:AddPermission\",\"SNS:RemovePermission\",\"SNS:DeleteTopic\",\"SNS:Subscribe\",\"SNS:ListSubscriptionsByTopic\",\"SNS:Publish\"],\"Condition\":{\"StringEquals\":{\"AWS:SourceOwner\":\"000000000000\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Resource\":\"arn:aws:sns:us-east-1:000000000000:warning-alerts\",\"Sid\":\"__default_statement_ID\"}],\"Version\":\"2008-10-17\"}",
+            "signature_version": 0,
+            "sqs_failure_feedback_role_arn": "",
+            "sqs_success_feedback_role_arn": "",
+            "sqs_success_feedback_sample_rate": 0,
+            "tags": {
+              "Day": "17",
+              "Environment": "dev"
+            },
+            "tags_all": {
+              "Day": "17",
+              "Environment": "dev"
+            },
+            "tracing_config": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.sns",
+      "mode": "managed",
+      "type": "aws_sns_topic_subscription",
+      "name": "critical_email",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:sns:us-east-1:000000000000:critical-alerts:50f2426f-7b7c-4e4a-b5de-21d3ec6b88f1",
+            "confirmation_timeout_in_minutes": 1,
+            "confirmation_was_authenticated": false,
+            "delivery_policy": "",
+            "endpoint": "devops@example.com",
+            "endpoint_auto_confirms": false,
+            "filter_policy": "",
+            "filter_policy_scope": "",
+            "id": "arn:aws:sns:us-east-1:000000000000:critical-alerts:50f2426f-7b7c-4e4a-b5de-21d3ec6b88f1",
+            "owner_id": "000000000000",
+            "pending_confirmation": true,
+            "protocol": "email",
+            "raw_message_delivery": false,
+            "redrive_policy": "",
+            "replay_policy": "",
+            "subscription_role_arn": "",
+            "topic_arn": "arn:aws:sns:us-east-1:000000000000:critical-alerts"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.sns.aws_sns_topic.critical_alerts"
+          ]
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
