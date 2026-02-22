@@ -1,64 +1,51 @@
-# VPC Module Variables
-
 variable "environment" {
-  description = "Environment name (dev, prod)"
+  description = "Environment name"
   type        = string
-  validation {
-    condition     = contains(["dev", "prod"], var.environment)
-    error_message = "Environment must be dev or prod."
-  }
+}
+
+variable "project_name" {
+  description = "Project name"
+  type        = string
+}
+
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+  default     = "us-east-1"
 }
 
 variable "vpc_cidr" {
-  description = "CIDR block for VPC"
+  description = "VPC CIDR block"
   type        = string
   default     = "10.0.0.0/16"
 }
 
 variable "public_subnet_1_cidr" {
-  description = "CIDR block for public subnet 1"
+  description = "Public subnet 1 CIDR"
   type        = string
   default     = "10.0.1.0/24"
 }
 
 variable "public_subnet_2_cidr" {
-  description = "CIDR block for public subnet 2"
+  description = "Public subnet 2 CIDR"
   type        = string
   default     = "10.0.2.0/24"
 }
 
-variable "az1" {
-  description = "First availability zone"
+variable "private_subnet_1_cidr" {
+  description = "Private subnet 1 CIDR"
   type        = string
-  default     = "us-east-1a"
+  default     = "10.0.11.0/24"
 }
 
-variable "az2" {
-  description = "Second availability zone"
+variable "private_subnet_2_cidr" {
+  description = "Private subnet 2 CIDR"
   type        = string
-  default     = "us-east-1b"
+  default     = "10.0.12.0/24"
 }
 
-variable "enable_flow_logs" {
-  description = "Enable VPC flow logs"
-  type        = bool
-  default     = false
-}
-
-variable "flow_log_role_arn" {
-  description = "IAM role ARN for VPC flow logs"
-  type        = string
-  default     = ""
-}
-
-variable "flow_log_destination" {
-  description = "Flow log destination ARN"
-  type        = string
-  default     = ""
-}
-
-variable "common_tags" {
-  description = "Common tags to apply to all resources"
-  type        = map(string)
-  default     = {}
+variable "allowed_ssh_cidr" {
+  description = "CIDR blocks allowed to SSH"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
 }

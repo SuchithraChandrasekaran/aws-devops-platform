@@ -1,0 +1,58 @@
+========================================
+Network Security Test - Day 24
+Date: Sat Feb 21 18:39:11 IST 2026
+========================================
+
+Test 1: Listing VPCs...
+---------------------------------------------------------
+|                     DescribeVpcs                      |
++------------------------+-----------------+------------+
+|  vpc-ced1c3160b92b7623 |  172.31.0.0/16  |  None      |
+|  vpc-2255f72cd1bbdd03e |  10.0.0.0/16    |  myapp-vpc |
++------------------------+-----------------+------------+
+
+Test 2: Listing Security Groups...
+-----------------------------------------------------------------------------------------------
+|                                   DescribeSecurityGroups                                    |
++-----------------------+--------------------+------------------------------------------------+
+|  sg-c64604e3a32f47bb3 |  default           |  default VPC security group                    |
+|  sg-79f75058ba81052ac |  default           |  default VPC security group                    |
+|  sg-f5c5cd82b63b70d1a |  myapp-alb-sg      |  Security group for Application Load Balancer  |
+|  sg-1beddf799c4a7dcc4 |  myapp-bastion-sg  |  Security group for bastion host               |
+|  sg-6a8ae9a658887fd32 |  myapp-app-sg      |  Security group for application servers        |
+|  sg-06887285e3241ac6d |  myapp-database-sg |  Security group for database servers           |
++-----------------------+--------------------+------------------------------------------------+
+
+Test 3: ALB Security Group Rules...
+Ingress Rules:
+------------------------
+|DescribeSecurityGroups|
++------+-------+-------+
+|  80  |  80   |  tcp  |
+|  443 |  443  |  tcp  |
++------+-------+-------+
+
+Test 4: Listing Network ACLs...
+-------------------------------------------------
+|              DescribeNetworkAcls              |
++------------------------+----------------------+
+|  acl-a1c75a2b1401013b2 |  None                |
+|  acl-3e503076a845b9ee3 |  None                |
+|  acl-6e55b93646ba25f7d |  myapp-private-nacl  |
+|  acl-652246adc8eb6bedf |  myapp-public-nacl   |
++------------------------+----------------------+
+
+Test 5: VPC Flow Logs Status...
+-------------------------------------------
+|            DescribeFlowLogs             |
++-----------------------+---------+-------+
+|  fl-802a1c6a4ea934889 |  ACTIVE |  ALL  |
++-----------------------+---------+-------+
+
+Test 6: Subnet Summary...
+  Public Subnets: 2
+  Private Subnets: 2
+
+========================================
+Network security test complete
+========================================

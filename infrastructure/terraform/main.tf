@@ -49,3 +49,12 @@ module "secrets" {
   project_name = var.project_name
   kms_key_id   = module.kms.kms_key_id
 }
+
+# VPC Module for network security
+module "vpc" {
+  source = "./modules/vpc"
+
+  environment  = var.environment
+  project_name = var.project_name
+  aws_region   = var.aws_region
+}
