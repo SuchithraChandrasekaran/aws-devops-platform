@@ -1,0 +1,110 @@
+========================================
+AWS Config Testing - Day 25
+Date: Sun Feb 22 16:16:18 IST 2026
+========================================
+
+Test 1: Config Recorders...
+{
+    "ConfigurationRecorders": [
+        {
+            "name": "myapp-recorder",
+            "roleARN": "arn:aws:iam::000000000000:role/myapp-config-role",
+            "recordingGroup": {
+                "allSupported": true,
+                "includeGlobalResourceTypes": false,
+                "resourceTypes": [],
+                "exclusionByResourceTypes": {
+                    "resourceTypes": []
+                },
+                "recordingStrategy": {
+                    "useOnly": "ALL_SUPPORTED_RESOURCE_TYPES"
+                }
+            }
+        }
+    ]
+}
+
+Test 2: Recorder Status...
+{
+    "ConfigurationRecordersStatus": [
+        {
+            "name": "myapp-recorder",
+            "lastStartTime": "2026-02-22T15:44:30+05:30",
+            "recording": true,
+            "lastStatus": "PENDING",
+            "lastStatusChangeTime": "2026-02-22T15:44:30+05:30"
+        }
+    ]
+}
+
+Test 3: Config Rules...
+{
+    "ConfigRules": [
+        {
+            "ConfigRuleName": "approved-amis-by-id",
+            "ConfigRuleArn": "arn:aws:config:us-east-1:000000000000:config-rule/config-rule-xltflg",
+            "ConfigRuleId": "config-rule-xltflg",
+            "Source": {
+                "Owner": "AWS",
+                "SourceIdentifier": "APPROVED_AMIS_BY_ID"
+            },
+            "InputParameters": "{\"amiIds\":\"ami-0abcdef1234567890,ami-0abcdef1234567891\"}",
+            "ConfigRuleState": "ACTIVE"
+        },
+        {
+            "ConfigRuleName": "cloudtrail-enabled",
+            "ConfigRuleArn": "arn:aws:config:us-east-1:000000000000:config-rule/config-rule-idmazj",
+            "ConfigRuleId": "config-rule-idmazj",
+            "Source": {
+                "Owner": "AWS",
+                "SourceIdentifier": "CLOUD_TRAIL_ENABLED"
+            },
+            "ConfigRuleState": "ACTIVE"
+        },
+        {
+            "ConfigRuleName": "iam-password-policy",
+            "ConfigRuleArn": "arn:aws:config:us-east-1:000000000000:config-rule/config-rule-yvehsk",
+            "ConfigRuleId": "config-rule-yvehsk",
+            "Source": {
+                "Owner": "AWS",
+                "SourceIdentifier": "IAM_PASSWORD_POLICY"
+            },
+            "InputParameters": "{\"MaxPasswordAge\":90,\"MinimumPasswordLength\":14,\"RequireLowercaseCharacters\":true,\"RequireNumbers\":true,\"RequireUppercaseCharacters\":true}",
+            "ConfigRuleState": "ACTIVE"
+        },
+        {
+            "ConfigRuleName": "rds-storage-encrypted",
+            "ConfigRuleArn": "arn:aws:config:us-east-1:000000000000:config-rule/config-rule-jajrlx",
+            "ConfigRuleId": "config-rule-jajrlx",
+            "Source": {
+                "Owner": "AWS",
+                "SourceIdentifier": "RDS_STORAGE_ENCRYPTED"
+            },
+            "ConfigRuleState": "ACTIVE"
+        },
+        {
+            "ConfigRuleName": "s3-bucket-server-side-encryption-enabled",
+            "ConfigRuleArn": "arn:aws:config:us-east-1:000000000000:config-rule/config-rule-sdhdbc",
+            "ConfigRuleId": "config-rule-sdhdbc",
+            "Source": {
+                "Owner": "AWS",
+                "SourceIdentifier": "S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED"
+            },
+            "ConfigRuleState": "ACTIVE"
+        }
+    ]
+}
+
+Test 4: Delivery Channel...
+{
+    "DeliveryChannels": [
+        {
+            "name": "myapp-delivery-channel",
+            "s3BucketName": "myapp-config-bucket"
+        }
+    ]
+}
+
+========================================
+Config testing complete
+========================================

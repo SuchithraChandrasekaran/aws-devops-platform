@@ -1,0 +1,30 @@
+======================================================================
+AWS Config Compliance Report - Day 25
+======================================================================
+
+Total Config Rules: 5
+----------------------------------------------------------------------
+
+Note: LocalStack has limited Config compliance evaluation.
+Rules are created but compliance checking is not fully implemented.
+----------------------------------------------------------------------
+CREATED  | approved-amis-by-id                      | AWS            
+           Source: APPROVED_AMIS_BY_ID
+CREATED  | cloudtrail-enabled                       | AWS            
+           Source: CLOUD_TRAIL_ENABLED
+CREATED  | iam-password-policy                      | AWS            
+           Source: IAM_PASSWORD_POLICY
+CREATED  | rds-storage-encrypted                    | AWS            
+           Source: RDS_STORAGE_ENCRYPTED
+CREATED  | s3-bucket-server-side-encryption-enabled | AWS            
+           Source: S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED
+
+======================================================================
+Summary
+======================================================================
+Total Rules Created: 5
+Managed Rules (AWS): 5
+Custom Rules:        0
+
+In real AWS, these rules would actively evaluate resources.
+======================================================================

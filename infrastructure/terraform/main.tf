@@ -58,3 +58,11 @@ module "vpc" {
   project_name = var.project_name
   aws_region   = var.aws_region
 }
+
+# AWS Config Module for compliance monitoring
+module "config" {
+  source = "./modules/config"
+
+  environment  = var.environment
+  project_name = var.project_name
+}
