@@ -66,3 +66,11 @@ module "config" {
   environment  = var.environment
   project_name = var.project_name
 }
+
+# Security Lambda Module for auto-remediation
+module "security_lambda" {
+  source = "./modules/security-lambda"
+
+  environment  = var.environment
+  project_name = var.project_name
+}
