@@ -1,0 +1,6 @@
+[bandit]
+exclude_dirs = /test,/tests,/.venv,/venv
+skips = B404,B603
+
+[bandit.assert_used]
+skips = B101

@@ -1,0 +1,6 @@
+[tool.bandit]
+exclude_dirs = ["tests", "test", ".venv"]
+skips = ["B404", "B603"]
+
+[tool.bandit.assert_used]
+skips = ["B101"]
