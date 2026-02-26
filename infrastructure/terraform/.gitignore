@@ -15,3 +15,5 @@ backend/.terraform.lock.hcl
 backend/terraform.tfstate
 backend/terraform.tfstate.backup
 backend/*.tfplan
+*.tfplan
+*.tfstate.backup

@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-02-25T14:34:38.857548",
+  "total_checks": 4,
+  "pass": 4,
+  "warning": 0,
+  "fail": 0,
+  "error": 0,
+  "score": 100.0,
+  "findings": [
+    {
+      "category": "IAM",
+      "status": "PASS",
+      "message": "0 roles with least privilege"
+    },
+    {
+      "category": "Network",
+      "status": "PASS",
+      "message": "Security groups properly configured"
+    },
+    {
+      "category": "Encryption",
+      "status": "PASS",
+      "message": "All S3 buckets encrypted"
+    },
+    {
+      "category": "Logging",
+      "status": "PASS",
+      "message": "0 log groups configured"
+    }
+  ]
+}
