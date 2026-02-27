@@ -48,7 +48,7 @@ jobs:
       - name: Upload to LocalStack S3
         run: |
           TIMESTAMP=$(date +%Y%m%d-%H%M%S)
-          VERSION="${TIMESTAMP}-${{ github.sha }}"
+          VERSION= "${TIMESTAMP}-${{ github.sha }}"
           
           aws --endpoint-url=${{ env.LOCALSTACK_ENDPOINT }} \
             s3 cp docker-image.tar.gz \

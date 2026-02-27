@@ -6,7 +6,7 @@ set -e
 ENDPOINT="http://localhost:4566"
 PROFILE="localstack"
 
-echo "🪣 Setting up S3 buckets for pipeline artifacts..."
+echo "Setting up S3 buckets for pipeline artifacts..."
 
 # Create artifacts bucket
 echo "Creating artifacts bucket..."
@@ -26,9 +26,8 @@ aws --endpoint-url=$ENDPOINT --profile $PROFILE \
     --versioning-configuration Status=Enabled
 
 echo ""
-echo "✅ S3 buckets created:"
+echo "S3 buckets created:"
 aws --endpoint-url=$ENDPOINT --profile $PROFILE s3 ls
 
 echo ""
-echo "✅ S3 setup complete!"
-echo "(Lifecycle policy skipped - not critical for LocalStack)"
+echo "S3 setup complete!"

@@ -74,3 +74,11 @@ module "security_lambda" {
   environment  = var.environment
   project_name = var.project_name
 }
+
+# Lambda Automation Module
+module "lambda_automation" {
+  source = "./modules/lambda-automation"
+
+  environment  = var.environment
+  project_name = var.project_name
+}
