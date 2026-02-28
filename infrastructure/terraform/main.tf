@@ -82,3 +82,21 @@ module "lambda_automation" {
   environment  = var.environment
   project_name = var.project_name
 }
+
+# EventBridge Automation Module
+module "eventbridge_automation" {
+  source = "./modules/eventbridge-automation"
+
+  environment  = var.environment
+  project_name = var.project_name
+
+  # Reference Lambda functions from lambda-automation module
+  ec2_handler_lambda_arn        = module.lambda_automation.lambda_functions.auto_stop_resources
+  auto_tag_lambda_arn           = module.lambda_automation.lambda_functions.auto_tag
+  s3_security_lambda_arn        = module.lambda_automation.lambda_functions.security_remediation
+  s3_remediation_lambda_arn     = module.lambda_automation.lambda_functions.security_remediation
+  iam_audit_lambda_arn          = module.lambda_automation.lambda_functions.security_remediation
+  security_alert_lambda_arn     = module.lambda_automation.lambda_functions.security_remediation
+  alarm_handler_lambda_arn      = module.lambda_automation.lambda_functions.health_check
+  security_audit_lambda_arn     = module.lambda_automation.lambda_functions.auto_stop_resources
+}

@@ -1,0 +1,41 @@
+======================================================================
+EventBridge Pattern Tests - Day 30
+======================================================================
+
+Test 1: EC2 State Change Event
+----------------------------------------------------------------------
+  Error: Parameter validation failed:
+Unknown parameter in Entries[0]: "version", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+Unknown parameter in Entries[0]: "id", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+Unknown parameter in Entries[0]: "detail-type", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+Unknown parameter in Entries[0]: "source", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+Unknown parameter in Entries[0]: "detail", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+
+Test 2: S3 Bucket Creation Event
+----------------------------------------------------------------------
+  Error: Parameter validation failed:
+Unknown parameter in Entries[0]: "version", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+Unknown parameter in Entries[0]: "id", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+Unknown parameter in Entries[0]: "detail-type", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+Unknown parameter in Entries[0]: "source", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+Unknown parameter in Entries[0]: "detail", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+
+Test 3: IAM Policy Change Event
+----------------------------------------------------------------------
+  Error: Parameter validation failed:
+Unknown parameter in Entries[0]: "version", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+Unknown parameter in Entries[0]: "id", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+Unknown parameter in Entries[0]: "detail-type", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+Unknown parameter in Entries[0]: "source", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+Unknown parameter in Entries[0]: "detail", must be one of: Time, Source, Resources, DetailType, Detail, EventBusName, TraceHeader
+
+Test 4: CloudWatch Alarm State Change
+----------------------------------------------------------------------
+  Lambda invoked: 200
+  Response: "Handled alarm high-cpu-utilization"
+
+======================================================================
+Event Pattern Tests Complete
+======================================================================
+
+Note: Check Lambda logs to verify handlers were triggered
