@@ -1,0 +1,67 @@
+========================================
+Auto-scaling Simulation Started
+Scale-out threshold : CPU > 70%
+Scale-in  threshold : CPU < 30%
+========================================
+[Cycle 1/6] CPU: 85% | Replicas: 1
+[SCALE-OUT] -> 2 replicas
+time="2026-03-01T05:23:53+05:30" level=warning msg="No services to build"
+ Container sample-app-app-1 Running 
+ Container sample-app-app-2 Running 
+ Container sample-app-app-5 Stopping 
+ Container sample-app-app-3 Stopping 
+ Container sample-app-app-4 Stopping 
+ Container sample-app-app-4 Stopped 
+ Container sample-app-app-4 Removing 
+ Container sample-app-app-5 Stopped 
+ Container sample-app-app-5 Removing 
+ Container sample-app-app-4 Removed 
+ Container sample-app-app-3 Stopped 
+ Container sample-app-app-3 Removing 
+ Container sample-app-app-5 Removed 
+ Container sample-app-app-3 Removed 
+ Container sample-app-nginx-1 Starting 
+ Container sample-app-nginx-1 Started 
+[Cycle 2/6] CPU: 85% | Replicas: 2
+[SCALE-OUT] -> 3 replicas
+time="2026-03-01T05:23:59+05:30" level=warning msg="No services to build"
+ Container sample-app-app-1 Running 
+ Container sample-app-app-2 Running 
+ Container sample-app-app-3 Creating 
+ Container sample-app-app-3 Created 
+ Container sample-app-app-3 Starting 
+ Container sample-app-app-3 Started 
+ Container sample-app-nginx-1 Starting 
+ Container sample-app-nginx-1 Started 
+[Cycle 3/6] CPU: 85% | Replicas: 3
+[SCALE-OUT] -> 4 replicas
+time="2026-03-01T05:24:08+05:30" level=warning msg="No services to build"
+ Container sample-app-app-1 Running 
+ Container sample-app-app-2 Running 
+ Container sample-app-app-3 Running 
+ Container sample-app-app-4 Creating 
+ Container sample-app-app-4 Created 
+ Container sample-app-app-4 Starting 
+ Container sample-app-app-4 Started 
+ Container sample-app-nginx-1 Starting 
+ Container sample-app-nginx-1 Started 
+[Cycle 4/6] CPU: 85% | Replicas: 4
+[SCALE-OUT] -> 5 replicas
+time="2026-03-01T05:24:13+05:30" level=warning msg="No services to build"
+ Container sample-app-app-1 Running 
+ Container sample-app-app-2 Running 
+ Container sample-app-app-3 Running 
+ Container sample-app-app-4 Running 
+ Container sample-app-app-5 Creating 
+ Container sample-app-app-5 Created 
+ Container sample-app-app-5 Starting 
+ Container sample-app-app-5 Started 
+ Container sample-app-nginx-1 Starting 
+ Container sample-app-nginx-1 Started 
+[Cycle 5/6] CPU: 85% | Replicas: 5
+[STABLE] No action
+[Cycle 6/6] CPU: 85% | Replicas: 5
+[STABLE] No action
+========================================
+Simulation complete. Final replicas: 5
+========================================

@@ -1,4 +1,5 @@
 const express = require('express');
+const os = require('os');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
     task: 'Containerization complete!',
     project: 'AWS DevOps Platform',
     environment: process.env.NODE_ENV || 'development',
+    hostname: os.hostname(),
     timestamp: new Date().toISOString()
   });
 });
@@ -22,6 +24,7 @@ app.get('/health', (req, res) => {
   res.json({ 
     status: 'healthy',
     uptime: process.uptime(),
+    hostname: os.hostname(),
     timestamp: new Date().toISOString()
   });
 });
@@ -44,6 +47,7 @@ app.get('/api/info', (req, res) => {
 app.get('/metrics', (req, res) => {
   res.json({ 
     uptime: process.uptime(),
+    hostname: os.hostname(),
     timestamp: new Date().toISOString(),
     memory: process.memoryUsage(),
     platform: process.platform,
@@ -55,6 +59,7 @@ app.get('/metrics', (req, res) => {
 app.get('/ready', (req, res) => {
   res.json({ 
     ready: true,
+    hostname: os.hostname(),
     timestamp: new Date().toISOString()
   });
 });
