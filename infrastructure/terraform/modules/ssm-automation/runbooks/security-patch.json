@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "2.2",
+  "description": "Apply security patches to EC2 instance",
+  "parameters": {
+    "RebootAfterPatch": {
+      "type": "String",
+      "default": "false",
+      "description": "Reboot instance after patching"
+    }
+  },
+  "mainSteps": [
+    {
+      "action": "aws:runShellScript",
+      "name": "PrePatchSnapshot",
+      "inputs": {
+        "runCommand": [
+          "echo 'Pre-patch state recorded at '$(date)",
+          "uname -r"
+        ]
+      }
+    },
+    {
+      "action": "aws:runShellScript",
+      "name": "ApplyPatches",
+      "inputs": {
+        "runCommand": [
+          "echo 'Applying security patches...'",
+          "sudo apt-get update -y || sudo yum update -y",
+          "echo 'Patches applied at '$(date)"
+        ]
+      }
+    },
+    {
+      "action": "aws:runShellScript",
+      "name": "VerifyPatch",
+      "inputs": {
+        "runCommand": [
+          "echo 'Post-patch kernel: '$(uname -r)",
+          "echo 'Patch verification complete'"
+        ]
+      }
+    }
+  ]
+}

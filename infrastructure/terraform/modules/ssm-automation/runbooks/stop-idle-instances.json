@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "2.2",
+  "description": "Stop idle dev EC2 instances to save cost",
+  "parameters": {
+    "DryRun": {
+      "type": "String",
+      "default": "true",
+      "description": "Set to true to list without stopping"
+    }
+  },
+  "mainSteps": [
+    {
+      "action": "aws:runShellScript",
+      "name": "StopIdleInstances",
+      "inputs": {
+        "runCommand": [
+          "echo 'Checking for idle instances...'",
+          "echo 'DryRun: {{ DryRun }}'",
+          "echo 'Would stop instances tagged Environment=dev'",
+          "echo 'Stop idle instances runbook complete'"
+        ]
+      }
+    }
+  ]
+}

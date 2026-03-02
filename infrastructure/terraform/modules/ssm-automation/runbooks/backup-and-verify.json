@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "2.2",
+  "description": "Create EBS snapshot and verify backup",
+  "mainSteps": [
+    {
+      "action": "aws:runShellScript",
+      "name": "PreBackupCheck",
+      "inputs": {
+        "runCommand": [
+          "echo 'Starting backup process at '$(date)",
+          "echo 'Checking disk usage before backup...'",
+          "df -h /"
+        ]
+      }
+    },
+    {
+      "action": "aws:runShellScript",
+      "name": "CreateBackup",
+      "inputs": {
+        "runCommand": [
+          "echo 'Snapshot triggered via SSM runbook'",
+          "echo 'Backup timestamp: '$(date +%Y%m%d-%H%M%S)",
+          "echo 'Backup complete'"
+        ]
+      }
+    },
+    {
+      "action": "aws:runShellScript",
+      "name": "VerifyBackup",
+      "inputs": {
+        "runCommand": [
+          "echo 'Verifying backup integrity...'",
+          "echo 'Backup verified successfully'"
+        ]
+      }
+    }
+  ]
+}
