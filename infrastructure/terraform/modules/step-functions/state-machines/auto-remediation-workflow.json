@@ -1,0 +1,106 @@
+{
+  "Comment": "Auto Remediation Workflow - Day 33",
+  "StartAt": "DetectIssue",
+  "States": {
+    "DetectIssue": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:security-remediation",
+      "Parameters": {
+        "action": "detect",
+        "resource_id.$": "$.resource_id",
+        "issue_type.$": "$.issue_type"
+      },
+      "ResultPath": "$.detection_result",
+      "Next": "IsIssueCritical",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "EscalateAlert",
+          "ResultPath": "$.error"
+        }
+      ]
+    },
+    "IsIssueCritical": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.detection_result.severity",
+          "StringEquals": "critical",
+          "Next": "ImmediateRemediation"
+        },
+        {
+          "Variable": "$.detection_result.severity",
+          "StringEquals": "medium",
+          "Next": "ScheduledRemediation"
+        }
+      ],
+      "Default": "LogAndContinue"
+    },
+    "ImmediateRemediation": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:security-remediation",
+      "Parameters": {
+        "action": "remediate",
+        "resource_id.$": "$.resource_id",
+        "priority": "immediate"
+      },
+      "ResultPath": "$.remediation_result",
+      "Next": "WaitForRemediation",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "EscalateAlert",
+          "ResultPath": "$.error"
+        }
+      ]
+    },
+    "ScheduledRemediation": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:security-remediation",
+      "Parameters": {
+        "action": "remediate",
+        "resource_id.$": "$.resource_id",
+        "priority": "scheduled"
+      },
+      "ResultPath": "$.remediation_result",
+      "Next": "WaitForRemediation"
+    },
+    "WaitForRemediation": {
+      "Type": "Wait",
+      "Seconds": 30,
+      "Next": "VerifyRemediation"
+    },
+    "VerifyRemediation": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:security-remediation",
+      "Parameters": {
+        "action": "verify",
+        "resource_id.$": "$.resource_id"
+      },
+      "ResultPath": "$.verification_result",
+      "Next": "IsRemediationSuccessful"
+    },
+    "IsRemediationSuccessful": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.verification_result.resolved",
+          "BooleanEquals": true,
+          "Next": "RemediationComplete"
+        }
+      ],
+      "Default": "EscalateAlert"
+    },
+    "RemediationComplete": {
+      "Type": "Succeed"
+    },
+    "LogAndContinue": {
+      "Type": "Succeed"
+    },
+    "EscalateAlert": {
+      "Type": "Fail",
+      "Error": "RemediationFailed",
+      "Cause": "Auto remediation failed, manual intervention required"
+    }
+  }
+}

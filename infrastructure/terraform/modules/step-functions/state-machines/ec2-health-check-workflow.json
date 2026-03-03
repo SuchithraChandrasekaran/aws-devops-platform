@@ -1,0 +1,75 @@
+{
+  "Comment": "EC2 Health Check Workflow - Day 33",
+  "StartAt": "CheckInstanceState",
+  "States": {
+    "CheckInstanceState": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:health-check",
+      "Parameters": {
+        "action": "check_state",
+        "instance_id.$": "$.instance_id"
+      },
+      "ResultPath": "$.state_result",
+      "Next": "IsInstanceRunning",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "HealthCheckFailed",
+          "ResultPath": "$.error"
+        }
+      ]
+    },
+    "IsInstanceRunning": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.state_result.status",
+          "StringEquals": "running",
+          "Next": "RunHealthCheck"
+        }
+      ],
+      "Default": "InstanceNotRunning"
+    },
+    "RunHealthCheck": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:health-check",
+      "Parameters": {
+        "action": "run_checks",
+        "instance_id.$": "$.instance_id"
+      },
+      "ResultPath": "$.health_result",
+      "Next": "IsHealthy",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "HealthCheckFailed",
+          "ResultPath": "$.error"
+        }
+      ]
+    },
+    "IsHealthy": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.health_result.healthy",
+          "BooleanEquals": true,
+          "Next": "HealthCheckPassed"
+        }
+      ],
+      "Default": "HealthCheckFailed"
+    },
+    "HealthCheckPassed": {
+      "Type": "Succeed"
+    },
+    "InstanceNotRunning": {
+      "Type": "Fail",
+      "Error": "InstanceNotRunning",
+      "Cause": "EC2 instance is not in running state"
+    },
+    "HealthCheckFailed": {
+      "Type": "Fail",
+      "Error": "HealthCheckFailed",
+      "Cause": "EC2 instance health check did not pass"
+    }
+  }
+}

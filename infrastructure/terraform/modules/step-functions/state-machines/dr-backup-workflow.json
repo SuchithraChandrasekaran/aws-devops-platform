@@ -1,0 +1,100 @@
+{
+  "Comment": "DR Backup Workflow - Day 33",
+  "StartAt": "PrepareForBackup",
+  "States": {
+    "PrepareForBackup": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:backup-verify",
+      "Parameters": {
+        "action": "prepare",
+        "instance_id.$": "$.instance_id"
+      },
+      "ResultPath": "$.prepare_result",
+      "Next": "StopInstance",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "BackupFailed",
+          "ResultPath": "$.error"
+        }
+      ]
+    },
+    "StopInstance": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:auto-stop-resources",
+      "Parameters": {
+        "action": "stop",
+        "instance_id.$": "$.instance_id"
+      },
+      "ResultPath": "$.stop_result",
+      "Next": "WaitForStop"
+    },
+    "WaitForStop": {
+      "Type": "Wait",
+      "Seconds": 20,
+      "Next": "CreateBackup"
+    },
+    "CreateBackup": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:backup-verify",
+      "Parameters": {
+        "action": "create_snapshot",
+        "instance_id.$": "$.instance_id"
+      },
+      "ResultPath": "$.backup_result",
+      "Next": "WaitForBackup",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "BackupFailed",
+          "ResultPath": "$.error"
+        }
+      ]
+    },
+    "WaitForBackup": {
+      "Type": "Wait",
+      "Seconds": 30,
+      "Next": "VerifyBackup"
+    },
+    "VerifyBackup": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:backup-verify",
+      "Parameters": {
+        "action": "verify",
+        "instance_id.$": "$.instance_id",
+        "snapshot_id.$": "$.backup_result.snapshot_id"
+      },
+      "ResultPath": "$.verify_result",
+      "Next": "IsBackupValid"
+    },
+    "IsBackupValid": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.verify_result.valid",
+          "BooleanEquals": true,
+          "Next": "RestartInstance"
+        }
+      ],
+      "Default": "BackupFailed"
+    },
+    "RestartInstance": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:auto-stop-resources",
+      "Parameters": {
+        "action": "start",
+        "instance_id.$": "$.instance_id"
+      },
+      "ResultPath": "$.restart_result",
+      "Next": "BackupComplete"
+    },
+    "BackupComplete": {
+      "Type": "Succeed"
+    },
+    "BackupFailed": {
+      "Type": "Fail",
+      "Error": "BackupFailed",
+      "Cause": "DR backup workflow failed"
+    }
+  }
+}

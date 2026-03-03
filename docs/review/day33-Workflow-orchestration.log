@@ -1,0 +1,28 @@
+=======================================================
+Step Functions Validation - Day 33
+=======================================================
+
+Testing: EC2HealthCheckWorkflow
+  Name       : EC2HealthCheckWorkflow
+  Status     : ACTIVE
+  StartAt    : CheckInstanceState
+  States     : ['CheckInstanceState', 'IsInstanceRunning', 'RunHealthCheck', 'IsHealthy', 'HealthCheckPassed', 'InstanceNotRunning', 'HealthCheckFailed']
+  PASS
+
+Testing: AutoRemediationWorkflow
+  Name       : AutoRemediationWorkflow
+  Status     : ACTIVE
+  StartAt    : DetectIssue
+  States     : ['DetectIssue', 'IsIssueCritical', 'ImmediateRemediation', 'ScheduledRemediation', 'WaitForRemediation', 'VerifyRemediation', 'IsRemediationSuccessful', 'RemediationComplete', 'LogAndContinue', 'EscalateAlert']
+  PASS
+
+Testing: DRBackupWorkflow
+  Name       : DRBackupWorkflow
+  Status     : ACTIVE
+  StartAt    : PrepareForBackup
+  States     : ['PrepareForBackup', 'StopInstance', 'WaitForStop', 'CreateBackup', 'WaitForBackup', 'VerifyBackup', 'IsBackupValid', 'RestartInstance', 'BackupComplete', 'BackupFailed']
+  PASS
+
+=======================================================
+Results: 3 passed, 0 failed
+=======================================================
