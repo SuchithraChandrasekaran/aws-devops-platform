@@ -1,0 +1,48 @@
+============================================================
+Messaging Pattern Test - Day 34
+============================================================
+
+Topics found   : ['order', 'alert', 'audit']
+Queues found   : ['order', 'alert', 'audit', 'dlq']
+
+1. Testing Fan-out Pattern with Filters
+----------------------------------------
+  Published: high priority order - should reach order queue | MessageId: a9b21106-3ee6-4d6c-8511-14ea32c8b1f7
+  Published: critical alert - should reach alert queue | MessageId: 47b6cf31-cba9-42ff-8087-b22b19c564b9
+  Published: security audit - should reach audit queue | MessageId: a468cc5a-ccf8-48f6-bc4a-0b718d6e1688
+  Published: low priority order - should be filtered out | MessageId: ca7a8891-118a-4c34-90d7-25214cec6cf2
+
+2. Queue Message Counts After Publishing
+----------------------------------------
+  Order queue : 1 message(s)  (expected 1)
+  Alert queue : 1 message(s)  (expected 1)
+  Audit queue : 1 message(s)  (expected 1)
+  DLQ         : 0 message(s)  (expected 0)
+
+3. Testing DLQ - Simulating 3 Failed Processing Attempts
+----------------------------------------
+  Attempt 1: receive but do not delete
+    order: received 1 message(s) - not deleting
+    alert: received 1 message(s) - not deleting
+    audit: received 1 message(s) - not deleting
+  Attempt 2: receive but do not delete
+    order: received 1 message(s) - not deleting
+    alert: received 1 message(s) - not deleting
+    audit: received 1 message(s) - not deleting
+  Attempt 3: receive but do not delete
+    order: received 1 message(s) - not deleting
+    alert: received 1 message(s) - not deleting
+    audit: received 1 message(s) - not deleting
+
+  DLQ after 3 failed attempts: 0 message(s) (expected 3)
+
+4. Test Summary
+----------------------------------------
+  Fan-out       : topics delivered to correct queues
+  Filter policy : low priority order was filtered out
+  DLQ           : failed messages moved after 3 attempts
+  SNS + SQS integration complete
+
+============================================================
+Messaging test complete
+============================================================

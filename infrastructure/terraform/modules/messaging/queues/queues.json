@@ -1,0 +1,28 @@
+{
+  "Queues": [
+    {
+      "Name": "order-processing-queue",
+      "VisibilityTimeout": "30",
+      "MessageRetentionPeriod": "345600",
+      "Description": "Processes order events from order-events-topic"
+    },
+    {
+      "Name": "alert-processing-queue",
+      "VisibilityTimeout": "30",
+      "MessageRetentionPeriod": "345600",
+      "Description": "Processes alerts from alert-notifications-topic"
+    },
+    {
+      "Name": "audit-processing-queue",
+      "VisibilityTimeout": "30",
+      "MessageRetentionPeriod": "345600",
+      "Description": "Processes audit logs from audit-log-topic"
+    },
+    {
+      "Name": "dead-letter-queue",
+      "VisibilityTimeout": "30",
+      "MessageRetentionPeriod": "1209600",
+      "Description": "Captures failed messages from all queues after 3 attempts"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "Topics": [
+    {
+      "Name": "order-events-topic",
+      "Description": "Publishes order created, updated, cancelled events"
+    },
+    {
+      "Name": "alert-notifications-topic",
+      "Description": "Publishes system alerts and warnings"
+    },
+    {
+      "Name": "audit-log-topic",
+      "Description": "Publishes audit events for compliance"
+    }
+  ]
+}
