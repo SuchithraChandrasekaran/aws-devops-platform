@@ -1,0 +1,29 @@
+========================================
+AWS Free Tier Deployment - Day 36
+Date: Thu Mar 05 22:37:17 IST 2026
+========================================
+
+Phase 2 started - real AWS deployment
+
+Resources Created:
+- VPC               : aws-devops-vpc (10.0.0.0/16)
+- Public subnet     : 10.0.1.0/24 in us-east-1a
+- Internet gateway  : attached to VPC
+- Route table       : 0.0.0.0/0 -> IGW
+- Security group    : SSH from my IP only, port 80 and 3000 open
+- EC2 instance      : t2.micro Amazon Linux 2 (FREE TIER)
+- Instance ID       : i-0eea9312c1d8fc04a
+- Public IP         : 98.92.216.35
+
+Instance stopped after verification to preserve free tier hours.
+
+Free Tier Reminders:
+- 750 hours/month EC2 t2.micro
+- Stop instance when not in use
+- Billing alarm set at $1
+- Check billing dashboard daily
+
+Terraform state: infrastructure/terraform/aws-free-tier/terraform.tfstate (local)
+Key pair: ~/.ssh/aws-devops-key.pem
+
+Day 36 complete - AWS infrastructure deployed (FREE TIER)
