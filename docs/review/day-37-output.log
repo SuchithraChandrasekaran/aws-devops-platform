@@ -1,0 +1,35 @@
+========================================
+App Deployment to AWS EC2 - Day 37
+Date: Fri Mar 06 18:13:31 IST 2026
+========================================
+
+Instance ID  : i-0eea9312c1d8fc04a
+Deployed via : GitHub Actions (deploy-to-aws.yml)
+Reverse proxy: Nginx on port 80 -> Node.js app on port 3000
+
+Files Created:
+- infrastructure/terraform/aws-free-tier/modules/nginx/nginx.conf
+- scripts/deploy/setup-ec2.sh
+- scripts/deploy/deploy-app.sh
+- .github/workflows/deploy-to-aws.yml
+
+Deployment Flow:
+  push to main
+  -> test job     (npm ci + npm test)
+  -> build job    (docker build + save as tar + upload artifact)
+  -> deploy job   (scp tar + scp nginx.conf + ssh run deploy-app.sh)
+  -> verify       (curl /health through Nginx)
+
+GitHub Secrets:
+  EC2_HOST    : public IP (changes on every instance start)
+  EC2_USER    : ec2-user
+  EC2_SSH_KEY : contents of aws-devops-key.pem
+
+Nginx vs ALB:
+  Nginx : free, runs on EC2, manual config
+  ALB   : ~$16/month, managed by AWS
+  Using Nginx to stay within free tier
+
+Instance stopped after verification.
+
+Day 37 complete - Application deployed to AWS
