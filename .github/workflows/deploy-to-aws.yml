@@ -1,0 +1,103 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches: [ dev ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          cd applications/sample-app
+          npm ci
+
+      - name: Run tests
+        run: |
+          cd applications/sample-app
+          npm test
+
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          cd applications/sample-app
+          docker build -t sample-app:latest .
+
+      - name: Save image as tar
+        run: |
+          docker save sample-app:latest | gzip > sample-app.tar.gz
+
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image-${{ github.sha }}
+          path: sample-app.tar.gz
+          retention-days: 1
+
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-image-${{ github.sha }}
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy-key.pem
+          chmod 400 ~/.ssh/deploy-key.pem
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Copy image to EC2
+        run: |
+          scp -i ~/.ssh/deploy-key.pem \
+            sample-app.tar.gz \
+            ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/tmp/sample-app.tar.gz
+
+      - name: Copy Nginx config to EC2
+        run: |
+          scp -i ~/.ssh/deploy-key.pem \
+            infrastructure/terraform/aws-free-tier/modules/nginx/nginx.conf \
+            ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/tmp/nginx.conf
+
+      - name: Copy deploy script to EC2
+        run: |
+          scp -i ~/.ssh/deploy-key.pem \
+            scripts/deploy/deploy-app.sh \
+            ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/tmp/deploy-app.sh
+
+      - name: Run deploy script on EC2
+        run: |
+          ssh -i ~/.ssh/deploy-key.pem \
+            ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+            "bash /tmp/deploy-app.sh"
+
+      - name: Verify deployment
+        run: |
+          sleep 5
+          curl -f http://${{ secrets.EC2_HOST }}/health
+          echo "Deployment verified"
