@@ -94,7 +94,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/deploy-key.pem \
             ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
-            "bash /tmp/deploy-app.sh"
+            "DATABASE_URL='${{ secrets.DATABASE_URL }}' bash /tmp/deploy-app.sh"
 
       - name: Verify deployment
         run: |

@@ -1,0 +1,33 @@
+========================================
+RDS Database Deployment - Day 38
+Date: Sat Mar 07 20:16:20 IST 2026
+========================================
+
+Instance ID   : i-0eea9312c1d8fc04a
+DB Identifier : aws-devops-db
+DB Engine     : PostgreSQL 15
+Instance Class: db.t3.micro
+Storage       : 20GB gp2
+Multi-AZ      : false
+Public Access : false
+
+Files Created:
+- infrastructure/terraform/aws-free-tier/modules/rds/main.tf
+- infrastructure/terraform/aws-free-tier/modules/rds/security-group.tf
+- infrastructure/terraform/aws-free-tier/modules/rds/subnet-group.tf
+- infrastructure/terraform/aws-free-tier/modules/rds/variables.tf
+- infrastructure/terraform/aws-free-tier/modules/rds/outputs.tf
+
+Backup Config:
+  Retention : 7 days
+  Window    : 03:00-04:00 UTC
+  Maintenance: Sunday 04:00-05:00 UTC
+
+Free Tier Note:
+  RDS free tier = 750 hrs/month db.t2/t3.micro
+  Stop instance overnight: aws rds stop-db-instance --db-instance-identifier aws-devops-db
+  Start again:             aws rds start-db-instance --db-instance-identifier aws-devops-db
+
+Database stopped after verification to conserve free tier hours.
+
+Day 38 complete - Database deployed
