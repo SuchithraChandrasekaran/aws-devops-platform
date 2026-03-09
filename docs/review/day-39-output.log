@@ -1,0 +1,33 @@
+========================================
+CloudWatch Monitoring - Day 39
+Date: Sun Mar 08 22:14:56 IST 2026
+========================================
+
+Alarms Created (6 total, 10 free tier max):
+  billing-alert-1-dollar   : EstimatedCharges >  (us-east-1)
+  ec2-cpu-high             : CPUUtilization > 80% for 2 periods
+  ec2-status-check-failed  : StatusCheckFailed >= 1
+  rds-cpu-high             : CPUUtilization > 70% for 2 periods
+  rds-low-storage          : FreeStorageSpace < 2GB
+  ec2-memory-high          : mem_used_percent > 85% (custom metric)
+
+Custom Metrics Used: 1/10
+  mem_used_percent (pushed by CloudWatch agent)
+
+Log Groups:
+  /aws-devops/sample-app   : 7 day retention
+
+SNS Topic: aws-devops-alerts
+  Email subscription confirmed
+
+Files Created:
+  infrastructure/terraform/aws-free-tier/modules/cloudwatch/main.tf
+
+Free Tier Status:
+  Alarms         : 6/10 used
+  Custom metrics : 1/10 used
+  Log ingestion  : minimal
+
+EC2 and RDS stopped after verification.
+
+Day 39 complete - CloudWatch monitoring live
