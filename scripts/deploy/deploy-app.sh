@@ -13,6 +13,15 @@ APP_NAME="sample-app"
 APP_PORT=3000
 IMAGE_NAME="sample-app:latest"
 
+# Read DATABASE_URL from SSM Parameter Store
+echo "Fetching config from SSM..."
+DATABASE_URL=$(aws ssm get-parameter \
+  --name "/aws-devops/db/url" \
+  --with-decryption \
+  --query 'Parameter.Value' \
+  --output text \
+  --region us-east-1)
+
 if docker ps -a --format '{{.Names}}' | grep -q "^${APP_NAME}$"; then
   echo "Stopping old container..."
   docker stop $APP_NAME || true
@@ -28,7 +37,7 @@ docker run -d \
   --restart unless-stopped \
   -p $APP_PORT:$APP_PORT \
   -e NODE_ENV=production \
-  -e DATABASE_URL="${DATABASE_URL}" \
+  -e DATABASE_URL="$DATABASE_URL" \
   $IMAGE_NAME
 
 sleep 5

@@ -1,0 +1,37 @@
+========================================
+Security Hardening - Day 40
+Date: Mon Mar 09 22:49:33 IST 2026
+========================================
+
+IAM Role: aws-devops-ec2-role
+  Policies attached:
+    CloudWatchAgentServerPolicy
+    AmazonSSMManagedInstanceCore
+    AmazonS3ReadOnlyAccess
+
+Instance Profile: aws-devops-ec2-profile
+  Attached to: i-0eea9312c1d8fc04a
+
+SSM Parameters:
+  /aws-devops/db/password    SecureString (KMS encrypted)
+  /aws-devops/db/username    SecureString (KMS encrypted)
+  /aws-devops/db/url         SecureString (KMS encrypted)
+  /aws-devops/app/environment String
+
+VPC Flow Logs:
+  VPC    : vpc-0c95104adf52a97aa
+  Traffic: ALL
+  Log Group: /aws-devops/vpc-flow-logs (7 day retention)
+  Status : ACTIVE
+
+KMS: AWS managed keys (free, no customer managed keys needed)
+
+deploy-app.sh updated:
+  DATABASE_URL now read from SSM at deploy time
+  EC2 role provides SSM access - no credentials needed
+
+Files Created:
+  infrastructure/terraform/aws-free-tier/modules/security/main.tf
+  infrastructure/terraform/aws-free-tier/modules/security/variables.tf
+
+Day 40 complete - Security hardening complete
