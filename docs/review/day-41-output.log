@@ -1,0 +1,41 @@
+========================================
+CI/CD Pipeline to AWS - Day 41
+Date: Wed Mar 11 05:23:52 IST 2026
+========================================
+
+Pipeline: GitHub Actions (deploy-to-aws.yml)
+Jobs: test -> build -> deploy (production environment gate)
+
+Improvements Added:
+  1. GitHub Environment: production (manual approval required)
+  2. GitHub Environment: staging (auto deploy)
+  3. Rollback step on failure
+  4. Smoke test script
+  5. SNS deployment notification
+
+GitHub Secrets (total):
+  EC2_HOST              : EC2 public IP
+  EC2_USER              : ec2-user
+  EC2_SSH_KEY           : PEM file contents
+  DATABASE_URL          : postgresql connection string
+  AWS_ACCESS_KEY_ID     : for SNS notifications
+  AWS_SECRET_ACCESS_KEY : for SNS notifications
+  AWS_REGION            : us-east-1
+  SNS_TOPIC_ARN         : aws-devops-alerts ARN
+
+Files Created:
+  scripts/deploy/smoke-test.sh
+
+Files Updated:
+  .github/workflows/deploy-to-aws.yml
+
+Pipeline Flow:
+  push to main
+  -> test job (npm ci + npm test)
+  -> build job (docker build + artifact upload)
+  -> production gate (manual approval)
+  -> deploy job (scp + ssh + deploy-app.sh)
+  -> smoke test
+  -> SNS notification
+
+Day 41 complete - CI/CD pipeline to AWS complete

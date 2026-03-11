@@ -2,7 +2,7 @@ name: Deploy to AWS EC2
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -56,6 +56,7 @@ jobs:
     name: Deploy to EC2
     runs-on: ubuntu-latest
     needs: build
+    environment: production
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -72,32 +73,52 @@ jobs:
           chmod 400 ~/.ssh/deploy-key.pem
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Copy image to EC2
+      - name: Copy files to EC2
         run: |
           scp -i ~/.ssh/deploy-key.pem \
             sample-app.tar.gz \
             ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/tmp/sample-app.tar.gz
 
-      - name: Copy Nginx config to EC2
-        run: |
           scp -i ~/.ssh/deploy-key.pem \
             infrastructure/terraform/aws-free-tier/modules/nginx/nginx.conf \
             ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/tmp/nginx.conf
 
-      - name: Copy deploy script to EC2
-        run: |
           scp -i ~/.ssh/deploy-key.pem \
             scripts/deploy/deploy-app.sh \
             ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/tmp/deploy-app.sh
 
-      - name: Run deploy script on EC2
+      - name: Deploy application
+        id: deploy
         run: |
           ssh -i ~/.ssh/deploy-key.pem \
             ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
-            "DATABASE_URL='${{ secrets.DATABASE_URL }}' bash /tmp/deploy-app.sh"
+            "bash /tmp/deploy-app.sh"
 
       - name: Verify deployment
         run: |
           sleep 5
           curl -f http://${{ secrets.EC2_HOST }}/health
-          echo "Deployment verified"
+          echo "Deployment verified at $(date)"
+
+      - name: Run smoke tests
+        run: |
+          bash scripts/deploy/smoke-test.sh ${{ secrets.EC2_HOST }}
+
+      - name: Send deployment notification
+        if: success()
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          aws sns publish \
+            --topic-arn ${{ secrets.SNS_TOPIC_ARN }} \
+            --subject "Deploy SUCCESS: aws-devops-platform" \
+            --message "Deployment completed successfully. Commit: ${{ github.sha }}. Time: $(date)"
+
+      - name: Rollback on failure
+        if: failure() && steps.deploy.outcome == 'failure'
+        run: |
+          ssh -i ~/.ssh/deploy-key.pem \
+            ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+            "docker stop sample-app || true && docker rm sample-app || true && echo 'Container removed - manual restore needed'"
