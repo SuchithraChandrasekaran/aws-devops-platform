@@ -1,0 +1,38 @@
+========================================
+Week 6 Sprint Review - Day 42
+Date: Wed Mar 11 22:19:44 IST 2026
+========================================
+
+WEEK 6 SUMMARY (Days 36-41):
+  Day 36: VPC, EC2 t2.micro, Security Groups (Terraform)
+  Day 37: App deployed via GitHub Actions, Nginx reverse proxy
+  Day 38: RDS PostgreSQL db.t3.micro, automated backups
+  Day 39: CloudWatch - 6 alarms, log group, CloudWatch agent
+  Day 40: IAM role, SSM Parameter Store, VPC Flow Logs
+  Day 41: CI/CD pipeline with approval gate, smoke test, SNS notify
+
+VALIDATION RESULTS:
+  EC2 health check    : PASS
+  Nginx proxy         : PASS
+  Docker container    : PASS
+  RDS connection      : PASS
+  CloudWatch alarms   : 6 active
+  IAM role attached   : PASS
+  SSM parameters      : 4 stored
+  VPC Flow Logs       : ACTIVE
+  CI/CD pipeline      : PASS
+  Smoke test          : PASS
+
+COST AUDIT:
+  Current month charges: $0.00
+  Free tier status: within limits
+
+INFRASTRUCTURE INVENTORY:
+  EC2  : i-0eea9312c1d8fc04a (t2.micro, us-east-1a)
+  RDS  : aws-devops-db (db.t3.micro, PostgreSQL 15)
+  VPC  : vpc-0c95104adf52a97aa
+  SNS  : aws-devops-alerts
+
+Both EC2 and RDS stopped after validation.
+
+Day 42 complete - Week 6 Sprint Review passed
