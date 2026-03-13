@@ -5,3 +5,4 @@ security-reports/
 .env
 terraform.tfvars
 *.tfvars
+environments/aws-free-tier/**/*.tfvars
