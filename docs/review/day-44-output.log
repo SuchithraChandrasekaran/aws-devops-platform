@@ -1,0 +1,33 @@
+========================================
+RDS Automated Backups + Snapshots - Day 44
+Date: Fri Mar 13 06:59:40 IST 2026
+========================================
+
+RDS Instance: aws-devops-db
+  Backup retention : 7 days
+  Backup window    : 03:00-04:00 UTC
+  Point-in-time    : available within 7 day window
+
+Manual Snapshots Created:
+  aws-devops-db-day44-snapshot  (checkpoint)
+  aws-devops-db-manual-*        (via rds-snapshot.sh)
+
+Restore Test:
+  Restored from: aws-devops-db-day44-snapshot
+  Restore target: aws-devops-db-restore-test
+  Result: PASSED
+  Deleted after test: yes
+
+Scripts Created:
+  scripts/backup/rds-snapshot.sh       (on-demand snapshot + cleanup)
+  scripts/backup/rds-restore-test.sh   (restore verification)
+
+Backup Strategy:
+  Automated : daily, 7 day retention, managed by AWS
+  Manual    : on-demand via script, 7 day retention, self-managed
+  PITR      : any second within 7 day window
+  Restore   : always to new instance, never over live DB
+
+RDS stopped after verification.
+
+Day 44 complete - RDS automated backups + snapshots
