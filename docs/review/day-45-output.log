@@ -1,0 +1,33 @@
+========================================
+S3 Lifecycle Policies + Versioning - Day 45
+Date: Sun Mar 15 07:09:07 IST 2026
+========================================
+
+Bucket: aws-devops-app-149152058755
+  Versioning  : Enabled
+  Encryption  : AES256 (AWS managed)
+  Public access: Blocked
+
+Lifecycle Rules:
+  expire-old-versions       : noncurrent versions deleted after 30 days
+  cleanup-incomplete-uploads: incomplete multipart uploads deleted after 7 days
+  expire-artifacts          : artifacts/ objects deleted after 90 days
+                              noncurrent versions deleted after 7 days
+
+Versioning Test:
+  Uploaded 3 versions of config/app-config.json
+  Recovered version 1 successfully - content verified
+
+S3 Buckets in Account:
+  aws-devops-tfstate-149152058755  (Terraform state)
+  aws-devops-app-149152058755                      (App bucket - today)
+
+Files Created:
+  infrastructure/terraform/aws-free-tier/modules/s3/main.tf
+  scripts/s3/bucket-status.sh
+
+Free Tier Status:
+  S3 storage: well within 5GB free tier
+  Requests  : well within 20,000 GET / 2,000 PUT free tier
+
+Day 45 complete - S3 lifecycle policies + versioning
