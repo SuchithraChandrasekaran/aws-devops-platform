@@ -1,0 +1,33 @@
+========================================
+CloudWatch Custom Metrics - Day 46
+Date: Sun Mar 15 10:55:16 IST 2026
+========================================
+
+Custom Metrics Added (aws-devops/App namespace):
+  RequestCount      : requests per 5 min interval
+  ErrorCount        : errors per 5 min interval
+  ResponseTime      : average response in ms
+  ActiveConnections : current active connections
+
+Custom Metrics Total: 5/10 free tier
+  1 - mem_used_percent  (aws-devops/EC2, Day 39)
+  2 - RequestCount      (aws-devops/App, today)
+  3 - ErrorCount        (aws-devops/App, today)
+  4 - ResponseTime      (aws-devops/App, today)
+  5 - ActiveConnections (aws-devops/App, today)
+
+Alarms Added (8/10 total):
+  app-error-count-high    : ErrorCount > 10 in 5 min
+  app-response-time-high  : ResponseTime avg > 500ms
+
+Cron job on EC2:
+  Runs every 5 minutes
+  Logs to /var/log/metrics.log
+
+Files Created:
+  scripts/metrics/publish-app-metrics.sh
+  infrastructure/terraform/aws-free-tier/modules/custom-metrics/main.tf
+
+EC2 stopped after verification.
+
+Day 46 complete - CloudWatch custom metrics for app
