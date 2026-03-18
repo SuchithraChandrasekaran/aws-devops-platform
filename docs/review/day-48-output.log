@@ -1,0 +1,30 @@
+========================================
+EventBridge Automation Rules - Day 48
+Date: Tue Mar 17 10:28:52 IST 2026
+========================================
+
+EventBridge Rules Created (4 total):
+  auto-stop-ec2-nightly   : cron(0 23 * * ? *) -> Lambda -> stops EC2
+  ec2-state-change-notify : EC2 state changes  -> SNS -> email
+  rds-events-notify       : RDS DB events      -> SNS -> email
+  infra-health-check      : rate(30 minutes)   -> Lambda -> CW metric
+
+Lambda Functions Created:
+  auto-stop-ec2              : stops i-0eea9312c1d8fc04a if running
+  infrastructure-health-check: checks EC2+RDS, publishes health metric
+
+IAM Role: aws-devops-eventbridge-lambda-role
+  Policies: AWSLambdaBasicExecutionRole, ec2-stop-policy, health-check-policy
+
+Health Check Test: PASSED
+
+Practical Benefit:
+  EC2 auto-stops at 11 PM UTC - no more overnight charges
+  Email on every EC2 start/stop - full visibility
+  Email on RDS events - confirm backups running
+  Health metric published every 30 min - InfrastructureHealth in aws-devops/App
+
+Files Created:
+  infrastructure/terraform/aws-free-tier/modules/eventbridge/main.tf
+
+Day 48 complete - EventBridge automation rules
