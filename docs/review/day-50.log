@@ -1,0 +1,20 @@
+========================================
+SNS Alerting - Day 50
+Date: $(date +'%a %b %d %H:%M:%S %Z %Y')
+========================================
+
+SNS Topics:
+  aws-devops-alerts   : email + SMS (general)
+  aws-devops-critical : email + SMS (critical only)
+
+Lambda Updated:
+  s3-encryption-check : now publishes to critical topic
+
+Test Results:
+  email delivery : PASSED
+  SMS delivery   : PASSED
+
+Files Modified:
+  infrastructure/terraform/aws-free-tier/modules/monitoring/sns.tf
+
+Day 50 complete - SNS alerting to email/SMS
