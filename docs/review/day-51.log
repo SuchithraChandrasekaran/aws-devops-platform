@@ -1,0 +1,23 @@
+========================================
+CloudTrail Logging - Day 51
+Date: Fri Mar 20 21:04:00 IST 2026
+========================================
+
+Trail Created:
+  Name   : aws-devops-trail
+  Bucket : aws-devops-cloudtrail-149152058755
+  Status : logging enabled
+
+Lambda Created:
+  cloudtrail-monitor : scans for suspicious events hourly
+
+EventBridge Rule:
+  hourly-cloudtrail-monitor : rate(1 hour)
+
+IAM Policy Added:
+  cloudtrail-lookup-policy on aws-devops-eventbridge-lambda-role
+
+Files Created:
+  infrastructure/terraform/aws-free-tier/modules/cloudtrail/main.tf
+
+Day 51 complete - CloudTrail logging and analysis
