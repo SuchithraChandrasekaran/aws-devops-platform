@@ -1,0 +1,23 @@
+========================================
+Billing Alarms and Budgets - Day 54
+Date: Mon Mar 23 23:00:34 IST 2026
+========================================
+
+CloudWatch Billing Alarms (2):
+  Billing-Alert-1-USD : triggers at  estimated charges
+  Billing-Alert-5-USD : triggers at  estimated charges
+  Both alert to: aws-devops-alerts SNS topic
+
+AWS Budgets (2):
+  aws-devops-monthly-budget : /month cap, alerts at 50%, 80%, 100%
+  rds-service-budget        :  RDS-only cap, alerts at 1%
+
+SNS Topic: aws-devops-alerts
+  Subscribers: email + SMS
+
+Billing Alerts enabled: yes (via console)
+
+Files Created:
+  infrastructure/terraform/aws-free-tier/modules/billing/main.tf
+
+Day 54 complete - Billing alarms and budgets
