@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  blue-app:
+    build: ./app-blue
+    container_name: blue-app
+    networks:
+      - app-network
+
+  green-app:
+    build: ./app-green
+    container_name: green-app
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-router
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx-blue.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - blue-app
+      - green-app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
