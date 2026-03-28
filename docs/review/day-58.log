@@ -1,0 +1,31 @@
+========================================
+Log Aggregation and Analysis - Day 58
+Date: $(date +'%a %b %d %H:%M:%S %Z %Y')
+========================================
+
+CloudWatch Log Groups (3):
+  /aws-devops-platform/app    : request + slow_request logs, 7 day retention
+  /aws-devops-platform/errors : error logs, 7 day retention
+  /aws-devops-platform/access : access logs per request, 7 day retention
+
+Log Format: structured JSON
+  Fields: type, requestId, path, durationMs, timestamp
+
+Logs Insights Queries Run:
+  1. Request count by path
+  2. Slow requests over 200ms
+  3. Error count
+  4. Recent log tail
+
+Metric Filter:
+  error-count-filter on /aws-devops-platform/errors
+  Pattern: { $.type = "error" }
+  Metric: AppErrorCount in aws-devops-platform/app namespace
+
+Files Created:
+  scripts/log-aggregation/app/app.js
+  scripts/log-aggregation/app/Dockerfile
+
+Cost: $0 - CloudWatch Logs free tier (5GB ingestion/month)
+
+Day 58 complete - Log aggregation and analysis
