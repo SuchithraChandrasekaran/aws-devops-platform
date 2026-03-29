@@ -1,0 +1,31 @@
+========================================
+Security Group Audit - Day 59
+Date: $(date +'%a %b %d %H:%M:%S %Z %Y')
+========================================
+
+Audit Script: scripts/sg-audit.sh
+  Checks: 0.0.0.0/0 rules, sensitive ports (SSH/RDP/DB), wide port ranges, unused groups
+
+Findings:
+  (fill in from your audit output)
+  CRITICAL: X issues found
+  WARNING : X issues found
+  UNUSED  : X groups found
+
+Fixes Applied:
+  SSH port 22 restricted from 0.0.0.0/0 to MY_IP/32
+  (or: No critical findings - all rules within policy)
+
+Security Group Rules Policy:
+  SSH (22)       : your IP only, never 0.0.0.0/0
+  HTTP (80)      : 0.0.0.0/0 allowed (public web)
+  HTTPS (443)    : 0.0.0.0/0 allowed (public web)
+  DB ports       : never open to 0.0.0.0/0
+  All traffic    : never open to 0.0.0.0/0
+
+Files Created:
+  scripts/sg-audit.sh
+
+Cost: $0 - no new AWS resources
+
+Day 59 complete - Security group audit and optimization
