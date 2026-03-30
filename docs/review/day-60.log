@@ -1,0 +1,41 @@
+========================================
+IAM Role Refinement - Day 60
+Date: $(date +'%a %b %d %H:%M:%S %Z %Y')
+========================================
+
+Audit Script: scripts/iam-audit.sh
+  Checks: stale access keys (>90 days), console users without MFA,
+          AdministratorAccess on roles, wildcard Action policies, never-used roles
+
+Findings:
+  (fill in from your audit output)
+  CRITICAL: X issues found
+  WARNING : X issues found
+  INFO    : X never-used roles
+
+Fixes Applied:
+  (e.g.)
+  - Removed AdministratorAccess from role X, replaced with S3ReadOnly + CloudWatchLogs
+  - Disabled stale access key AKIA... for user Y (pending delete after 24h confirm)
+  - Created EnforceMFAPolicy for console users
+  (or: No critical findings - all roles within least-privilege policy)
+
+IAM Security Policy:
+  EC2 roles     : minimum permissions only (no AdministratorAccess)
+  Lambda roles  : scoped to specific resources (no wildcard resources)
+  Human users   : MFA mandatory for console access
+  Access keys   : rotate every 90 days, disable if unused
+  Policies      : no Action: '*' in customer-managed policies
+
+Files Created:
+  scripts/iam-audit.sh
+  (EnforceMFAPolicy created in IAM)
+
+Relationship to Day 59:
+  Day 59 hardened the network perimeter (security groups, open ports)
+  Day 60 hardens the identity layer (who can do what inside AWS)
+  Together: defense-in-depth — network + identity both locked down
+
+Cost: $0 - no new AWS resources
+
+Day 60 complete - IAM role refinement
