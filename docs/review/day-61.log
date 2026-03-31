@@ -1,0 +1,31 @@
+========================================
+DR Runbook Automation - Day 61
+Date: $(date +'%a %b %d %H:%M:%S %Z %Y')
+========================================
+
+Scripts Created:
+  scripts/dr/recover-ec2.sh   - Launch EC2 from DR AMI
+  scripts/dr/recover-s3.sh    - Restore deleted S3 objects
+
+Runbook Created:
+  docs/runbooks/dr-runbook.md
+    Scenarios: EC2 failure, S3 deletion, RDS failure, lockout recovery
+    RTO targets: EC2=30min, S3=5min, RDS=45min, Lockout=15min
+
+DR Assets Created Today:
+  AMI: (fill in AMI ID from Step 2)
+  RDS snapshot: dr-baseline-$(date +%Y%m%d) (if RDS running)
+
+Dry Run Result:
+  AMI state: available / (fill in)
+  Recovery parameters validated: YES / NO
+
+Relationship to Day 59 + 60:
+  Day 59 - hardened network perimeter (security groups)
+  Day 60 - hardened identity layer (IAM roles)
+  Day 61 - documented + automated recovery when things break anyway
+  Together: prevent → detect → recover
+
+Cost: $0 - AMI storage negligible on free tier. Terminate any test instances.
+
+Day 61 complete - DR runbook automation
