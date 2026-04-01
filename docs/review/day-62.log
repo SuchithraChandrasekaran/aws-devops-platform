@@ -1,0 +1,39 @@
+========================================
+DynamoDB Table Creation - Day 62
+Date: $(date +'%a %b %d %H:%M:%S %Z %Y')
+========================================
+
+Table Created:
+  Name          : platform-audit-log
+  Billing mode  : PROVISIONED (free tier safe)
+  RCU / WCU     : 1 / 1
+  Partition key : resource_id (S)
+  Sort key      : timestamp   (S)
+  PITR          : enabled
+  Items loaded  : 8 sample audit events (Days 59-62)
+
+IaC:
+  infrastructure/dynamodb-audit-log.yaml
+  CloudFormation template validated - ready to deploy in dev/staging
+
+Scripts Created:
+  scripts/audit-log.sh — one-line audit event logger for use by other scripts
+
+Query Patterns Tested:
+  Query by resource_id (partition key lookup)
+  Query by resource_id + timestamp range (sort key range)
+  Scan by result=failed (full scan — use sparingly)
+  GetItem by exact PK + SK
+
+Free Tier Status:
+  RCU used : 1 / 25 (4%)
+  WCU used : 1 / 25 (4%)
+  Storage  : < 1 MB / 25 GB
+
+Relationship to prior days:
+  Day 59-61 events loaded as real audit data into DynamoDB
+  audit-log.sh can now be integrated into sg-audit.sh, iam-audit.sh, dr scripts
+
+Cost: $0 - fully within DynamoDB permanent free tier
+
+Day 62 complete - DynamoDB table creation (free tier)
