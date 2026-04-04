@@ -1,4 +1,4 @@
-# 95-Day Tracker - Days 1 to 3 Command Recall
+# Days 1 to 3 Command Recall
 
 ---
 
