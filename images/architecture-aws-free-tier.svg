@@ -1,0 +1,200 @@
+<svg width="100%" viewBox="0 0 680 760" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>AWS Free Tier Architecture — AWS DevOps Pro Study Environment</title>
+  <desc>Architecture diagram showing the real AWS Free Tier deployment used in days 36–63. Covers VPC, EC2, RDS, S3, CloudWatch, Lambda, EventBridge, IAM, and related services — all within the AWS 12-month free tier.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .th { font-size: 14px; font-weight: 500; }
+      .t  { font-size: 14px; font-weight: 400; }
+      .ts { font-size: 12px; font-weight: 400; fill: #4a4a4a; }
+      .arr { stroke: #888780; stroke-width: 1.5; fill: none; }
+      .leader { stroke: #888780; stroke-width: 0.5; stroke-dasharray: 4 3; fill: none; }
+      .warn-box { fill: #FAEEDA; stroke: #854F0B; stroke-width: 0.5; }
+      /* Outer AWS boundary */
+      .aws-bg { fill: #FFF8F0; stroke: #BA7517; stroke-width: 1; stroke-dasharray: 6 3; }
+      /* VPC container */
+      .vpc-bg { fill: #E1F5EE; stroke: #0F6E56; stroke-width: 0.5; }
+      /* Subnet containers */
+      .subnet-bg { fill: #9FE1CB; stroke: #085041; stroke-width: 0.5; }
+      /* Service boxes */
+      .svc-green { fill: #C0DD97; stroke: #3B6D11; stroke-width: 0.5; }
+      .svc-blue { fill: #B5D4F4; stroke: #185FA5; stroke-width: 0.5; }
+      .svc-amber { fill: #FAC775; stroke: #854F0B; stroke-width: 0.5; }
+      .svc-coral { fill: #F5C4B3; stroke: #993C1D; stroke-width: 0.5; }
+      .svc-purple { fill: #CECBF6; stroke: #534AB7; stroke-width: 0.5; }
+      .svc-gray { fill: #D3D1C7; stroke: #5F5E5A; stroke-width: 0.5; }
+      .svc-teal { fill: #5DCAA5; stroke: #0F6E56; stroke-width: 0.5; }
+      .th-green { fill: #27500A; }
+      .th-blue { fill: #0C447C; }
+      .th-amber { fill: #633806; }
+      .th-coral { fill: #712B13; }
+      .th-purple { fill: #3C3489; }
+      .th-gray { fill: #2C2C2A; }
+      .th-teal { fill: #04342C; }
+      .ts-green { fill: #3B6D11; }
+      .ts-blue { fill: #185FA5; }
+      .ts-amber { fill: #854F0B; }
+      .ts-coral { fill: #993C1D; }
+      .ts-purple { fill: #534AB7; }
+      .ts-gray { fill: #5F5E5A; }
+      .ts-teal { fill: #0F6E56; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text class="th" x="340" y="26" text-anchor="middle" style="font-size:16px; fill:#1a1a1a;">AWS Free Tier architecture (days 36–63)</text>
+  <text class="ts" x="340" y="44" text-anchor="middle">AWS DevOps Pro — Phase 2: real AWS deployment · target cost: $0</text>
+
+  <!-- === INTERNET / GITHUB (outside AWS) === -->
+  <!-- GitHub -->
+  <rect class="svc-purple" x="20" y="56" width="120" height="44" rx="6"/>
+  <text class="th th-purple" x="80" y="75" text-anchor="middle" dominant-baseline="central">GitHub</text>
+  <text class="ts ts-purple" x="80" y="92" text-anchor="middle" dominant-baseline="central">source + IaC</text>
+
+  <!-- GitHub Actions (outside AWS) -->
+  <rect class="svc-purple" x="20" y="118" width="120" height="44" rx="6"/>
+  <text class="th th-purple" x="80" y="137" text-anchor="middle" dominant-baseline="central">GitHub Actions</text>
+  <text class="ts ts-purple" x="80" y="154" text-anchor="middle" dominant-baseline="central">CI/CD pipeline</text>
+
+  <!-- Arrow: GitHub → Actions -->
+  <line x1="80" y1="100" x2="80" y2="116" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- === AWS BOUNDARY === -->
+  <rect class="aws-bg" x="154" y="52" width="510" height="582" rx="16"/>
+  <text class="th th-amber" x="174" y="72" style="font-size:12px;">AWS Cloud (us-east-1 / ap-south-1)</text>
+
+  <!-- Billing alarm badge -->
+  <rect class="warn-box" x="450" y="56" width="198" height="32" rx="6"/>
+  <text class="th th-amber" x="549" y="66" text-anchor="middle" dominant-baseline="central" style="font-size:11px;">⚠ Billing alarm: $1 threshold</text>
+  <text class="ts ts-amber" x="549" y="80" text-anchor="middle" dominant-baseline="central">Stop RDS + EC2 when idle</text>
+
+  <!-- === VPC CONTAINER === -->
+  <rect class="vpc-bg" x="164" y="96" width="484" height="374" rx="12"/>
+  <text class="th th-green" x="184" y="114" style="font-size:12px;">VPC (10.0.0.0/16) · 2 subnets · IGW · Security Groups · VPC Flow Logs</text>
+
+  <!-- Public subnet -->
+  <rect class="subnet-bg" x="180" y="122" width="212" height="160" rx="8"/>
+  <text class="th th-teal" x="200" y="138" style="font-size:11px;">Public subnet (10.0.1.0/24)</text>
+
+  <!-- EC2 -->
+  <rect class="svc-green" x="196" y="148" width="180" height="48" rx="6"/>
+  <text class="th th-green" x="286" y="167" text-anchor="middle" dominant-baseline="central">EC2 t2.micro</text>
+  <text class="ts ts-green" x="286" y="184" text-anchor="middle" dominant-baseline="central">Node.js app + NGINX + Docker</text>
+
+  <!-- Arrow: EC2 → NGINX (inside EC2 label) -->
+
+  <!-- CodePipeline -->
+  <rect class="svc-green" x="196" y="212" width="180" height="44" rx="6"/>
+  <text class="th th-green" x="286" y="231" text-anchor="middle" dominant-baseline="central">CodePipeline (1 free)</text>
+  <text class="ts ts-green" x="286" y="248" text-anchor="middle" dominant-baseline="central">or GitHub Actions deploy</text>
+
+  <!-- Private subnet -->
+  <rect class="subnet-bg" x="408" y="122" width="224" height="160" rx="8"/>
+  <text class="th th-teal" x="428" y="138" style="font-size:11px;">Private subnet (10.0.2.0/24)</text>
+
+  <!-- RDS -->
+  <rect class="svc-green" x="424" y="148" width="192" height="48" rx="6"/>
+  <text class="th th-green" x="520" y="167" text-anchor="middle" dominant-baseline="central">RDS db.t2.micro</text>
+  <text class="ts ts-green" x="520" y="184" text-anchor="middle" dominant-baseline="central">PostgreSQL · Single-AZ · stop idle</text>
+
+  <!-- DynamoDB (private) -->
+  <rect class="svc-green" x="424" y="212" width="192" height="44" rx="6"/>
+  <text class="th th-green" x="520" y="231" text-anchor="middle" dominant-baseline="central">DynamoDB</text>
+  <text class="ts ts-green" x="520" y="248" text-anchor="middle" dominant-baseline="central">25 GB free · state lock</text>
+
+  <!-- Arrow: EC2 → RDS -->
+  <line x1="376" y1="172" x2="422" y2="172" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- S3 (inside VPC area, below subnets) -->
+  <rect class="svc-teal" x="180" y="302" width="144" height="44" rx="6"/>
+  <text class="th th-teal" x="252" y="321" text-anchor="middle" dominant-baseline="central">S3</text>
+  <text class="ts ts-teal" x="252" y="338" text-anchor="middle" dominant-baseline="central">5 GB free · artifacts</text>
+
+  <!-- SSM Parameter Store -->
+  <rect class="svc-teal" x="340" y="302" width="152" height="44" rx="6"/>
+  <text class="th th-teal" x="416" y="321" text-anchor="middle" dominant-baseline="central">SSM Param Store</text>
+  <text class="ts ts-teal" x="416" y="338" text-anchor="middle" dominant-baseline="central">KMS SecureString</text>
+
+  <!-- IAM -->
+  <rect class="svc-teal" x="508" y="302" width="124" height="44" rx="6"/>
+  <text class="th th-teal" x="570" y="321" text-anchor="middle" dominant-baseline="central">IAM</text>
+  <text class="ts ts-teal" x="570" y="338" text-anchor="middle" dominant-baseline="central">least-privilege roles</text>
+
+  <!-- CloudTrail -->
+  <rect class="svc-teal" x="180" y="360" width="140" height="44" rx="6"/>
+  <text class="th th-teal" x="250" y="379" text-anchor="middle" dominant-baseline="central">CloudTrail</text>
+  <text class="ts ts-teal" x="250" y="396" text-anchor="middle" dominant-baseline="central">API logging</text>
+
+  <!-- AWS Config -->
+  <rect class="svc-teal" x="336" y="360" width="140" height="44" rx="6"/>
+  <text class="th th-teal" x="406" y="379" text-anchor="middle" dominant-baseline="central">AWS Config</text>
+  <text class="ts ts-teal" x="406" y="396" text-anchor="middle" dominant-baseline="central">5 rules (free)</text>
+
+  <!-- KMS -->
+  <rect class="svc-teal" x="492" y="360" width="140" height="44" rx="6"/>
+  <text class="th th-teal" x="562" y="379" text-anchor="middle" dominant-baseline="central">KMS</text>
+  <text class="ts ts-teal" x="562" y="396" text-anchor="middle" dominant-baseline="central">managed keys (free)</text>
+
+  <!-- === OBSERVABILITY LAYER (below VPC, inside AWS) === -->
+  <rect class="aws-bg" x="164" y="482" width="484" height="140" rx="10"/>
+  <text class="th th-amber" x="184" y="498" style="font-size:12px;">Observability + automation</text>
+
+  <!-- CloudWatch -->
+  <rect class="svc-amber" x="180" y="506" width="152" height="48" rx="6"/>
+  <text class="th th-amber" x="256" y="525" text-anchor="middle" dominant-baseline="central">CloudWatch</text>
+  <text class="ts ts-amber" x="256" y="542" text-anchor="middle" dominant-baseline="central">10 metrics · 10 alarms free</text>
+
+  <!-- EventBridge -->
+  <rect class="svc-amber" x="348" y="506" width="140" height="48" rx="6"/>
+  <text class="th th-amber" x="418" y="525" text-anchor="middle" dominant-baseline="central">EventBridge</text>
+  <text class="ts ts-amber" x="418" y="542" text-anchor="middle" dominant-baseline="central">automation rules</text>
+
+  <!-- Lambda -->
+  <rect class="svc-amber" x="504" y="506" width="128" height="48" rx="6"/>
+  <text class="th th-amber" x="568" y="525" text-anchor="middle" dominant-baseline="central">Lambda</text>
+  <text class="ts ts-amber" x="568" y="542" text-anchor="middle" dominant-baseline="central">1M req/mo free</text>
+
+  <!-- SNS -->
+  <rect class="svc-coral" x="180" y="568" width="112" height="44" rx="6"/>
+  <text class="th th-coral" x="236" y="587" text-anchor="middle" dominant-baseline="central">SNS</text>
+  <text class="ts ts-coral" x="236" y="604" text-anchor="middle" dominant-baseline="central">email / SMS alerts</text>
+
+  <!-- Budgets + Billing -->
+  <rect class="svc-coral" x="308" y="568" width="144" height="44" rx="6"/>
+  <text class="th th-coral" x="380" y="587" text-anchor="middle" dominant-baseline="central">Budgets + Billing</text>
+  <text class="ts ts-coral" x="380" y="604" text-anchor="middle" dominant-baseline="central">cost tags + alarms</text>
+
+  <!-- Cost allocation tags -->
+  <rect class="svc-coral" x="468" y="568" width="164" height="44" rx="6"/>
+  <text class="th th-coral" x="550" y="587" text-anchor="middle" dominant-baseline="central">Cost allocation tags</text>
+  <text class="ts ts-coral" x="550" y="604" text-anchor="middle" dominant-baseline="central">all resources tagged</text>
+
+  <!-- === ARROWS: GitHub Actions → EC2 === -->
+  <line x1="140" y1="140" x2="162" y2="172" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: CloudWatch ← EC2 (downward) -->
+  <line x1="256" y1="470" x2="256" y2="504" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: EventBridge → Lambda -->
+  <line x1="488" y1="530" x2="502" y2="530" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: CloudWatch → SNS -->
+  <line x1="236" y1="554" x2="236" y2="566" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- === LEGEND / COST STRIP === -->
+  <rect class="svc-gray" x="20" y="648" width="640" height="96" rx="8"/>
+  <text class="th th-gray" x="340" y="666" text-anchor="middle" dominant-baseline="central" style="font-size:12px;">Free tier limits to stay within</text>
+
+  <text class="ts ts-gray" x="36" y="686">EC2 t2.micro · 750 hrs/mo</text>
+  <text class="ts ts-gray" x="36" y="702">RDS db.t2.micro · 750 hrs/mo · stop when idle</text>
+  <text class="ts ts-gray" x="36" y="718">S3 · 5 GB storage · 20k GET</text>
+  <text class="ts ts-gray" x="36" y="734">Lambda · 1M req · 400k GB-s</text>
+
+  <text class="ts ts-gray" x="340" y="686">CloudWatch · 10 metrics · 10 alarms · 5 GB logs</text>
+  <text class="ts ts-gray" x="340" y="702">DynamoDB · 25 GB · 25 RCU / 25 WCU</text>
+  <text class="ts ts-gray" x="340" y="718">CodePipeline · 1 pipeline free</text>
+  <text class="ts ts-gray" x="340" y="734">Data transfer · 1 GB/mo outbound</text>
+</svg>

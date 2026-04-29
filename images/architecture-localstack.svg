@@ -1,0 +1,228 @@
+<svg width="100%" viewBox="0 0 680 720" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Local Stack Architecture — AWS DevOps Pro Study Environment</title>
+  <desc>Architecture diagram showing the local development stack using LocalStack, Docker, GitHub Actions, and related tooling</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .th { font-size: 14px; font-weight: 500; }
+      .t  { font-size: 14px; font-weight: 400; }
+      .ts { font-size: 12px; font-weight: 400; fill: #4a4a4a; }
+      .arr { stroke: #888780; stroke-width: 1.5; fill: none; }
+      .leader { stroke: #888780; stroke-width: 0.5; stroke-dasharray: 4 3; fill: none; }
+      /* Outer container */
+      .outer-bg { fill: #F1EFE8; stroke: #5F5E5A; stroke-width: 0.5; }
+      /* Containers */
+      .docker-bg { fill: #E6F1FB; stroke: #185FA5; stroke-width: 0.5; }
+      .localstack-bg { fill: #E1F5EE; stroke: #0F6E56; stroke-width: 0.5; }
+      .cicd-bg { fill: #EEEDFE; stroke: #534AB7; stroke-width: 0.5; }
+      /* Service boxes */
+      .svc-blue { fill: #B5D4F4; stroke: #185FA5; stroke-width: 0.5; }
+      .svc-green { fill: #9FE1CB; stroke: #0F6E56; stroke-width: 0.5; }
+      .svc-purple { fill: #CECBF6; stroke: #534AB7; stroke-width: 0.5; }
+      .svc-amber { fill: #FAC775; stroke: #854F0B; stroke-width: 0.5; }
+      .svc-coral { fill: #F5C4B3; stroke: #993C1D; stroke-width: 0.5; }
+      .svc-gray { fill: #D3D1C7; stroke: #5F5E5A; stroke-width: 0.5; }
+      .th-blue { fill: #0C447C; }
+      .th-green { fill: #085041; }
+      .th-purple { fill: #3C3489; }
+      .th-amber { fill: #633806; }
+      .th-coral { fill: #712B13; }
+      .th-gray { fill: #2C2C2A; }
+      .ts-blue { fill: #185FA5; }
+      .ts-green { fill: #0F6E56; }
+      .ts-purple { fill: #534AB7; }
+      .ts-amber { fill: #854F0B; }
+      .ts-coral { fill: #993C1D; }
+      .ts-gray { fill: #5F5E5A; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text class="th" x="340" y="28" text-anchor="middle" style="font-size:16px; fill:#1a1a1a;">Local stack architecture (days 1–35)</text>
+  <text class="ts" x="340" y="46" text-anchor="middle">AWS DevOps Pro — Phase 1: LocalStack</text>
+
+  <!-- === OUTER MACHINE CONTAINER === -->
+  <rect class="outer-bg" x="20" y="58" width="640" height="592" rx="16"/>
+  <text class="th th-gray" x="40" y="80" style="font-size:13px;">Developer machine</text>
+
+  <!-- === CI/CD CONTAINER (top) === -->
+  <rect class="cicd-bg" x="36" y="88" width="608" height="78" rx="10"/>
+  <text class="th th-purple" x="56" y="106" style="font-size:12px;">CI/CD pipeline</text>
+
+  <!-- GitHub repo box -->
+  <rect class="svc-purple" x="52" y="112" width="130" height="44" rx="6"/>
+  <text class="th th-purple" x="117" y="131" text-anchor="middle" dominant-baseline="central">GitHub repo</text>
+  <text class="ts ts-purple" x="117" y="148" text-anchor="middle" dominant-baseline="central">source + IaC</text>
+
+  <!-- Arrow: GitHub → GitHub Actions -->
+  <line x1="182" y1="134" x2="214" y2="134" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- GitHub Actions box -->
+  <rect class="svc-purple" x="214" y="112" width="140" height="44" rx="6"/>
+  <text class="th th-purple" x="284" y="131" text-anchor="middle" dominant-baseline="central">GitHub Actions</text>
+  <text class="ts ts-purple" x="284" y="148" text-anchor="middle" dominant-baseline="central">build + test + scan</text>
+
+  <!-- Arrow: GitHub Actions → Trivy -->
+  <line x1="354" y1="134" x2="386" y2="134" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- Trivy box -->
+  <rect class="svc-coral" x="386" y="112" width="110" height="44" rx="6"/>
+  <text class="th th-coral" x="441" y="131" text-anchor="middle" dominant-baseline="central">Trivy scan</text>
+  <text class="ts ts-coral" x="441" y="148" text-anchor="middle" dominant-baseline="central">container security</text>
+
+  <!-- Arrow: Trivy → SonarCloud -->
+  <line x1="496" y1="134" x2="524" y2="134" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- SonarCloud box -->
+  <rect class="svc-coral" x="524" y="112" width="108" height="44" rx="6"/>
+  <text class="th th-coral" x="578" y="131" text-anchor="middle" dominant-baseline="central">SonarCloud</text>
+  <text class="ts ts-coral" x="578" y="148" text-anchor="middle" dominant-baseline="central">code quality</text>
+
+  <!-- === DOCKER CONTAINER === -->
+  <rect class="docker-bg" x="36" y="178" width="608" height="210" rx="10"/>
+  <text class="th th-blue" x="56" y="196" style="font-size:12px;">Docker environment</text>
+
+  <!-- Node.js App -->
+  <rect class="svc-blue" x="52" y="204" width="130" height="44" rx="6"/>
+  <text class="th th-blue" x="117" y="223" text-anchor="middle" dominant-baseline="central">Node.js app</text>
+  <text class="ts ts-blue" x="117" y="240" text-anchor="middle" dominant-baseline="central">containerised</text>
+
+  <!-- Arrow: App → Prometheus -->
+  <line x1="182" y1="226" x2="210" y2="226" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- Prometheus -->
+  <rect class="svc-blue" x="210" y="204" width="120" height="44" rx="6"/>
+  <text class="th th-blue" x="270" y="223" text-anchor="middle" dominant-baseline="central">Prometheus</text>
+  <text class="ts ts-blue" x="270" y="240" text-anchor="middle" dominant-baseline="central">metrics scrape</text>
+
+  <!-- Arrow: Prometheus → Grafana -->
+  <line x1="330" y1="226" x2="358" y2="226" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- Grafana -->
+  <rect class="svc-blue" x="358" y="204" width="110" height="44" rx="6"/>
+  <text class="th th-blue" x="413" y="223" text-anchor="middle" dominant-baseline="central">Grafana</text>
+  <text class="ts ts-blue" x="413" y="240" text-anchor="middle" dominant-baseline="central">dashboards</text>
+
+  <!-- Arrow: App → NGINX -->
+  <line x1="117" y1="248" x2="117" y2="270" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- NGINX -->
+  <rect class="svc-blue" x="52" y="270" width="130" height="44" rx="6"/>
+  <text class="th th-blue" x="117" y="289" text-anchor="middle" dominant-baseline="central">NGINX proxy</text>
+  <text class="ts ts-blue" x="117" y="306" text-anchor="middle" dominant-baseline="central">reverse proxy / SSL</text>
+
+  <!-- Docker Compose label -->
+  <rect class="svc-gray" x="468" y="204" width="160" height="44" rx="6"/>
+  <text class="th th-gray" x="548" y="221" text-anchor="middle" dominant-baseline="central">Docker Compose</text>
+  <text class="ts ts-gray" x="548" y="238" text-anchor="middle" dominant-baseline="central">scaling simulation</text>
+
+  <!-- Jest/Pytest -->
+  <rect class="svc-blue" x="210" y="270" width="120" height="44" rx="6"/>
+  <text class="th th-blue" x="270" y="289" text-anchor="middle" dominant-baseline="central">Jest / Pytest</text>
+  <text class="ts ts-blue" x="270" y="306" text-anchor="middle" dominant-baseline="central">automated tests</text>
+
+  <!-- Step Functions (Docker) -->
+  <rect class="svc-blue" x="358" y="270" width="120" height="44" rx="6"/>
+  <text class="th th-blue" x="418" y="289" text-anchor="middle" dominant-baseline="central">Step Functions</text>
+  <text class="ts ts-blue" x="418" y="306" text-anchor="middle" dominant-baseline="central">workflow simulation</text>
+
+  <!-- Terraform -->
+  <rect class="svc-blue" x="500" y="270" width="128" height="44" rx="6"/>
+  <text class="th th-blue" x="564" y="289" text-anchor="middle" dominant-baseline="central">Terraform</text>
+  <text class="ts ts-blue" x="564" y="306" text-anchor="middle" dominant-baseline="central">IaC (LocalStack)</text>
+
+  <!-- === LOCALSTACK CONTAINER === -->
+  <rect class="localstack-bg" x="36" y="400" width="608" height="230" rx="10"/>
+  <text class="th th-green" x="56" y="418" style="font-size:12px;">LocalStack (port 4566) — simulated AWS services</text>
+
+  <!-- Row 1: Core services -->
+  <!-- VPC -->
+  <rect class="svc-green" x="52" y="426" width="96" height="44" rx="6"/>
+  <text class="th th-green" x="100" y="445" text-anchor="middle" dominant-baseline="central">VPC</text>
+  <text class="ts ts-green" x="100" y="462" text-anchor="middle" dominant-baseline="central">subnets, IGW, SGs</text>
+
+  <!-- EC2 -->
+  <rect class="svc-green" x="160" y="426" width="96" height="44" rx="6"/>
+  <text class="th th-green" x="208" y="445" text-anchor="middle" dominant-baseline="central">EC2</text>
+  <text class="ts ts-green" x="208" y="462" text-anchor="middle" dominant-baseline="central">simulated instances</text>
+
+  <!-- S3 -->
+  <rect class="svc-green" x="268" y="426" width="96" height="44" rx="6"/>
+  <text class="th th-green" x="316" y="445" text-anchor="middle" dominant-baseline="central">S3</text>
+  <text class="ts ts-green" x="316" y="462" text-anchor="middle" dominant-baseline="central">artifact storage</text>
+
+  <!-- RDS -->
+  <rect class="svc-green" x="376" y="426" width="96" height="44" rx="6"/>
+  <text class="th th-green" x="424" y="445" text-anchor="middle" dominant-baseline="central">RDS</text>
+  <text class="ts ts-green" x="424" y="462" text-anchor="middle" dominant-baseline="central">PostgreSQL sim.</text>
+
+  <!-- DynamoDB -->
+  <rect class="svc-green" x="484" y="426" width="144" height="44" rx="6"/>
+  <text class="th th-green" x="556" y="445" text-anchor="middle" dominant-baseline="central">DynamoDB</text>
+  <text class="ts ts-green" x="556" y="462" text-anchor="middle" dominant-baseline="central">state locking</text>
+
+  <!-- Row 2: Ops services -->
+  <!-- CloudWatch -->
+  <rect class="svc-amber" x="52" y="484" width="128" height="44" rx="6"/>
+  <text class="th th-amber" x="116" y="503" text-anchor="middle" dominant-baseline="central">CloudWatch</text>
+  <text class="ts ts-amber" x="116" y="520" text-anchor="middle" dominant-baseline="central">metrics + logs + alarms</text>
+
+  <!-- EventBridge -->
+  <rect class="svc-amber" x="192" y="484" width="128" height="44" rx="6"/>
+  <text class="th th-amber" x="256" y="503" text-anchor="middle" dominant-baseline="central">EventBridge</text>
+  <text class="ts ts-amber" x="256" y="520" text-anchor="middle" dominant-baseline="central">event automation</text>
+
+  <!-- Lambda -->
+  <rect class="svc-amber" x="332" y="484" width="100" height="44" rx="6"/>
+  <text class="th th-amber" x="382" y="503" text-anchor="middle" dominant-baseline="central">Lambda</text>
+  <text class="ts ts-amber" x="382" y="520" text-anchor="middle" dominant-baseline="central">5 functions</text>
+
+  <!-- SNS / SQS -->
+  <rect class="svc-amber" x="444" y="484" width="100" height="44" rx="6"/>
+  <text class="th th-amber" x="494" y="503" text-anchor="middle" dominant-baseline="central">SNS / SQS</text>
+  <text class="ts ts-amber" x="494" y="520" text-anchor="middle" dominant-baseline="central">fan-out / DLQ</text>
+
+  <!-- SSM -->
+  <rect class="svc-amber" x="556" y="484" width="72" height="44" rx="6"/>
+  <text class="th th-amber" x="592" y="503" text-anchor="middle" dominant-baseline="central">SSM</text>
+  <text class="ts ts-amber" x="592" y="520" text-anchor="middle" dominant-baseline="central">Param Store</text>
+
+  <!-- Row 3: IaC + Security -->
+  <!-- CloudFormation -->
+  <rect class="svc-green" x="52" y="542" width="144" height="44" rx="6"/>
+  <text class="th th-green" x="124" y="561" text-anchor="middle" dominant-baseline="central">CloudFormation</text>
+  <text class="ts ts-green" x="124" y="578" text-anchor="middle" dominant-baseline="central">nested stacks, drift</text>
+
+  <!-- IAM -->
+  <rect class="svc-green" x="208" y="542" width="96" height="44" rx="6"/>
+  <text class="th th-green" x="256" y="561" text-anchor="middle" dominant-baseline="central">IAM</text>
+  <text class="ts ts-green" x="256" y="578" text-anchor="middle" dominant-baseline="central">roles + policies</text>
+
+  <!-- KMS -->
+  <rect class="svc-green" x="316" y="542" width="96" height="44" rx="6"/>
+  <text class="th th-green" x="364" y="561" text-anchor="middle" dominant-baseline="central">KMS</text>
+  <text class="ts ts-green" x="364" y="578" text-anchor="middle" dominant-baseline="central">encryption</text>
+
+  <!-- AWS Config -->
+  <rect class="svc-green" x="424" y="542" width="110" height="44" rx="6"/>
+  <text class="th th-green" x="479" y="561" text-anchor="middle" dominant-baseline="central">AWS Config</text>
+  <text class="ts ts-green" x="479" y="578" text-anchor="middle" dominant-baseline="central">5 rules, compliance</text>
+
+  <!-- CodePipeline -->
+  <rect class="svc-green" x="546" y="542" width="82" height="44" rx="6"/>
+  <text class="th th-green" x="587" y="561" text-anchor="middle" dominant-baseline="central">CodePipeline</text>
+  <text class="ts ts-green" x="587" y="578" text-anchor="middle" dominant-baseline="central">CI/CD sim.</text>
+
+  <!-- Arrow: GitHub Actions → LocalStack (vertical) -->
+  <line x1="284" y1="156" x2="284" y2="174" class="arr" marker-end="url(#arrow)"/>
+  <!-- Arrow: Docker → LocalStack -->
+  <line x1="340" y1="388" x2="340" y2="398" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- Cost label -->
+  <rect class="svc-gray" x="20" y="656" width="640" height="40" rx="8"/>
+  <text class="th th-gray" x="340" y="673" text-anchor="middle" dominant-baseline="central" style="font-size:12px;"> Days 1–35  |  docker run -d -p 4566:4566 localstack/localstack</text>
+  <text class="ts ts-gray" x="340" y="688" text-anchor="middle" dominant-baseline="central">All AWS services simulated locally - no real AWS account needed</text>
+</svg>
