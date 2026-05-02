@@ -4,7 +4,7 @@
 
 ## Overview
 
-This project is a **complete AWS DevOps Professional certification preparation platform** that combines hands-on infrastructure deployment, CI/CD automation, and comprehensive exam preparation—all designed to cost **zero dollars** (except the exam fee).
+This project is a **complete AWS DevOps Professional certification preparation platform** that combines hands-on infrastructure deployment, CI/CD automation, and comprehensive exam preparation—all designed to cost **zero dollars**
 
 ### Key Features
 
@@ -14,16 +14,15 @@ This project is a **complete AWS DevOps Professional certification preparation p
 ✅ **Infrastructure as Code**: CloudFormation + Terraform  
 ✅ **Full Observability Stack**: CloudWatch, Prometheus, Grafana  
 ✅ **Security Hardened**: IAM, KMS, VPC best practices  
-✅ **1,785+ Practice Questions**: Integrated throughout the journey  
 ✅ **Production-Ready**: Scalable, monitored, automated platform  
 
 ---
 ### Learning Approach
 
 ```
-LocalStack (Days 1-35) → AWS Free Tier (Days 36-63) → Practice Exams (Days 64-90) → ExAM (Day 91)
-     ↓                          ↓                              ↓                        ↓
-  Safe Learning          Real-World Testing            Exam Mastery              Certification
+LocalStack (Days 1-35) → AWS Free Tier (Days 36-63) 
+     ↓                          ↓                  
+  Safe Learning          Real-World Testing       
 ```
 
 ---
@@ -380,37 +379,6 @@ aws-devops-platform/
 │   └── load/
 │       └── load-test-scenarios/
 │
-├── practice-questions/                 # Exam Preparation
-│   ├── by-domain/
-│   │   ├── domain-1-sdlc/
-│   │   │   ├── questions-01-50.md
-│   │   │   └── answers-01-50.md
-│   │   ├── domain-2-iac/
-│   │   │   ├── questions-01-50.md
-│   │   │   └── answers-01-50.md
-│   │   ├── domain-3-monitoring/
-│   │   │   ├── questions-01-50.md
-│   │   │   └── answers-01-50.md
-│   │   ├── domain-4-policies/
-│   │   │   ├── questions-01-30.md
-│   │   │   └── answers-01-30.md
-│   │   ├── domain-5-incident-response/
-│   │   │   ├── questions-01-40.md
-│   │   │   └── answers-01-40.md
-│   │   └── domain-6-security/
-│   │       ├── questions-01-50.md
-│   │       └── answers-01-50.md
-│   ├── practice-exams/
-│   │   ├── practice-exam-01.md         # 75 questions
-│   │   ├── practice-exam-02.md
-│   │   ├── practice-exam-03.md
-│   │   ├── practice-exam-04.md
-│   │   └── practice-exam-05.md
-│   ├── scenarios/
-│   │   └── complex-scenarios.md
-│   └── tracking/
-│       └── progress-tracker.xlsx       # Your uploaded file
-│
 ├── deployments/                        # Deployment Artifacts
 │   ├── dev/
 │   │   └── deployment-history.json
@@ -489,19 +457,7 @@ aws-devops-platform/
 - Security hardening
 - **Day 63 CHECKPOINT**: Full platform live on AWS
 
-#### **Weeks 10-13: Exam Preparation (Days 64-90)**
-- 10+ full practice exams (75 questions each)
-- Deep domain reviews
-- Scenario-based practice
-- Weak area targeting
-- **Day 89**: Final practice exam (target 90%+)
-
-#### **Week 14: Exam  
-
 ---
-
-## Exam Domains
-
 ### Domain Coverage
 
 | Domain | Weight | Topics | Questions in Plan |
@@ -512,8 +468,6 @@ aws-devops-platform/
 | **Domain 4: Policies & Standards** | 10% | Service Catalog, Config, Organizations | 200+ |
 | **Domain 5: Incident & Event Response** | 18% | Lambda, Auto Scaling, DR | 300+ |
 | **Domain 6: Security & Compliance** | 16% | IAM, KMS, Security Hub, GuardDuty | 385+ |
-
-**Total: 1,785+ Practice Questions**
 
 ---
 
@@ -541,7 +495,7 @@ aws-devops-platform/
 
 ```bash
 # Free Tier Account
-1. Create AWS account (if you don't have one)
+1. Create AWS account
 2. Enable MFA on root account
 3. Create IAM admin user
 4. Set billing alarm at $1
@@ -589,10 +543,6 @@ Phase 2 (Days 36-63): AWS Free Tier
     ├── S3: 5GB standard storage
     ├── CloudWatch: 10 metrics, 10 alarms
     └── Lambda: 1M requests, 400K GB-seconds
-
-Phase 3 (Days 64-90): Practice Exams
-
-Phase 4 (Day 91): Exam
 
 ```
 
@@ -677,21 +627,6 @@ Every 7 days, complete a sprint review:
 6. Plan next week
 
 ---
-
-### Documentation
-- [AWS DevOps Blog](https://aws.amazon.com/blogs/devops/)
-- [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
-- [AWS Whitepapers](https://aws.amazon.com/whitepapers/)
-- [Terraform AWS Provider Docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
-- [LocalStack Documentation](https://docs.localstack.cloud/)
-
-### Community
-- [AWS DevOps Subreddit](https://www.reddit.com/r/aws/)
-- [AWS Certification Discord](https://discord.gg/aws-certification)
-- Stack Overflow: `[amazon-web-services] [devops]`
-
----
-
 ##  Contributing
 
 This is a personal learning project, but if you find it useful and want to contribute:
@@ -708,13 +643,4 @@ This is a personal learning project, but if you find it useful and want to contr
 - Better automation scripts
 - Documentation improvements
 - Bug fixes
-
-### When Stuck
-
-1. Check the daily logs in `docs/daily-logs/`
-2. Review the runbooks in `docs/runbooks/`
-3. Search the practice questions for similar scenarios
-4. Ask in AWS community forums
-5. Review AWS documentation
-
 
