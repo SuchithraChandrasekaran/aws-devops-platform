@@ -6,7 +6,12 @@ A production-grade AWS DevOps platform, covering all 6 domains of the **AWS Cert
 
 ## Architecture Overview
 
-> *(Add your architecture diagram image here — export from Day 90 and place in `/docs/architecture.png`)*
+*AWS DevOps Platform Architecture -Local Stack*
+![Architecture Diagram](images/architecture-localstack.svg)
+
+
+*AWS DevOps Platform Architecture -AWS Free-Tier*
+![Architecture Diagram](images/architecture-aws-free-tier.svg)
 
 ```
 [ GitHub ] → [ CodePipeline / GitHub Actions ] → [ Docker Build ]
