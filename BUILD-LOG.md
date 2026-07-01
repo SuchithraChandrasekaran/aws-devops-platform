@@ -1,95 +1,98 @@
-Thu Jan 29 Day 0 - Create README.md
-Fri Jan 30 Day 1 - Create ProjectPlan.md
-Sat Jan 31 Day 2 - VPC complete on LocalStack
-Sun Feb 01 Day 3 - Application containerized
-Mon Feb 02 Day 4 - LocalStack EC2 deployment and GitHub Actions setup complete
-Tue Feb 03 Day 5 - Complete CI/CD pipeline with S3 artifacts
-Wed Feb 04 Day 6 - Testing and security scanning integrated
-Thu Feb 05 Day 7 - Week 1 SPRINT complete: CI/CD Pipeline Implemented
-Fri Feb 06 Day 8 - CloudFormation VPC template created
-Sat Feb 07 Day 9 - Multi-environment IaC implemented
-Sun Feb 08 Day 10- Nested stacks deployed
-Mon Feb 09 Day 11 - Terraform modules created
-Tue Feb 10 Day 12 - Terraform state management configured
-Wed Feb 11 Day 13 - Config management via SSM
-Thu Feb 12 Day 14 - week 2 SPRINT complete- full IaC implemented
-Fri Feb 13 Day 15 - Custom metrics flowing to CloudWatch
-Sat Feb 14 Day 16 - Centralized logging implemented
-Sun Feb 15 Day 17 - Alerting system configured
-Mon Feb 16 Day 18 - Operation Dashboard Live
-Tue Feb 17 Day 19 -  Prometheus - Grafana monitoring deployed
-Wed Feb 18 Day 20 - Event Automation
-Thu Feb 19 Day 21 - week 3 SPRINT complete- full observability implemented
-Fri Feb 20 Day 22 - IAM hardened with least privilege
-Sat Feb 21 Day 23 - Secrets secured with KMS encryption
-Sun Feb 22 Day 24 - Network security hardened
-Mon Feb 23 Day 25 -  Compliance monitoring enabled
-Tue Feb 24 Day 26 -  Auto-remediation Lambda deployed
-Wed Feb 25 Day 27 - Security scanning in CI/CD pipeline
-Thu Feb 26 Day 28 - week 4 SPRINT complete-  Security hardened
-Fri Feb 27 Day 29 - Serverless automation deployed (5 Lambda functions)
-Sat Feb 28 Day 30 - Event-driven architecture implemented
-Sun Mar 01 Day 31 - Auto-scaling simulation implemented
-Mon Mar 02 Day 32 - Runbook automation created
-Tue Mar 03 Day 33 -  Workflow orchestration with Step Functions
-Wed Mar 04 Day 34 - Messaging patterns implemented
-Thu Mar 05 Day 35 - week 5 SPRINT complete : LocalStack components -E2E Testing
-Fri Mar 06 Day 36 - AWS infrastructure deployed (FREE TIER)
-Sat Mar 07 Day 37 - Application deployed to AWS
-Sun Mar 08 Day 38 - Database deployed
-Mon Mar 09 Day 39 - CloudWatch monitoring live
-Tue Mar 10 Day 40 - Security hardening complete
-Wed Mar 11 Day 41 - Add CI/CD pipeline log
-Thu Mar 12 Day 42 - week 6 SPRINT complete: AWS infrastructure validated
-Fri Mar 13 Day 43 - Multi-environment Terraform workspaces
-Sat Mar 14 Day 44 - RDS automated backups and snapshots
-Sun Mar 15 Day 45 - S3 lifecycle policies-versioning
-Mon Mar 16 Day 46 - CloudWatch custom metrics for app
-Tue Mar 17 Day 47 - CloudWatch dashboard enhancement
-Wed Mar 18 Day 48 - EventBridge automation rules
-Thu Mar 19 Day 49 -  Lambda auto-remediation on real AWS
-Fri Mar 20 Day 50 - SNS alerting to email/SMS
-Sat Mar 21 Day 51 -  CloudTrail logging and analysis
-Sun Mar 22 Day 52 - AWS Config rules
-Mon Mar 23 Day 53 - Add cost allocation tags log
-Tue Mar 24 Day 54 -  Billing alarms and budgets
-Wed Mar 25 Day 55 - Blue-green deployment with Docker
-Thu Mar 26 Day 56 - NGINX SSL/TLS with 'Let's Encrypt'
-Fri Mar 27 Day 57 - Application-level monitoring
-Sat Mar 28 Day 58 - Log aggregation and analysis
-Sun Mar 29 Day 59 - Add security group audit log
-Mon Mar 30 Day 60 - Add IAM audit log
-Tue Mar 31 Day 61 - DR runbook automation
-Wed Apr 01 Day 62 - DynamoDB table creation (free tier)
-Thu Apr 02 Day 63 - week 9 SPRINT : All features complete on AWS FREE TIER
-Fri Apr 03 Day 64 - Recall D1-D3: LocalStack, VPC, Docker
-Sat Apr 04 Day 65 - Recall D4-D8: EC2 deploy, CI/CD pipeline, Trivy, Blue-green, CFN
-Sun Apr 05 Day 66 - Recall D9-D11: CFN multi-env, Nested stacks, Terraform modules
-Mon Apr 06 Day 67 - Recall D12-D15: TF remote state, SSM, Drift detection, CloudWatch metrics
-Tue Apr 07 Day 68 - Recall D16-D18: Logs, Alarms-SNS, Dashboard
-Wed Apr 08 Day 69 - Recall D19-D21: Prometheus+Grafana, EventBridge, Monitoring integration
-Thu Apr 09 Day 70 - Recall D22-D24: IAM least-privilege, KMS+SSM, VPC Flow Logs
-Fri Apr 10 Day 71 - Recall D25-D27: Config rules, Lambda remediation, Trivy+SonarCloud
-Sat Apr 11 Day 72 - Recall D28-D29: Security audit, 5 Lambda functions
-Sun Apr 12 Day 73 - Recall D30-D31: EventBridge remediation, Docker Compose scaling
-Mon Apr 13 Day 74 - Recall D32-D34: SSM runbooks, Step Functions DR, SNS/SQS fan-out, DLQ
-Tue Apr 14 Day 75 - Recall D35-D37: E2E testing, AWS Free Tier deploy, NGINX+GitHub Actions
-Wed Apr 15 Day 76 - Recall D38-D40: RDS PostgreSQL, CloudWatch alarms, Security hardening
-Thu Apr 16 Day 77 - Recall D41-D43: CodePipeline, E2E+Cost audit, TF workspaces
-Fri Apr 17 Day 78 - Recall D44-D46: RDS snapshots, S3 lifecycle+versioning, CW custom metrics
-Sat Apr 18 Day 79 - Recall D47-D50: CW Dashboard, EventBridge rules, Lambda remediation, SNS alerts
-Sun Apr 19 Day 80 - Recall D51-D53: CloudTrail, Config rules, Cost allocation tags
-Mon Apr 20 Day 81 - Recall D54-D55: Billing alarms+budgets, Blue-green Docker deploy
-Tue Apr 21 Day 82 - Recall D56-D58: NGINX SSL, App monitoring, Log aggregation
-Wed Apr 22 Day 83 - Recall D59-D63: SG audit, IAM refine, DR runbook, DynamoDB, E2E test
-Thu Apr 23 Day 84 - FlowDiagram Domain1- SDLC Automation
-Fri Apr 24 Day 85 - FlowDiagram Domain2- ConfigMgmt & IaC
-Sat Apr 25 Day 86 - FlowDiagram Domain3-Resilient-Cloud-Solutions
-Sun Apr 26 Day 87 - FlowDiagram Domain4-Monitoring-Logging
-Mon Apr 27 Day 88 - FlowDiagram Domain5-Incident and Event Response
-Tue Apr 28 Day 89 - FlowDiagram Domain6-Security and Compliance
-Wed Apr 29 Day 90 - Create Architecture diagrams
-Thu Apr 30 Day 91 - Create CheatSheet-1
-Fri May 01 Day 92 - Create CheatSheet-2
-Sat May 02 Day 93 - Update Project-plan.md, README.md
-Sun May 03 Day 94 - Create INDEX.md, Update README.md
+# Build Log
+
+- **Thu Jan 29**: Day 0 - Create README.md
+- **Fri Jan 30**: Day 1 - Create ProjectPlan.md
+- **Sat Jan 31**: Day 2 - VPC complete on LocalStack
+- **Sun Feb 01**: Day 3 - Application containerized
+- **Mon Feb 02**: Day 4 - LocalStack EC2 deployment and GitHub Actions setup complete
+- **Tue Feb 03**: Day 5 - Complete CI/CD pipeline with S3 artifacts
+- **Wed Feb 04**: Day 6 - Testing and security scanning integrated
+- **Thu Feb 05**: Day 7 - Week 1 SPRINT complete: CI/CD Pipeline Implemented
+- **Fri Feb 06**: Day 8 - CloudFormation VPC template created
+- **Sat Feb 07**: Day 9 - Multi-environment IaC implemented
+- **Sun Feb 08**: Day 10- Nested stacks deployed
+- **Mon Feb 09**: Day 11 - Terraform modules created
+- **Tue Feb 10**: Day 12 - Terraform state management configured
+- **Wed Feb 11**: Day 13 - Config management via SSM
+- **Thu Feb 12**: Day 14 - week 2 SPRINT complete- full IaC implemented
+- **Fri Feb 13**: Day 15 - Custom metrics flowing to CloudWatch
+- **Sat Feb 14**: Day 16 - Centralized logging implemented
+- **Sun Feb 15**: Day 17 - Alerting system configured
+- **Mon Feb 16**: Day 18 - Operation Dashboard Live
+- **Tue Feb 17**: Day 19 -  Prometheus - Grafana monitoring deployed
+- **Wed Feb 18**: Day 20 - Event Automation
+- **Thu Feb 19**: Day 21 - week 3 SPRINT complete- full observability implemented
+- **Fri Feb 20**: Day 22 - IAM hardened with least privilege
+- **Sat Feb 21**: Day 23 - Secrets secured with KMS encryption
+- **Sun Feb 22**: Day 24 - Network security hardened
+- **Mon Feb 23**: Day 25 -  Compliance monitoring enabled
+- **Tue Feb 24**: Day 26 -  Auto-remediation Lambda deployed
+- **Wed Feb 25**: Day 27 - Security scanning in CI/CD pipeline
+- **Thu Feb 26**: Day 28 - week 4 SPRINT complete-  Security hardened
+- **Fri Feb 27**: Day 29 - Serverless automation deployed (5 Lambda functions)
+- **Sat Feb 28**: Day 30 - Event-driven architecture implemented
+- **Sun Mar 01**: Day 31 - Auto-scaling simulation implemented
+- **Mon Mar 02**: Day 32 - Runbook automation created
+- **Tue Mar 03**: Day 33 -  Workflow orchestration with Step Functions
+- **Wed Mar 04**: Day 34 - Messaging patterns implemented
+- **Thu Mar 05**: Day 35 - week 5 SPRINT complete : LocalStack components -E2E Testing
+- **Fri Mar 06**: Day 36 - AWS infrastructure deployed (FREE TIER)
+- **Sat Mar 07**: Day 37 - Application deployed to AWS
+- **Sun Mar 08**: Day 38 - Database deployed
+- **Mon Mar 09**: Day 39 - CloudWatch monitoring live
+- **Tue Mar 10**: Day 40 - Security hardening complete
+- **Wed Mar 11**: Day 41 - Add CI/CD pipeline log
+- **Thu Mar 12**: Day 42 - week 6 SPRINT complete: AWS infrastructure validated
+- **Fri Mar 13**: Day 43 - Multi-environment Terraform workspaces
+- **Sat Mar 14**: Day 44 - RDS automated backups and snapshots
+- **Sun Mar 15**: Day 45 - S3 lifecycle policies-versioning
+- **Mon Mar 16**: Day 46 - CloudWatch custom metrics for app
+- **Tue Mar 17**: Day 47 - CloudWatch dashboard enhancement
+- **Wed Mar 18**: Day 48 - EventBridge automation rules
+- **Thu Mar 19**: Day 49 -  Lambda auto-remediation on real AWS
+- **Fri Mar 20**: Day 50 - SNS alerting to email/SMS
+- **Sat Mar 21**: Day 51 -  CloudTrail logging and analysis
+- **Sun Mar 22**: Day 52 - AWS Config rules
+- **Mon Mar 23**: Day 53 - Add cost allocation tags log
+- **Tue Mar 24**: Day 54 -  Billing alarms and budgets
+- **Wed Mar 25**: Day 55 - Blue-green deployment with Docker
+- **Thu Mar 26**: Day 56 - NGINX SSL/TLS with 'Let's Encrypt'
+- **Fri Mar 27**: Day 57 - Application-level monitoring
+- **Sat Mar 28**: Day 58 - Log aggregation and analysis
+- **Sun Mar 29**: Day 59 - Add security group audit log
+- **Mon Mar 30**: Day 60 - Add IAM audit log
+- **Tue Mar 31**: Day 61 - DR runbook automation
+- **Wed Apr 01**: Day 62 - DynamoDB table creation (free tier)
+- **Thu Apr 02**: Day 63 - week 9 SPRINT : All features complete on AWS FREE TIER
+- **Fri Apr 03**: Day 64 - Recall D1-D3: LocalStack, VPC, Docker
+- **Sat Apr 04**: Day 65 - Recall D4-D8: EC2 deploy, CI/CD pipeline, Trivy, Blue-green, CFN
+- **Sun Apr 05**: Day 66 - Recall D9-D11: CFN multi-env, Nested stacks, Terraform modules
+- **Mon Apr 06**: Day 67 - Recall D12-D15: TF remote state, SSM, Drift detection, CloudWatch metrics
+- **Tue Apr 07**: Day 68 - Recall D16-D18: Logs, Alarms-SNS, Dashboard
+- **Wed Apr 08**: Day 69 - Recall D19-D21: Prometheus+Grafana, EventBridge, Monitoring integration
+- **Thu Apr 09**: Day 70 - Recall D22-D24: IAM least-privilege, KMS+SSM, VPC Flow Logs
+- **Fri Apr 10**: Day 71 - Recall D25-D27: Config rules, Lambda remediation, Trivy+SonarCloud
+- **Sat Apr 11**: Day 72 - Recall D28-D29: Security audit, 5 Lambda functions
+- **Sun Apr 12**: Day 73 - Recall D30-D31: EventBridge remediation, Docker Compose scaling
+- **Mon Apr 13**: Day 74 - Recall D32-D34: SSM runbooks, Step Functions DR, SNS/SQS fan-out, DLQ
+- **Tue Apr 14**: Day 75 - Recall D35-D37: E2E testing, AWS Free Tier deploy, NGINX+GitHub Actions
+- **Wed Apr 15**: Day 76 - Recall D38-D40: RDS PostgreSQL, CloudWatch alarms, Security hardening
+- **Thu Apr 16**: Day 77 - Recall D41-D43: CodePipeline, E2E+Cost audit, TF workspaces
+- **Fri Apr 17**: Day 78 - Recall D44-D46: RDS snapshots, S3 lifecycle+versioning, CW custom metrics
+- **Sat Apr 18**: Day 79 - Recall D47-D50: CW Dashboard, EventBridge rules, Lambda remediation, SNS alerts
+- **Sun Apr 19**: Day 80 - Recall D51-D53: CloudTrail, Config rules, Cost allocation tags
+- **Mon Apr 20**: Day 81 - Recall D54-D55: Billing alarms+budgets, Blue-green Docker deploy
+- **Tue Apr 21**: Day 82 - Recall D56-D58: NGINX SSL, App monitoring, Log aggregation
+- **Wed Apr 22**: Day 83 - Recall D59-D63: SG audit, IAM refine, DR runbook, DynamoDB, E2E test
+- **Thu Apr 23**: Day 84 - FlowDiagram Domain1- SDLC Automation
+- **Fri Apr 24**: Day 85 - FlowDiagram Domain2- ConfigMgmt & IaC
+- **Sat Apr 25**: Day 86 - FlowDiagram Domain3-Resilient-Cloud-Solutions
+- **Sun Apr 26**: Day 87 - FlowDiagram Domain4-Monitoring-Logging
+- **Mon Apr 27**: Day 88 - FlowDiagram Domain5-Incident and Event Response
+- **Tue Apr 28**: Day 89 - FlowDiagram Domain6-Security and Compliance
+- **Wed Apr 29**: Day 90 - Create Architecture diagrams
+- **Thu Apr 30**: Day 91 - Create CheatSheet-1
+- **Fri May 01**: Day 92 - Create CheatSheet-2
+- **Sat May 02**: Day 93 - Update Project-plan.md, README.md
+- **Sun May 03**: Day 94 - Create INDEX.md, Update README.md
+- **Wed Jul 01**: Build-log added
