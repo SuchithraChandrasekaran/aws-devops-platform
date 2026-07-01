@@ -15,11 +15,11 @@ resource "aws_secretsmanager_secret" "db_credentials" {
 resource "aws_secretsmanager_secret_version" "db_credentials" {
   secret_id = aws_secretsmanager_secret.db_credentials.id
   secret_string = jsonencode({
-    username = "dbadmin"
-    password = "ChangeMeInProduction123!"
-    host     = "localhost"
-    port     = 5432
-    database = "myapp"
+    username = var.db_username
+    password = var.db_password
+    host     = var.db_host
+    port     = var.db_port
+    database = var.db_name
   })
 }
 
@@ -40,9 +40,9 @@ resource "aws_secretsmanager_secret" "api_keys" {
 resource "aws_secretsmanager_secret_version" "api_keys" {
   secret_id = aws_secretsmanager_secret.api_keys.id
   secret_string = jsonencode({
-    stripe_key    = "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
-    sendgrid_key  = "SG.1234567890abcdefghij"
-    github_token  = "ghp_1234567890abcdefghijklmnopqrst"
+    stripe_key    = "sk_test_PLACEHOLDER"
+    sendgrid_key  = "SG.PLACEHOLDER"
+    github_token  = "ghp_PLACEHOLDER"
   })
 }
 
@@ -63,9 +63,9 @@ resource "aws_secretsmanager_secret" "app_config" {
 resource "aws_secretsmanager_secret_version" "app_config" {
   secret_id = aws_secretsmanager_secret.app_config.id
   secret_string = jsonencode({
-    jwt_secret     = "super-secret-jwt-key-change-me"
-    encryption_key = "aes-256-encryption-key-change-me"
-    session_secret = "session-secret-key-change-me"
+    jwt_secret     = var.jwt_secret
+    encryption_key = var.encryption_key
+    session_secret = var.session_secret
   })
 }
 
