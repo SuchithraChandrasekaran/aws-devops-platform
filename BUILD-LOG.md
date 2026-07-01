@@ -1,11 +1,11 @@
 # Build Log
 
-- **Thu Jan 29**: Day 0 - Create README.md
-- **Fri Jan 30**: Day 1 - Create ProjectPlan.md
-- **Sat Jan 31**: Day 2 - VPC complete on LocalStack
-- **Sun Feb 01**: Day 3 - Application containerized
-- **Mon Feb 02**: Day 4 - LocalStack EC2 deployment and GitHub Actions setup complete
-- **Tue Feb 03**: Day 5 - Complete CI/CD pipeline with S3 artifacts
+- **Thu Jan 29**: Day 0     - Create README.md
+- **Fri Jan 30**: Day 1     - Create ProjectPlan.md
+- **Sat Jan 31**: Day 2     - VPC complete on LocalStack
+- **Sun Feb 01**: Day 3     - Application containerized
+- **Mon Feb 02**: Day 4     - LocalStack EC2 deployment and GitHub Actions setup complete
+- **Tue Feb 03**: Day 5     - Complete CI/CD pipeline with S3 artifacts
 - **Wed Feb 04**: Day 6 - Testing and security scanning integrated
 - **Thu Feb 05**: Day 7 - Week 1 SPRINT complete: CI/CD Pipeline Implemented
 - **Fri Feb 06**: Day 8 - CloudFormation VPC template created
@@ -95,4 +95,3 @@
 - **Fri May 01**: Day 92 - Create CheatSheet-2
 - **Sat May 02**: Day 93 - Update Project-plan.md, README.md
 - **Sun May 03**: Day 94 - Create INDEX.md, Update README.md
-- **Wed Jul 01**: Build-log added
